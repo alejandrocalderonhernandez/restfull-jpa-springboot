@@ -1,0 +1,9 @@
+spring:
+  datasource:
+    password: Alejandro95
+    url: jdbc:postgresql://localhost:5432/eagledb
+    username: postgresql
+  jpa:
+    properties:
+      hibernate:
+        default_schema: dev

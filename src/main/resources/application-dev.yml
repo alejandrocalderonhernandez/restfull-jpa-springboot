@@ -1,0 +1,17 @@
+server:
+  port: 9999
+  servlet:
+    context-path: /rdb-api
+spring:
+  datasource:
+    password: Alejandro95
+    url: jdbc:postgresql://localhost:5432/eagledb
+    username: postgres
+  jpa:
+    properties:
+      hibernate:
+        default_schema: dev
+  servlet:
+    multipart:
+      max-file-size: 8MB
+      max-request-size: 8MB
