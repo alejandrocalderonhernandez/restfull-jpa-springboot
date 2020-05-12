@@ -7,6 +7,7 @@ import java.util.NoSuchElementException;
 import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.apache.logging.log4j.Logger;
 
 import com.eagle.relationaldbaccessapi.models.dto.AddressDTO;
@@ -17,10 +18,9 @@ import com.eagle.relationaldbaccessapi.util.interfaces.IMapper;
 import com.eagle.relationaldbaccessapi.util.interfaces.IUpdater;
 
 @Service
-public class AddressServiceImpl implements IAddressService{
+public class AddressServiceImpl implements IAddressService {
 	
     private static final Logger LOGGER = LogManager.getLogger(AddressServiceImpl.class);
-
 	
 	 IMapper<AddressEntity, AddressDTO> mapToEntity  = (addressDto) -> {
 				return new AddressEntity(
@@ -59,6 +59,7 @@ public class AddressServiceImpl implements IAddressService{
 	}
 
 	@Override
+	@Transactional
 	public AddressDTO insert(AddressDTO dto) {
 		AddressEntity addressToInsert = this.mapToEntity.mapObjectToEntity(dto);
 		try {
@@ -70,12 +71,18 @@ public class AddressServiceImpl implements IAddressService{
 	}
 
 	@Override
+	@Transactional
 	public AddressDTO update(AddressDTO dto, Long id) {
 		if(this.repocitory.existsById(id)){
-			AddressEntity addresToUpdate = this.repocitory.findById(id).get();
-			updateEntity.update(dto, addresToUpdate);
-			this.repocitory.save(addresToUpdate);
-			return dto;
+			try {
+				AddressEntity addresToUpdate = this.repocitory.findById(id).get();
+				updateEntity.update(dto, addresToUpdate);
+				this.repocitory.save(addresToUpdate);
+				return dto;
+			} catch (Exception e) {
+				LOGGER.error("[update] Error to update address, exeption -> " + e.getMessage());
+				return dto;
+			}
 		} else {
 			LOGGER.error("[update] Error to update address, id -> " + id+ " don´t exist on database");
 			throw new IllegalArgumentException("The addres id -> " + id + " don´t exist");
@@ -83,6 +90,7 @@ public class AddressServiceImpl implements IAddressService{
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public AddressDTO findById(Long id) {
 		if(this.repocitory.existsById(id)){
 			return this.mapToDTO.mapObjectToEntity(this.repocitory.findById(id).get());
@@ -93,6 +101,7 @@ public class AddressServiceImpl implements IAddressService{
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<AddressDTO> findAll() {
 		List<AddressEntity>resultEntity = this.repocitory.findAll();
 		if(!resultEntity.isEmpty()) {
@@ -106,6 +115,7 @@ public class AddressServiceImpl implements IAddressService{
 	}
 
 	@Override
+	@Transactional
 	public boolean deleteById(Long id) {
 		if(this.repocitory.existsById(id)) {
 			this.repocitory.deleteById(id);
@@ -113,5 +123,10 @@ public class AddressServiceImpl implements IAddressService{
 		} else {
 			return false;
 		}
+	}
+
+	@Override
+	public boolean existById(Long id) {
+		return this.repocitory.existsById(id);
 	}
 }

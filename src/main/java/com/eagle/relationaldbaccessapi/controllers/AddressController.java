@@ -15,60 +15,91 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.eagle.relationaldbaccessapi.models.dto.AddressDTO;
 import com.eagle.relationaldbaccessapi.services.interfaces.IAddressService;
+import com.eagle.relationaldbaccessapi.util.components.ResponceMessages;
+
+import static com.eagle.relationaldbaccessapi.util.constants.RestConstants.*;
+
+import java.util.List;
+import java.util.Map;
 
 @RestController
-@RequestMapping("address")
+@RequestMapping("/address")
 public class AddressController {
 	
+	private static final String MODEL_NAME = "Address";
+	
 	private IAddressService service;
+	private ResponceMessages messages;
 	
 	@Autowired
-	public  AddressController(IAddressService service) {
+	public  AddressController(IAddressService service, ResponceMessages messages) {
 		this.service = service;
+		this.messages = messages;
 	}
 	
-	@PostMapping(path = "/create", consumes={"application/json"}) 
+	@PostMapping(path = REST_CREATE, consumes={"application/json"}) 
 	public ResponseEntity<?> create(@RequestBody AddressDTO address) {
 		try {
-			return ResponseEntity.ok().body(this.service.insert(address));
+			Map<String, Object> responce = this.messages.messageCreated(this.service.insert(address));
+			return new ResponseEntity<Map<String, Object>>(responce, HttpStatus.OK);
 		} catch (Exception e) {
-			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+			Map<String, Object> responce = this.messages.messsageGenericError(e.getMessage());
+			return new ResponseEntity<Map<String, Object>>(responce, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
-	@PutMapping(path = "/update/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes={"application/json"})
+	@PutMapping(path = REST_UPDATE, produces = MediaType.APPLICATION_JSON_VALUE, consumes={"application/json"})
 	public ResponseEntity<?> update(@RequestBody AddressDTO address, @PathVariable Long id) {
 		try {
-			return ResponseEntity.ok().body(this.service.update(address, id));
+			if(this.service.existById(id)) {
+				Map<String, Object> responce = this.messages.messageUpdated(this.service.update(address, id));
+				return new ResponseEntity<Map<String, Object>>(responce, HttpStatus.OK);
+			} else {
+				Map<String, Object> responce = this.messages.messsageModelNotFound(id, MODEL_NAME);
+				return new ResponseEntity<Map<String, Object>>(responce, HttpStatus.BAD_REQUEST);
+			}
 		} catch (Exception e) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			Map<String, Object> responce = this.messages.messsageGenericError(e.getMessage());
+			return new ResponseEntity<Map<String, Object>>(responce, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
-	@GetMapping(path = "find/{id}", produces = MediaType.APPLICATION_JSON_VALUE )
+	@GetMapping(path = REST_FIND_BY_ID, produces = MediaType.APPLICATION_JSON_VALUE )
 	public ResponseEntity<?> findById(@PathVariable Long id) {
 		try {
-			return ResponseEntity.ok().body(this.service.findById(id));
+			Map<String, Object> responce = this.messages.messageSuccess(this.service.findById(id));
+			return new ResponseEntity<Map<String, Object>>(responce, HttpStatus.OK);
 		} catch (Exception e) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			Map<String, Object> responce = this.messages.messsageGenericError(e.getMessage());
+			return new ResponseEntity<Map<String, Object>>(responce, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
-	@GetMapping(path = "findAll", produces = MediaType.APPLICATION_JSON_VALUE )
+	@GetMapping(path = REST_FIND_ALL, produces = MediaType.APPLICATION_JSON_VALUE )
 	public ResponseEntity<?> findAll() {
 		try {
-			return ResponseEntity.ok().body(this.service.findAll());
+			List<AddressDTO> listResponce = this.service.findAll();
+			if(listResponce.isEmpty()) {
+				Map<String, Object> responce = this.messages.messageNoData();
+				return new ResponseEntity<Map<String, Object>>(responce, HttpStatus.OK);
+			} else {
+				Map<String, Object> responce = this.messages.messageSuccess(listResponce);
+				return new ResponseEntity<Map<String, Object>>(responce, HttpStatus.OK);
+			}
 		} catch (Exception e) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			Map<String, Object> responce = this.messages.messsageGenericError(e.getMessage());
+			return new ResponseEntity<Map<String, Object>>(responce, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
-	@DeleteMapping(path = "delete/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@DeleteMapping(path = REST_DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> delete(@PathVariable Long id) {
 		if(this.service.deleteById(id)) {
-			return new ResponseEntity<>(HttpStatus.OK);
+			Map<String, Object> responce = this.messages.messageDeleted();
+			return new ResponseEntity<Map<String, Object>>(responce, HttpStatus.OK);
 		} else {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			Map<String, Object> responce = this.messages.messsageModelNotFound(id, MODEL_NAME);
+			return new ResponseEntity<Map<String, Object>>(responce, HttpStatus.BAD_REQUEST);
 		}
 	}
 }
