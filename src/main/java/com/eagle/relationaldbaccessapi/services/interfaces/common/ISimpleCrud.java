@@ -1,4 +1,4 @@
-package com.eagle.relationaldbaccessapi.util.interfaces;
+package com.eagle.relationaldbaccessapi.services.interfaces.common;
 
 import java.util.List;
 

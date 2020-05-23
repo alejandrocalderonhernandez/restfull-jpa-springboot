@@ -7,5 +7,6 @@ public class RestConstants {
 	public static final String REST_FIND_BY_ID = "/find/{id}";
 	public static final String REST_FIND_ALL = "/findAll";
 	public static final String REST_DELETE = "/delete/{id}";
+	
 	public static final String REST_UPLOAD_IMG = "/upload/img";
 }

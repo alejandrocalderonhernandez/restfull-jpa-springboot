@@ -11,7 +11,8 @@ public class ResponceMessages {
 	
 	private static final String MESSAGE = "message: ";
 	private static final String ERROR = "error: ";
-	private static final String RESPONCE = "responce: ";
+	private static final String RESPONCE = "data: ";
+	private static final String UPLOAD = "upload: ";
 	
 	private StringBuilder sb;
 	
@@ -77,10 +78,17 @@ public class ResponceMessages {
 		return responce;
 	}
 	
-	public Map<String, Object> messsageUploadFileError(String errorMessage) {
+	public Map<String, Object> messsageUploadFileError(boolean upload) {
 		Map<String, Object> responce = new HashMap<>();
 		responce.put(MESSAGE,  "Error to upload file");
-		responce.put(ERROR, errorMessage);
+		responce.put(UPLOAD, upload);
+		return responce;
+	}
+	
+	public Map<String, Object> messsageUploadFileSuccess(boolean upload) {
+		Map<String, Object> responce = new HashMap<>();
+		responce.put(MESSAGE,  "Upload file success");
+		responce.put(UPLOAD, upload);
 		return responce;
 	}
 	

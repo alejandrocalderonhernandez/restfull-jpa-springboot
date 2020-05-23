@@ -21,26 +21,36 @@ import com.eagle.relationaldbaccessapi.util.interfaces.IUpdater;
 public class AddressServiceImpl implements IAddressService {
 	
     private static final Logger LOGGER = LogManager.getLogger(AddressServiceImpl.class);
-	
-	 IMapper<AddressEntity, AddressDTO> mapToEntity  = (addressDto) -> {
-				return new AddressEntity(
-						addressDto.getId(), addressDto.getStreet(),
-						addressDto.getColony(), addressDto.getTownHall(),
-						addressDto.getEstate(), addressDto.getExternalNumber(), 
-						addressDto.getInternalNumber(), addressDto.getLat(), 
-						addressDto.getLon());
-	};
-	
-	 IMapper<AddressDTO, AddressEntity> mapToDTO  = (addressEntity) -> {
-			  return new AddressDTO(
-					  addressEntity.getId(), addressEntity.getStreet(),
-					  addressEntity.getColony(), addressEntity.getTownHall(),
-					  addressEntity.getEstate(), addressEntity.getExternalNumber(), 
-					  addressEntity.getInternalNumber(), addressEntity.getLat(), 
-					  addressEntity.getLon());
-    };
     
-    IUpdater<AddressDTO, AddressEntity> updateEntity = (newAddress, oldAddress) -> {
+	 private IMapper<AddressEntity, AddressDTO> mapToEntity  = (addressDto) -> {
+			return new AddressEntity.Builder()
+					.addId(addressDto.getId())
+					.addColony(addressDto.getColony())
+					.addTownHall(addressDto.getTownHall())
+					.addEstate(addressDto.getEstate())
+					.addStreet(addressDto.getStreet())
+					.addInternalNumber(addressDto.getInternalNumber())
+					.addExternalNumber(addressDto.getExternalNumber())
+					.addLat(addressDto.getLat())
+					.addLon(addressDto.getLon())
+					.build();
+	 	};
+	 	
+		private IMapper<AddressDTO, AddressEntity> mapToDTO  = (addressEntity) -> {
+				return new AddressDTO.Builder()
+						.addId(addressEntity.getId())
+						.addColony(addressEntity.getColony())
+						.addTownHall(addressEntity.getTownHall())
+						.addEstate(addressEntity.getEstate())
+						.addStreet(addressEntity.getStreet())
+						.addInternalNumber(addressEntity.getInternalNumber())
+						.addExternalNumber(addressEntity.getExternalNumber())
+						.addLat(addressEntity.getLat())
+						.addLon(addressEntity.getLon())
+						.build();
+		 	};
+    
+    private IUpdater<AddressDTO, AddressEntity> updateEntity = (newAddress, oldAddress) -> {
 			    	 oldAddress.setStreet(newAddress.getStreet());
 			    	 oldAddress.setColony(newAddress.getColony());
 			    	 oldAddress.setTownHall(newAddress.getTownHall());
@@ -61,7 +71,7 @@ public class AddressServiceImpl implements IAddressService {
 	@Override
 	@Transactional
 	public AddressDTO insert(AddressDTO dto) {
-		AddressEntity addressToInsert = this.mapToEntity.mapObjectToEntity(dto);
+		AddressEntity addressToInsert = this.mapToEntity.mapObject(dto);
 		try {
 			this.repocitory.save(addressToInsert);
 		} catch (Exception e) {
@@ -93,7 +103,7 @@ public class AddressServiceImpl implements IAddressService {
 	@Transactional(readOnly = true)
 	public AddressDTO findById(Long id) {
 		if(this.repocitory.existsById(id)){
-			return this.mapToDTO.mapObjectToEntity(this.repocitory.findById(id).get());
+			return this.mapToDTO.mapObject(this.repocitory.findById(id).get());
 		} else {
 			LOGGER.error("[findById]: Error to get address, id -> " + id+ " don´t exist in database");
 			throw new IllegalArgumentException("the addres id -> " + id + " don´t exist");
@@ -106,7 +116,7 @@ public class AddressServiceImpl implements IAddressService {
 		List<AddressEntity>resultEntity = this.repocitory.findAll();
 		if(!resultEntity.isEmpty()) {
 			List<AddressDTO> resultDTO = new LinkedList<>();
-			resultEntity.forEach(address ->  resultDTO.add(this.mapToDTO.mapObjectToEntity(address)));
+			resultEntity.forEach(address ->  resultDTO.add(this.mapToDTO.mapObject(address)));
 			return resultDTO;
 		} else {
 			LOGGER.error("[findAll]: Not data in database");

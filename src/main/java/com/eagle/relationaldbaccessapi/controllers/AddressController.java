@@ -37,7 +37,7 @@ public class AddressController {
 		this.messages = messages;
 	}
 	
-	@PostMapping(path = REST_CREATE, consumes={"application/json"}) 
+	@PostMapping(path = REST_CREATE, produces = MediaType.APPLICATION_JSON_VALUE, consumes=MediaType.APPLICATION_JSON_VALUE) 
 	public ResponseEntity<?> create(@RequestBody AddressDTO address) {
 		try {
 			Map<String, Object> responce = this.messages.messageCreated(this.service.insert(address));
@@ -48,7 +48,7 @@ public class AddressController {
 		}
 	}
 	
-	@PutMapping(path = REST_UPDATE, produces = MediaType.APPLICATION_JSON_VALUE, consumes={"application/json"})
+	@PutMapping(path = REST_UPDATE,  consumes=MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> update(@RequestBody AddressDTO address, @PathVariable Long id) {
 		try {
 			if(this.service.existById(id)) {
