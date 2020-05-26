@@ -15,3 +15,13 @@ spring:
     multipart:
       max-file-size: 8MB
       max-request-size: 8MB
+logging:
+  file: logs/log.log
+  level:
+    com:
+      lankydan:
+        service: debug
+    root: info
+  pattern:
+    file: '%d{dd-MM-yyyy HH:mm:ss.SSS} [%thread] %-5level %logger{36}.%M - %msg%n'
+

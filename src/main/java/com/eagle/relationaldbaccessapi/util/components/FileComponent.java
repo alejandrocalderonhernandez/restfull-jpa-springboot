@@ -25,7 +25,7 @@ public class FileComponent {
 		try (Stream<String> lines  = Files.lines(path, StandardCharsets.UTF_8)){
 			lines.forEach(stringBuilder::append);
 		} catch (Exception e) {
-			LOGGER.error("ERROR TO READ PATH -> " + e.getMessage());
+			LOGGER.error("Error to read path: " + e.getMessage());
 		}
 		return stringBuilder.toString();
 	}
@@ -33,10 +33,9 @@ public class FileComponent {
 	public boolean saveFile(Path path, MultipartFile file) {
 		try {
 			Files.copy(file.getInputStream(), path);
-			LOGGER.info("new file added: " + file.getOriginalFilename() );
 			return true;
 		} catch (IOException e) {
-			LOGGER.error("can't save file> " + e.getMessage());
+			LOGGER.error("Can't save file: " + e.getMessage());
 			return false;
 		}
 	}
@@ -45,7 +44,7 @@ public class FileComponent {
 		try {
 			return new UrlResource(path.toUri());
 		} catch (IOException e) {
-			LOGGER.error("can't get file -> " + e.getMessage());
+			LOGGER.error("Cant get file: " + e.getMessage());
 			return null;
 		}
 	}
@@ -53,16 +52,14 @@ public class FileComponent {
 	public boolean deleteFile(File file) {
 		if(file.exists() && file.canRead()) {
 			if(file.delete()) {
-				LOGGER.info("file deleted" );
 				return true;
 			} else {
-				LOGGER.error("can't delete file");
+				LOGGER.error("Can't read file");
 				return false;
 			}
 		} else {
-			LOGGER.error("can't read file");
-			throw new IllegalArgumentException();
+			LOGGER.error("Can't read file");
+			return false;
 		}
 	}
-	
 }

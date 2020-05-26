@@ -79,9 +79,9 @@ public class UserInfoServiceImpl implements IUserInfo {
 	public UserInfoDTO insert(UserInfoDTO dto) {
 		try {
 			this.repocitory.save(this.mapToEntity.mapObject(dto));
-			LOGGER.info("[insert] inserted UserInfo new UserInfo");
+			LOGGER.info("Inserted {} ", dto);
 		} catch (Exception e) {
-			LOGGER.error("[insert] Error to insert UserInfo -> ", e);
+			LOGGER.error("Error to insert UserInfo: ", e);
 		}
 		return dto;
 	}
@@ -94,15 +94,15 @@ public class UserInfoServiceImpl implements IUserInfo {
 				UserInfoEntity userToUpdate = this.repocitory.findById(id).get();
 				this.updater.update(dto, userToUpdate);
 				this.repocitory.save(userToUpdate);
-				LOGGER.info("[update] updated UserInfo with id " + id);
+				LOGGER.info("Updated {} ", dto);
 				return this.mapToDTO.mapObject(userToUpdate);
 			} catch (Exception e) {
-				LOGGER.error("[update] error to update UserInfo -> ", e);
+				LOGGER.error("Error to update UserInfo -> ", e);
 				return dto;
 			}
 		} else {
-			LOGGER.error("[update] Error to update UserInfo, id -> " + id+ " don´t exist on database");
-			throw new IllegalArgumentException("The UserInfo id -> " + id + " don´t exist");
+			LOGGER.warn("Update UserInfo not found id: " + id);
+			throw new IllegalArgumentException("The UserInfo id: " + id + " dont exist");
 		}
 	}
 
@@ -112,8 +112,8 @@ public class UserInfoServiceImpl implements IUserInfo {
 		if(this.repocitory.existsById(id)){
 			return this.mapToDTO.mapObject(this.repocitory.findById(id).get());
 		} else {
-			LOGGER.error("[findById]: Error to get UserInfo, id -> " + id+ " don´t exist in database");
-			throw new IllegalArgumentException("the UserInfo id -> " + id + " don´t exist");
+			LOGGER.warn("Select UserInfo not found id: " + id);
+			throw new IllegalArgumentException("The UserInfo with id:  " + id + " dont exist");
 		}
 	}
 
@@ -126,7 +126,7 @@ public class UserInfoServiceImpl implements IUserInfo {
 			resultEntity.forEach(address ->  resultDTO.add(this.mapToDTO.mapObject(address)));
 			return resultDTO;
 		} else {
-			LOGGER.error("[findAll]: Not data -> UserInfo");
+			LOGGER.warn("Find all no data: UserInfo");
 			throw new NoSuchElementException("Database is empty");
 		}
 	}
@@ -136,9 +136,10 @@ public class UserInfoServiceImpl implements IUserInfo {
 	public boolean deleteById(Long id) {
 		if(this.repocitory.existsById(id)) {
 			this.repocitory.deleteById(id);
-			LOGGER.info("[delete] UserInfo with id " + id);
+			LOGGER.info("Deleted UserInfo with id: " + id);
 			return true;
 		} else {
+			LOGGER.warn("Delete UserInfo not found id: " + id);
 			return false;
 		}
 	}
@@ -156,6 +157,7 @@ public class UserInfoServiceImpl implements IUserInfo {
 			UserInfoEntity userToUpdate = this.repocitory.findById(id).get();
 			userToUpdate.setPhotoUrl(fileModel.getPath().toString());
 			this.repocitory.save(userToUpdate);
+			LOGGER.info("New file: " + id);
 			return this.fileComponent.saveFile(fileModel.getPath(), fileModel.getMultipartFile());
 		}
 		return false;
@@ -170,10 +172,10 @@ public class UserInfoServiceImpl implements IUserInfo {
 				Path path = Paths.get(url).toAbsolutePath();
 				return this.fileComponent.getFile(path);
 			} else {
-				throw new NoSuchElementException("this user not have a photo");
+				throw new NoSuchElementException("This user not have a photo");
 			}
 		} else {
-			throw new IllegalArgumentException("the UserInfo id -> " + id + " don´t exist");
+			throw new IllegalArgumentException("the UserInfo with id : " + id + " dont exist");
 		}
 	}
 
@@ -188,7 +190,7 @@ public class UserInfoServiceImpl implements IUserInfo {
 			this.repocitory.save(userToUpdate);
 			return this.fileComponent.deleteFile(fileModel.getFile());
 		} else {
-			throw new IllegalArgumentException("the UserInfo id -> " + id + " don´t exist");
+			throw new IllegalArgumentException("the UserInfo with id : " + id + " dont exist");
 		}
 	}
 
@@ -199,10 +201,10 @@ public class UserInfoServiceImpl implements IUserInfo {
 			UserInfoEntity userToUpdate = this.repocitory.findById(id).get();
 			userToUpdate.setStatus(!userToUpdate.getStatus());
 			this.repocitory.save(userToUpdate);
-			LOGGER.info("[updated] UserInfo inactive with id " + id);
+			LOGGER.info("Updated UserInfo inactive with id " + id);
 		} else {
-			LOGGER.error("[update] Error to update UserInfo, id -> " + id+ " don´t exist on database");
-			throw new IllegalArgumentException("The UserInfo id -> " + id + " don´t exist");
+			LOGGER.warn("Update UserInfo not found id: " + id);
+			throw new IllegalArgumentException("The UserInfo with id: " + id + " dont exist");
 		}
 	}
 }

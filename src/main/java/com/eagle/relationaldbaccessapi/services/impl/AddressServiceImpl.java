@@ -72,11 +72,11 @@ public class AddressServiceImpl implements IAddressService {
 	@Transactional
 	public AddressDTO insert(AddressDTO dto) {
 		AddressEntity addressToInsert = this.mapToEntity.mapObject(dto);
-		LOGGER.info("[insert] inserted UserInfo new Address");
+		LOGGER.info("Inserted {} ", dto);
 		try {
 			this.repocitory.save(addressToInsert);
 		} catch (Exception e) {
-			LOGGER.error("[insert] Error to insert Address -> ", e);
+			LOGGER.error("Error to insert Address: ", e);
 		}
 		return dto;
 	}
@@ -89,15 +89,15 @@ public class AddressServiceImpl implements IAddressService {
 				AddressEntity addresToUpdate = this.repocitory.findById(id).get();
 				updateEntity.update(dto, addresToUpdate);
 				this.repocitory.save(addresToUpdate);
-				LOGGER.info("[update] updated Address with id " + id);
+				LOGGER.info("Updated {} ", dto);
 				return this.mapToDTO.mapObject(addresToUpdate);
 			} catch (Exception e) {
-				LOGGER.error("[update] Error to update Address, exeption -> " + e.getMessage());
+				LOGGER.error("Error to update Address -> ", e);
 				return dto;
 			}
 		} else {
-			LOGGER.error("[update] Error to update Address, id -> " + id+ " don´t exist on database");
-			throw new IllegalArgumentException("The Addres id -> " + id + " don´t exist");
+			LOGGER.warn("Update Address not found id: " + id);
+			throw new IllegalArgumentException("The Address id -> " + id + " dont exist");
 		}
 	}
 
@@ -107,8 +107,8 @@ public class AddressServiceImpl implements IAddressService {
 		if(this.repocitory.existsById(id)){
 			return this.mapToDTO.mapObject(this.repocitory.findById(id).get());
 		} else {
-			LOGGER.error("[findById]: Error to get address, id -> " + id+ " don´t exist in database");
-			throw new IllegalArgumentException("the addres id -> " + id + " don´t exist");
+			LOGGER.warn("Select Address not found id: " + id);
+			throw new IllegalArgumentException("The Address with id:  " + id + " dont exist");
 		}
 	}
 
@@ -121,7 +121,7 @@ public class AddressServiceImpl implements IAddressService {
 			resultEntity.forEach(address ->  resultDTO.add(this.mapToDTO.mapObject(address)));
 			return resultDTO;
 		} else {
-			LOGGER.error("[findAll]: Not data -> Address");
+			LOGGER.warn("Find all no data: Address");;
 			throw new NoSuchElementException("Database is empty");
 		}
 	}
@@ -131,9 +131,10 @@ public class AddressServiceImpl implements IAddressService {
 	public boolean deleteById(Long id) {
 		if(this.repocitory.existsById(id)) {
 			this.repocitory.deleteById(id);
-			LOGGER.info("[delete] Address with id " + id);
+			LOGGER.info("Deleted Address with id: " + id);
 			return true;
 		} else {
+			LOGGER.warn("Delete Address not found id: " + id);
 			return false;
 		}
 	}

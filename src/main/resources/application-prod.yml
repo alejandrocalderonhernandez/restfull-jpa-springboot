@@ -1,9 +1,27 @@
+server:
+  port: 0
+  servlet:
+    context-path: /rdb-api
 spring:
   datasource:
     password: Alejandro95
     url: jdbc:postgresql://localhost:5432/eagledb
-    username: postgresql
+    username: postgres
   jpa:
     properties:
       hibernate:
-        default_schema: dev
+        default_schema: prod
+  servlet:
+    multipart:
+      max-file-size: 8MB
+      max-request-size: 8MB
+logging:
+  file: logs/log.log
+  level:
+    com:
+      lankydan:
+        service: debug
+    root: info
+  pattern:
+    file: '%d{dd-MM-yyyy HH:mm:ss.SSS} [%thread] %-5level %logger{36}.%M - %msg%n'
+

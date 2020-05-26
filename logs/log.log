@@ -1,0 +1,207 @@
+26-05-2020 10:35:06.269 [main] INFO  c.e.r.RelationalDbAccessApiApplication.logStarting - Starting RelationalDbAccessApiApplication on alejandroLaptop with PID 12668 (/home/alejandro/Documentos/EagleLogistics/Projects/Backend/relational-db-access-api/target/classes started by alejandro in /home/alejandro/Documentos/EagleLogistics/Projects/Backend/relational-db-access-api)
+26-05-2020 10:35:06.274 [main] INFO  c.e.r.RelationalDbAccessApiApplication.logStartupProfileInfo - The following profiles are active: dev
+26-05-2020 10:35:06.728 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate.registerRepositoriesIn - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+26-05-2020 10:35:06.780 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate.registerRepositoriesIn - Finished Spring Data repository scanning in 45ms. Found 2 JPA repository interfaces.
+26-05-2020 10:35:07.096 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer.initialize - Tomcat initialized with port(s): 9999 (http)
+26-05-2020 10:35:07.102 [main] INFO  o.a.catalina.core.StandardService.log - Starting service [Tomcat]
+26-05-2020 10:35:07.103 [main] INFO  o.a.catalina.core.StandardEngine.log - Starting Servlet engine: [Apache Tomcat/9.0.34]
+26-05-2020 10:35:07.104 [main] INFO  o.a.c.core.AprLifecycleListener.log - An older version [1.2.21] of the APR based Apache Tomcat Native library is installed, while Tomcat recommends a minimum version of [1.2.23]
+26-05-2020 10:35:07.104 [main] INFO  o.a.c.core.AprLifecycleListener.log - Loaded APR based Apache Tomcat Native library [1.2.21] using APR version [1.6.3].
+26-05-2020 10:35:07.104 [main] INFO  o.a.c.core.AprLifecycleListener.log - APR capabilities: IPv6 [true], sendfile [true], accept filters [false], random [true].
+26-05-2020 10:35:07.104 [main] INFO  o.a.c.core.AprLifecycleListener.log - APR/OpenSSL configuration: useAprConnector [false], useOpenSSL [true]
+26-05-2020 10:35:07.106 [main] INFO  o.a.c.core.AprLifecycleListener.log - OpenSSL successfully initialized [OpenSSL 1.1.1  11 Sep 2018]
+26-05-2020 10:35:07.163 [main] INFO  o.a.c.c.C.[.[localhost].[/rdb-api].log - Initializing Spring embedded WebApplicationContext
+26-05-2020 10:35:07.163 [main] INFO  o.s.web.context.ContextLoader.prepareWebApplicationContext - Root WebApplicationContext: initialization completed in 855 ms
+26-05-2020 10:35:07.247 [main] INFO  com.zaxxer.hikari.HikariDataSource.getConnection - HikariPool-1 - Starting...
+26-05-2020 10:35:07.288 [main] INFO  com.zaxxer.hikari.HikariDataSource.getConnection - HikariPool-1 - Start completed.
+26-05-2020 10:35:07.317 [main] INFO  o.h.jpa.internal.util.LogHelper.logPersistenceUnitInformation - HHH000204: Processing PersistenceUnitInfo [name: default]
+26-05-2020 10:35:07.342 [main] INFO  org.hibernate.Version.logVersion - HHH000412: Hibernate ORM core version 5.4.15.Final
+26-05-2020 10:35:07.407 [main] INFO  o.h.annotations.common.Version.<clinit> - HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+26-05-2020 10:35:07.476 [main] INFO  org.hibernate.dialect.Dialect.<init> - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+26-05-2020 10:35:08.015 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator.initiateService - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+26-05-2020 10:35:08.020 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean.buildNativeEntityManagerFactory - Initialized JPA EntityManagerFactory for persistence unit 'default'
+26-05-2020 10:35:08.276 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration.openEntityManagerInViewInterceptor - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+26-05-2020 10:35:08.372 [main] INFO  o.s.s.c.ThreadPoolTaskExecutor.initialize - Initializing ExecutorService 'applicationTaskExecutor'
+26-05-2020 10:35:08.594 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer.start - Tomcat started on port(s): 9999 (http) with context path '/rdb-api'
+26-05-2020 10:35:08.598 [main] INFO  c.e.r.RelationalDbAccessApiApplication.logStarted - Started RelationalDbAccessApiApplication in 2.687 seconds (JVM running for 3.222)
+26-05-2020 10:35:19.627 [RMI TCP Connection(4)-127.0.0.1] INFO  o.s.b.a.SpringApplicationAdminMXBeanRegistrar$SpringApplicationAdmin.shutdown - Application shutdown requested.
+26-05-2020 10:35:19.630 [RMI TCP Connection(4)-127.0.0.1] INFO  o.s.s.c.ThreadPoolTaskExecutor.shutdown - Shutting down ExecutorService 'applicationTaskExecutor'
+26-05-2020 10:35:19.631 [RMI TCP Connection(4)-127.0.0.1] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean.destroy - Closing JPA EntityManagerFactory for persistence unit 'default'
+26-05-2020 10:35:19.634 [RMI TCP Connection(4)-127.0.0.1] INFO  com.zaxxer.hikari.HikariDataSource.close - HikariPool-1 - Shutdown initiated...
+26-05-2020 10:35:19.649 [RMI TCP Connection(4)-127.0.0.1] INFO  com.zaxxer.hikari.HikariDataSource.close - HikariPool-1 - Shutdown completed.
+26-05-2020 10:35:26.473 [main] INFO  c.e.r.RelationalDbAccessApiApplication.logStarting - Starting RelationalDbAccessApiApplication on alejandroLaptop with PID 12748 (/home/alejandro/Documentos/EagleLogistics/Projects/Backend/relational-db-access-api/target/classes started by alejandro in /home/alejandro/Documentos/EagleLogistics/Projects/Backend/relational-db-access-api)
+26-05-2020 10:35:26.477 [main] INFO  c.e.r.RelationalDbAccessApiApplication.logStartupProfileInfo - The following profiles are active: dev
+26-05-2020 10:35:27.038 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate.registerRepositoriesIn - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+26-05-2020 10:35:27.091 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate.registerRepositoriesIn - Finished Spring Data repository scanning in 42ms. Found 2 JPA repository interfaces.
+26-05-2020 10:35:27.448 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer.initialize - Tomcat initialized with port(s): 9999 (http)
+26-05-2020 10:35:27.454 [main] INFO  o.a.catalina.core.StandardService.log - Starting service [Tomcat]
+26-05-2020 10:35:27.454 [main] INFO  o.a.catalina.core.StandardEngine.log - Starting Servlet engine: [Apache Tomcat/9.0.34]
+26-05-2020 10:35:27.455 [main] INFO  o.a.c.core.AprLifecycleListener.log - An older version [1.2.21] of the APR based Apache Tomcat Native library is installed, while Tomcat recommends a minimum version of [1.2.23]
+26-05-2020 10:35:27.456 [main] INFO  o.a.c.core.AprLifecycleListener.log - Loaded APR based Apache Tomcat Native library [1.2.21] using APR version [1.6.3].
+26-05-2020 10:35:27.456 [main] INFO  o.a.c.core.AprLifecycleListener.log - APR capabilities: IPv6 [true], sendfile [true], accept filters [false], random [true].
+26-05-2020 10:35:27.456 [main] INFO  o.a.c.core.AprLifecycleListener.log - APR/OpenSSL configuration: useAprConnector [false], useOpenSSL [true]
+26-05-2020 10:35:27.458 [main] INFO  o.a.c.core.AprLifecycleListener.log - OpenSSL successfully initialized [OpenSSL 1.1.1  11 Sep 2018]
+26-05-2020 10:35:27.526 [main] INFO  o.a.c.c.C.[.[localhost].[/rdb-api].log - Initializing Spring embedded WebApplicationContext
+26-05-2020 10:35:27.527 [main] INFO  o.s.web.context.ContextLoader.prepareWebApplicationContext - Root WebApplicationContext: initialization completed in 993 ms
+26-05-2020 10:35:27.612 [main] INFO  com.zaxxer.hikari.HikariDataSource.getConnection - HikariPool-1 - Starting...
+26-05-2020 10:35:27.662 [main] INFO  com.zaxxer.hikari.HikariDataSource.getConnection - HikariPool-1 - Start completed.
+26-05-2020 10:35:27.692 [main] INFO  o.h.jpa.internal.util.LogHelper.logPersistenceUnitInformation - HHH000204: Processing PersistenceUnitInfo [name: default]
+26-05-2020 10:35:27.723 [main] INFO  org.hibernate.Version.logVersion - HHH000412: Hibernate ORM core version 5.4.15.Final
+26-05-2020 10:35:27.819 [main] INFO  o.h.annotations.common.Version.<clinit> - HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+26-05-2020 10:35:27.945 [main] INFO  org.hibernate.dialect.Dialect.<init> - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+26-05-2020 10:35:28.521 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator.initiateService - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+26-05-2020 10:35:28.528 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean.buildNativeEntityManagerFactory - Initialized JPA EntityManagerFactory for persistence unit 'default'
+26-05-2020 10:35:28.823 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration.openEntityManagerInViewInterceptor - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+26-05-2020 10:35:28.914 [main] INFO  o.s.s.c.ThreadPoolTaskExecutor.initialize - Initializing ExecutorService 'applicationTaskExecutor'
+26-05-2020 10:35:29.106 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer.start - Tomcat started on port(s): 9999 (http) with context path '/rdb-api'
+26-05-2020 10:35:29.109 [main] INFO  c.e.r.RelationalDbAccessApiApplication.logStarted - Started RelationalDbAccessApiApplication in 3.11 seconds (JVM running for 3.69)
+26-05-2020 10:35:35.310 [http-nio-9999-exec-1] INFO  o.a.c.c.C.[.[localhost].[/rdb-api].log - Initializing Spring DispatcherServlet 'dispatcherServlet'
+26-05-2020 10:35:35.311 [http-nio-9999-exec-1] INFO  o.s.web.servlet.DispatcherServlet.initServletBean - Initializing Servlet 'dispatcherServlet'
+26-05-2020 10:35:35.318 [http-nio-9999-exec-1] INFO  o.s.web.servlet.DispatcherServlet.initServletBean - Completed initialization in 7 ms
+26-05-2020 10:35:35.490 [http-nio-9999-exec-1] ERROR c.e.r.s.impl.UserInfoServiceImpl.findById - [findById]: Error to get UserInfo, id -> 90 don´t exist in database
+26-05-2020 10:35:47.642 [RMI TCP Connection(5)-127.0.0.1] INFO  o.s.b.a.SpringApplicationAdminMXBeanRegistrar$SpringApplicationAdmin.shutdown - Application shutdown requested.
+26-05-2020 10:35:47.648 [RMI TCP Connection(5)-127.0.0.1] INFO  o.s.s.c.ThreadPoolTaskExecutor.shutdown - Shutting down ExecutorService 'applicationTaskExecutor'
+26-05-2020 10:35:47.650 [RMI TCP Connection(5)-127.0.0.1] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean.destroy - Closing JPA EntityManagerFactory for persistence unit 'default'
+26-05-2020 10:35:47.654 [RMI TCP Connection(5)-127.0.0.1] INFO  com.zaxxer.hikari.HikariDataSource.close - HikariPool-1 - Shutdown initiated...
+26-05-2020 10:35:47.677 [RMI TCP Connection(5)-127.0.0.1] INFO  com.zaxxer.hikari.HikariDataSource.close - HikariPool-1 - Shutdown completed.
+26-05-2020 11:00:44.934 [main] INFO  c.e.r.RelationalDbAccessApiApplication.logStarting - Starting RelationalDbAccessApiApplication on alejandroLaptop with PID 14076 (/home/alejandro/Documentos/EagleLogistics/Projects/Backend/relational-db-access-api/target/classes started by alejandro in /home/alejandro/Documentos/EagleLogistics/Projects/Backend/relational-db-access-api)
+26-05-2020 11:00:44.936 [main] INFO  c.e.r.RelationalDbAccessApiApplication.logStartupProfileInfo - The following profiles are active: dev
+26-05-2020 11:00:45.389 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate.registerRepositoriesIn - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+26-05-2020 11:00:45.439 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate.registerRepositoriesIn - Finished Spring Data repository scanning in 40ms. Found 2 JPA repository interfaces.
+26-05-2020 11:00:45.802 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer.initialize - Tomcat initialized with port(s): 9999 (http)
+26-05-2020 11:00:45.809 [main] INFO  o.a.catalina.core.StandardService.log - Starting service [Tomcat]
+26-05-2020 11:00:45.810 [main] INFO  o.a.catalina.core.StandardEngine.log - Starting Servlet engine: [Apache Tomcat/9.0.34]
+26-05-2020 11:00:45.811 [main] INFO  o.a.c.core.AprLifecycleListener.log - An older version [1.2.21] of the APR based Apache Tomcat Native library is installed, while Tomcat recommends a minimum version of [1.2.23]
+26-05-2020 11:00:45.812 [main] INFO  o.a.c.core.AprLifecycleListener.log - Loaded APR based Apache Tomcat Native library [1.2.21] using APR version [1.6.3].
+26-05-2020 11:00:45.812 [main] INFO  o.a.c.core.AprLifecycleListener.log - APR capabilities: IPv6 [true], sendfile [true], accept filters [false], random [true].
+26-05-2020 11:00:45.812 [main] INFO  o.a.c.core.AprLifecycleListener.log - APR/OpenSSL configuration: useAprConnector [false], useOpenSSL [true]
+26-05-2020 11:00:45.815 [main] INFO  o.a.c.core.AprLifecycleListener.log - OpenSSL successfully initialized [OpenSSL 1.1.1  11 Sep 2018]
+26-05-2020 11:00:45.918 [main] INFO  o.a.c.c.C.[.[localhost].[/rdb-api].log - Initializing Spring embedded WebApplicationContext
+26-05-2020 11:00:45.918 [main] INFO  o.s.web.context.ContextLoader.prepareWebApplicationContext - Root WebApplicationContext: initialization completed in 951 ms
+26-05-2020 11:00:46.094 [main] INFO  com.zaxxer.hikari.HikariDataSource.getConnection - HikariPool-1 - Starting...
+26-05-2020 11:00:46.172 [main] INFO  com.zaxxer.hikari.HikariDataSource.getConnection - HikariPool-1 - Start completed.
+26-05-2020 11:00:46.200 [main] INFO  o.h.jpa.internal.util.LogHelper.logPersistenceUnitInformation - HHH000204: Processing PersistenceUnitInfo [name: default]
+26-05-2020 11:00:46.234 [main] INFO  org.hibernate.Version.logVersion - HHH000412: Hibernate ORM core version 5.4.15.Final
+26-05-2020 11:00:46.359 [main] INFO  o.h.annotations.common.Version.<clinit> - HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+26-05-2020 11:00:46.414 [main] INFO  org.hibernate.dialect.Dialect.<init> - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+26-05-2020 11:00:46.818 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator.initiateService - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+26-05-2020 11:00:46.823 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean.buildNativeEntityManagerFactory - Initialized JPA EntityManagerFactory for persistence unit 'default'
+26-05-2020 11:00:47.083 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration.openEntityManagerInViewInterceptor - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+26-05-2020 11:00:47.181 [main] INFO  o.s.s.c.ThreadPoolTaskExecutor.initialize - Initializing ExecutorService 'applicationTaskExecutor'
+26-05-2020 11:00:47.373 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer.start - Tomcat started on port(s): 9999 (http) with context path '/rdb-api'
+26-05-2020 11:00:47.375 [main] INFO  c.e.r.RelationalDbAccessApiApplication.logStarted - Started RelationalDbAccessApiApplication in 2.763 seconds (JVM running for 3.326)
+26-05-2020 11:01:16.694 [http-nio-9999-exec-1] INFO  o.a.c.c.C.[.[localhost].[/rdb-api].log - Initializing Spring DispatcherServlet 'dispatcherServlet'
+26-05-2020 11:01:16.695 [http-nio-9999-exec-1] INFO  o.s.web.servlet.DispatcherServlet.initServletBean - Initializing Servlet 'dispatcherServlet'
+26-05-2020 11:01:16.704 [http-nio-9999-exec-1] INFO  o.s.web.servlet.DispatcherServlet.initServletBean - Completed initialization in 9 ms
+26-05-2020 11:01:16.917 [http-nio-9999-exec-1] INFO  c.e.r.s.impl.UserInfoServiceImpl.insert - Inserted UserInfo com.eagle.relationaldbaccessapi.models.dto.UserInfoDTO@3d88ad71 
+26-05-2020 11:01:58.861 [RMI TCP Connection(4)-127.0.0.1] INFO  o.s.b.a.SpringApplicationAdminMXBeanRegistrar$SpringApplicationAdmin.shutdown - Application shutdown requested.
+26-05-2020 11:01:58.874 [RMI TCP Connection(4)-127.0.0.1] INFO  o.s.s.c.ThreadPoolTaskExecutor.shutdown - Shutting down ExecutorService 'applicationTaskExecutor'
+26-05-2020 11:01:58.876 [RMI TCP Connection(4)-127.0.0.1] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean.destroy - Closing JPA EntityManagerFactory for persistence unit 'default'
+26-05-2020 11:01:58.883 [RMI TCP Connection(4)-127.0.0.1] INFO  com.zaxxer.hikari.HikariDataSource.close - HikariPool-1 - Shutdown initiated...
+26-05-2020 11:01:58.913 [RMI TCP Connection(4)-127.0.0.1] INFO  com.zaxxer.hikari.HikariDataSource.close - HikariPool-1 - Shutdown completed.
+26-05-2020 11:02:00.551 [main] INFO  c.e.r.RelationalDbAccessApiApplication.logStarting - Starting RelationalDbAccessApiApplication on alejandroLaptop with PID 14205 (/home/alejandro/Documentos/EagleLogistics/Projects/Backend/relational-db-access-api/target/classes started by alejandro in /home/alejandro/Documentos/EagleLogistics/Projects/Backend/relational-db-access-api)
+26-05-2020 11:02:00.555 [main] INFO  c.e.r.RelationalDbAccessApiApplication.logStartupProfileInfo - The following profiles are active: dev
+26-05-2020 11:02:01.131 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate.registerRepositoriesIn - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+26-05-2020 11:02:01.214 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate.registerRepositoriesIn - Finished Spring Data repository scanning in 67ms. Found 2 JPA repository interfaces.
+26-05-2020 11:02:01.758 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer.initialize - Tomcat initialized with port(s): 9999 (http)
+26-05-2020 11:02:01.765 [main] INFO  o.a.catalina.core.StandardService.log - Starting service [Tomcat]
+26-05-2020 11:02:01.766 [main] INFO  o.a.catalina.core.StandardEngine.log - Starting Servlet engine: [Apache Tomcat/9.0.34]
+26-05-2020 11:02:01.767 [main] INFO  o.a.c.core.AprLifecycleListener.log - An older version [1.2.21] of the APR based Apache Tomcat Native library is installed, while Tomcat recommends a minimum version of [1.2.23]
+26-05-2020 11:02:01.770 [main] INFO  o.a.c.core.AprLifecycleListener.log - Loaded APR based Apache Tomcat Native library [1.2.21] using APR version [1.6.3].
+26-05-2020 11:02:01.771 [main] INFO  o.a.c.core.AprLifecycleListener.log - APR capabilities: IPv6 [true], sendfile [true], accept filters [false], random [true].
+26-05-2020 11:02:01.772 [main] INFO  o.a.c.core.AprLifecycleListener.log - APR/OpenSSL configuration: useAprConnector [false], useOpenSSL [true]
+26-05-2020 11:02:01.776 [main] INFO  o.a.c.core.AprLifecycleListener.log - OpenSSL successfully initialized [OpenSSL 1.1.1  11 Sep 2018]
+26-05-2020 11:02:01.881 [main] INFO  o.a.c.c.C.[.[localhost].[/rdb-api].log - Initializing Spring embedded WebApplicationContext
+26-05-2020 11:02:01.882 [main] INFO  o.s.web.context.ContextLoader.prepareWebApplicationContext - Root WebApplicationContext: initialization completed in 1295 ms
+26-05-2020 11:02:02.012 [main] INFO  com.zaxxer.hikari.HikariDataSource.getConnection - HikariPool-1 - Starting...
+26-05-2020 11:02:02.084 [main] INFO  com.zaxxer.hikari.HikariDataSource.getConnection - HikariPool-1 - Start completed.
+26-05-2020 11:02:02.135 [main] INFO  o.h.jpa.internal.util.LogHelper.logPersistenceUnitInformation - HHH000204: Processing PersistenceUnitInfo [name: default]
+26-05-2020 11:02:02.180 [main] INFO  org.hibernate.Version.logVersion - HHH000412: Hibernate ORM core version 5.4.15.Final
+26-05-2020 11:02:02.333 [main] INFO  o.h.annotations.common.Version.<clinit> - HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+26-05-2020 11:02:02.446 [main] INFO  org.hibernate.dialect.Dialect.<init> - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+26-05-2020 11:02:03.068 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator.initiateService - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+26-05-2020 11:02:03.078 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean.buildNativeEntityManagerFactory - Initialized JPA EntityManagerFactory for persistence unit 'default'
+26-05-2020 11:02:03.426 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration.openEntityManagerInViewInterceptor - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+26-05-2020 11:02:03.519 [main] INFO  o.s.s.c.ThreadPoolTaskExecutor.initialize - Initializing ExecutorService 'applicationTaskExecutor'
+26-05-2020 11:02:03.761 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer.start - Tomcat started on port(s): 9999 (http) with context path '/rdb-api'
+26-05-2020 11:02:03.764 [main] INFO  c.e.r.RelationalDbAccessApiApplication.logStarted - Started RelationalDbAccessApiApplication in 3.51 seconds (JVM running for 3.95)
+26-05-2020 11:02:10.132 [http-nio-9999-exec-2] INFO  o.a.c.c.C.[.[localhost].[/rdb-api].log - Initializing Spring DispatcherServlet 'dispatcherServlet'
+26-05-2020 11:02:10.132 [http-nio-9999-exec-2] INFO  o.s.web.servlet.DispatcherServlet.initServletBean - Initializing Servlet 'dispatcherServlet'
+26-05-2020 11:02:10.139 [http-nio-9999-exec-2] INFO  o.s.web.servlet.DispatcherServlet.initServletBean - Completed initialization in 7 ms
+26-05-2020 11:02:10.317 [http-nio-9999-exec-2] INFO  c.e.r.s.impl.UserInfoServiceImpl.insert - Inserted UserInfo UserInfoDTO [id=null, name1=ne2w, name2=ne2w, lastName1=Perez, lastName2=Hernandez, curp=V1o2k3u4ss3, photoUrl=null, createAt=null, age=35, status=null] 
+26-05-2020 11:02:33.946 [RMI TCP Connection(5)-127.0.0.1] INFO  o.s.b.a.SpringApplicationAdminMXBeanRegistrar$SpringApplicationAdmin.shutdown - Application shutdown requested.
+26-05-2020 11:02:33.950 [RMI TCP Connection(5)-127.0.0.1] INFO  o.s.s.c.ThreadPoolTaskExecutor.shutdown - Shutting down ExecutorService 'applicationTaskExecutor'
+26-05-2020 11:02:33.952 [RMI TCP Connection(5)-127.0.0.1] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean.destroy - Closing JPA EntityManagerFactory for persistence unit 'default'
+26-05-2020 11:02:33.956 [RMI TCP Connection(5)-127.0.0.1] INFO  com.zaxxer.hikari.HikariDataSource.close - HikariPool-1 - Shutdown initiated...
+26-05-2020 11:02:33.982 [RMI TCP Connection(5)-127.0.0.1] INFO  com.zaxxer.hikari.HikariDataSource.close - HikariPool-1 - Shutdown completed.
+26-05-2020 11:02:35.898 [main] INFO  c.e.r.RelationalDbAccessApiApplication.logStarting - Starting RelationalDbAccessApiApplication on alejandroLaptop with PID 14307 (/home/alejandro/Documentos/EagleLogistics/Projects/Backend/relational-db-access-api/target/classes started by alejandro in /home/alejandro/Documentos/EagleLogistics/Projects/Backend/relational-db-access-api)
+26-05-2020 11:02:35.899 [main] INFO  c.e.r.RelationalDbAccessApiApplication.logStartupProfileInfo - The following profiles are active: dev
+26-05-2020 11:02:36.612 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate.registerRepositoriesIn - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+26-05-2020 11:02:36.699 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate.registerRepositoriesIn - Finished Spring Data repository scanning in 79ms. Found 2 JPA repository interfaces.
+26-05-2020 11:02:37.240 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer.initialize - Tomcat initialized with port(s): 9999 (http)
+26-05-2020 11:02:37.248 [main] INFO  o.a.catalina.core.StandardService.log - Starting service [Tomcat]
+26-05-2020 11:02:37.248 [main] INFO  o.a.catalina.core.StandardEngine.log - Starting Servlet engine: [Apache Tomcat/9.0.34]
+26-05-2020 11:02:37.249 [main] INFO  o.a.c.core.AprLifecycleListener.log - An older version [1.2.21] of the APR based Apache Tomcat Native library is installed, while Tomcat recommends a minimum version of [1.2.23]
+26-05-2020 11:02:37.249 [main] INFO  o.a.c.core.AprLifecycleListener.log - Loaded APR based Apache Tomcat Native library [1.2.21] using APR version [1.6.3].
+26-05-2020 11:02:37.250 [main] INFO  o.a.c.core.AprLifecycleListener.log - APR capabilities: IPv6 [true], sendfile [true], accept filters [false], random [true].
+26-05-2020 11:02:37.250 [main] INFO  o.a.c.core.AprLifecycleListener.log - APR/OpenSSL configuration: useAprConnector [false], useOpenSSL [true]
+26-05-2020 11:02:37.252 [main] INFO  o.a.c.core.AprLifecycleListener.log - OpenSSL successfully initialized [OpenSSL 1.1.1  11 Sep 2018]
+26-05-2020 11:02:37.321 [main] INFO  o.a.c.c.C.[.[localhost].[/rdb-api].log - Initializing Spring embedded WebApplicationContext
+26-05-2020 11:02:37.322 [main] INFO  o.s.web.context.ContextLoader.prepareWebApplicationContext - Root WebApplicationContext: initialization completed in 1381 ms
+26-05-2020 11:02:37.422 [main] INFO  com.zaxxer.hikari.HikariDataSource.getConnection - HikariPool-1 - Starting...
+26-05-2020 11:02:37.478 [main] INFO  com.zaxxer.hikari.HikariDataSource.getConnection - HikariPool-1 - Start completed.
+26-05-2020 11:02:37.516 [main] INFO  o.h.jpa.internal.util.LogHelper.logPersistenceUnitInformation - HHH000204: Processing PersistenceUnitInfo [name: default]
+26-05-2020 11:02:37.548 [main] INFO  org.hibernate.Version.logVersion - HHH000412: Hibernate ORM core version 5.4.15.Final
+26-05-2020 11:02:37.648 [main] INFO  o.h.annotations.common.Version.<clinit> - HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+26-05-2020 11:02:37.704 [main] INFO  org.hibernate.dialect.Dialect.<init> - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+26-05-2020 11:02:38.073 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator.initiateService - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+26-05-2020 11:02:38.078 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean.buildNativeEntityManagerFactory - Initialized JPA EntityManagerFactory for persistence unit 'default'
+26-05-2020 11:02:38.319 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration.openEntityManagerInViewInterceptor - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+26-05-2020 11:02:38.416 [main] INFO  o.s.s.c.ThreadPoolTaskExecutor.initialize - Initializing ExecutorService 'applicationTaskExecutor'
+26-05-2020 11:02:38.595 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer.start - Tomcat started on port(s): 9999 (http) with context path '/rdb-api'
+26-05-2020 11:02:38.600 [main] INFO  c.e.r.RelationalDbAccessApiApplication.logStarted - Started RelationalDbAccessApiApplication in 3.102 seconds (JVM running for 3.693)
+26-05-2020 11:02:41.572 [http-nio-9999-exec-1] INFO  o.a.c.c.C.[.[localhost].[/rdb-api].log - Initializing Spring DispatcherServlet 'dispatcherServlet'
+26-05-2020 11:02:41.575 [http-nio-9999-exec-1] INFO  o.s.web.servlet.DispatcherServlet.initServletBean - Initializing Servlet 'dispatcherServlet'
+26-05-2020 11:02:41.587 [http-nio-9999-exec-1] INFO  o.s.web.servlet.DispatcherServlet.initServletBean - Completed initialization in 10 ms
+26-05-2020 11:02:41.837 [http-nio-9999-exec-1] INFO  c.e.r.s.impl.UserInfoServiceImpl.insert - Inserted UserInfo
+26-05-2020 11:03:20.032 [http-nio-9999-exec-3] INFO  c.e.r.s.impl.UserInfoServiceImpl.insert - Inserted UserInfo
+26-05-2020 11:03:36.123 [RMI TCP Connection(6)-127.0.0.1] INFO  o.s.b.a.SpringApplicationAdminMXBeanRegistrar$SpringApplicationAdmin.shutdown - Application shutdown requested.
+26-05-2020 11:03:36.127 [RMI TCP Connection(6)-127.0.0.1] INFO  o.s.s.c.ThreadPoolTaskExecutor.shutdown - Shutting down ExecutorService 'applicationTaskExecutor'
+26-05-2020 11:03:36.129 [RMI TCP Connection(6)-127.0.0.1] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean.destroy - Closing JPA EntityManagerFactory for persistence unit 'default'
+26-05-2020 11:03:36.131 [RMI TCP Connection(6)-127.0.0.1] INFO  com.zaxxer.hikari.HikariDataSource.close - HikariPool-1 - Shutdown initiated...
+26-05-2020 11:03:36.150 [RMI TCP Connection(6)-127.0.0.1] INFO  com.zaxxer.hikari.HikariDataSource.close - HikariPool-1 - Shutdown completed.
+26-05-2020 11:03:38.083 [main] INFO  c.e.r.RelationalDbAccessApiApplication.logStarting - Starting RelationalDbAccessApiApplication on alejandroLaptop with PID 14440 (/home/alejandro/Documentos/EagleLogistics/Projects/Backend/relational-db-access-api/target/classes started by alejandro in /home/alejandro/Documentos/EagleLogistics/Projects/Backend/relational-db-access-api)
+26-05-2020 11:03:38.085 [main] INFO  c.e.r.RelationalDbAccessApiApplication.logStartupProfileInfo - The following profiles are active: dev
+26-05-2020 11:03:38.751 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate.registerRepositoriesIn - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+26-05-2020 11:03:38.831 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate.registerRepositoriesIn - Finished Spring Data repository scanning in 68ms. Found 2 JPA repository interfaces.
+26-05-2020 11:03:39.333 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer.initialize - Tomcat initialized with port(s): 9999 (http)
+26-05-2020 11:03:39.339 [main] INFO  o.a.catalina.core.StandardService.log - Starting service [Tomcat]
+26-05-2020 11:03:39.340 [main] INFO  o.a.catalina.core.StandardEngine.log - Starting Servlet engine: [Apache Tomcat/9.0.34]
+26-05-2020 11:03:39.341 [main] INFO  o.a.c.core.AprLifecycleListener.log - An older version [1.2.21] of the APR based Apache Tomcat Native library is installed, while Tomcat recommends a minimum version of [1.2.23]
+26-05-2020 11:03:39.341 [main] INFO  o.a.c.core.AprLifecycleListener.log - Loaded APR based Apache Tomcat Native library [1.2.21] using APR version [1.6.3].
+26-05-2020 11:03:39.341 [main] INFO  o.a.c.core.AprLifecycleListener.log - APR capabilities: IPv6 [true], sendfile [true], accept filters [false], random [true].
+26-05-2020 11:03:39.341 [main] INFO  o.a.c.core.AprLifecycleListener.log - APR/OpenSSL configuration: useAprConnector [false], useOpenSSL [true]
+26-05-2020 11:03:39.344 [main] INFO  o.a.c.core.AprLifecycleListener.log - OpenSSL successfully initialized [OpenSSL 1.1.1  11 Sep 2018]
+26-05-2020 11:03:39.401 [main] INFO  o.a.c.c.C.[.[localhost].[/rdb-api].log - Initializing Spring embedded WebApplicationContext
+26-05-2020 11:03:39.402 [main] INFO  o.s.web.context.ContextLoader.prepareWebApplicationContext - Root WebApplicationContext: initialization completed in 1281 ms
+26-05-2020 11:03:39.491 [main] INFO  com.zaxxer.hikari.HikariDataSource.getConnection - HikariPool-1 - Starting...
+26-05-2020 11:03:39.559 [main] INFO  com.zaxxer.hikari.HikariDataSource.getConnection - HikariPool-1 - Start completed.
+26-05-2020 11:03:39.600 [main] INFO  o.h.jpa.internal.util.LogHelper.logPersistenceUnitInformation - HHH000204: Processing PersistenceUnitInfo [name: default]
+26-05-2020 11:03:39.642 [main] INFO  org.hibernate.Version.logVersion - HHH000412: Hibernate ORM core version 5.4.15.Final
+26-05-2020 11:03:39.744 [main] INFO  o.h.annotations.common.Version.<clinit> - HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+26-05-2020 11:03:39.815 [main] INFO  org.hibernate.dialect.Dialect.<init> - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+26-05-2020 11:03:40.213 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator.initiateService - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+26-05-2020 11:03:40.218 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean.buildNativeEntityManagerFactory - Initialized JPA EntityManagerFactory for persistence unit 'default'
+26-05-2020 11:03:40.453 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration.openEntityManagerInViewInterceptor - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+26-05-2020 11:03:40.547 [main] INFO  o.s.s.c.ThreadPoolTaskExecutor.initialize - Initializing ExecutorService 'applicationTaskExecutor'
+26-05-2020 11:03:40.780 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer.start - Tomcat started on port(s): 9999 (http) with context path '/rdb-api'
+26-05-2020 11:03:40.782 [main] INFO  c.e.r.RelationalDbAccessApiApplication.logStarted - Started RelationalDbAccessApiApplication in 3.114 seconds (JVM running for 3.762)
+26-05-2020 11:05:40.725 [http-nio-9999-exec-2] INFO  o.a.c.c.C.[.[localhost].[/rdb-api].log - Initializing Spring DispatcherServlet 'dispatcherServlet'
+26-05-2020 11:05:40.726 [http-nio-9999-exec-2] INFO  o.s.web.servlet.DispatcherServlet.initServletBean - Initializing Servlet 'dispatcherServlet'
+26-05-2020 11:05:40.739 [http-nio-9999-exec-2] INFO  o.s.web.servlet.DispatcherServlet.initServletBean - Completed initialization in 13 ms
+26-05-2020 11:05:40.938 [http-nio-9999-exec-2] INFO  c.e.r.s.impl.UserInfoServiceImpl.insert - Inserted UserInfo UserInfoDTO [id=null, name1=ne2w, name2=ne2w, lastName1=Perez, lastName2=Hernandez, curp=V1o2k3u4ss3, photoUrl=null, createAt=null, age=35, status=null] 
+26-05-2020 11:34:12.778 [RMI TCP Connection(9)-127.0.0.1] INFO  o.s.b.a.SpringApplicationAdminMXBeanRegistrar$SpringApplicationAdmin.shutdown - Application shutdown requested.
+26-05-2020 11:34:12.781 [RMI TCP Connection(9)-127.0.0.1] INFO  o.s.s.c.ThreadPoolTaskExecutor.shutdown - Shutting down ExecutorService 'applicationTaskExecutor'
+26-05-2020 11:34:12.782 [RMI TCP Connection(9)-127.0.0.1] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean.destroy - Closing JPA EntityManagerFactory for persistence unit 'default'
+26-05-2020 11:34:12.785 [RMI TCP Connection(9)-127.0.0.1] INFO  com.zaxxer.hikari.HikariDataSource.close - HikariPool-1 - Shutdown initiated...
+26-05-2020 11:34:12.801 [RMI TCP Connection(9)-127.0.0.1] INFO  com.zaxxer.hikari.HikariDataSource.close - HikariPool-1 - Shutdown completed.
