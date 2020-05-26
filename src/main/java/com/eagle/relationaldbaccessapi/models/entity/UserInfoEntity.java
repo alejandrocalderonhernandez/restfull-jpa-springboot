@@ -32,9 +32,9 @@ public class UserInfoEntity implements Serializable{
 	private String curp;
 	@Column(name = "photo", length = 100, nullable = true)
 	private String photoUrl;
-	@Column(name = "created_at" )
+	@Column(name = "created_at", nullable = false)
 	private LocalDateTime createAt;
-	@Column(name = "years_age" )
+	@Column(name = "years_age", nullable = true)
 	private Short age;
 	@Column(name = "status", nullable = false)
 	private Boolean status;
@@ -45,7 +45,6 @@ public class UserInfoEntity implements Serializable{
 	public Long getId() {
 		return id;
 	}
-
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -120,5 +119,60 @@ public class UserInfoEntity implements Serializable{
 
 	public void setStatus(Boolean status) {
 		this.status = status;
+	}
+	
+	public static class Builder {
+		
+		private UserInfoEntity userInfoEntity;
+		
+		public Builder() {
+			this.userInfoEntity = new UserInfoEntity();
+			this.userInfoEntity.setStatus(true);
+			this.userInfoEntity.setCreateAt(LocalDateTime.now());
+		}
+		
+		public Builder addId(Long id) {
+			this.userInfoEntity.setId(id);
+			return this;
+		}
+		
+		public Builder addName1(String name1) {
+			this.userInfoEntity.setName1(name1);
+			return this;
+		}
+		
+		public Builder addName2(String name2) {
+			this.userInfoEntity.setName2(name2);
+			return this;
+		}
+		
+		public Builder addLastName1(String lastName1) {
+			this.userInfoEntity.setLastName1(lastName1);
+			return this;
+		}
+		
+		public Builder addLastName2(String lastName2) {
+			this.userInfoEntity.setLastName2(lastName2);
+			return this;
+		}
+		
+		public Builder addCurp(String curp) {
+			this.userInfoEntity.setCurp(curp);
+			return this;
+		}
+		
+		public Builder addPhotoUrl(String photoUrl) {
+			this.userInfoEntity.setPhotoUrl(photoUrl);
+			return this;
+		}
+		
+		public Builder addAge(Short age) {
+			this.userInfoEntity.setAge(age);
+			return this;
+		}
+		
+		public UserInfoEntity build() {
+			return this.userInfoEntity;
+		}
 	}
 }

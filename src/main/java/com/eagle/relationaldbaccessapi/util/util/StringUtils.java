@@ -1,0 +1,42 @@
+package com.eagle.relationaldbaccessapi.util.util;
+
+import java.util.Random;
+
+import com.eagle.relationaldbaccessapi.util.constants.FileConstants;
+
+public class StringUtils {
+	
+	private StringUtils() {
+	}
+
+	private static final int CHARACTER_TYPES = 3;
+	private static final int LOWER = 1;
+	private static final int UPPER = 2; 
+	private static final int ASCII_START_LOWER = 97;
+	private static final int ASCII_START_UPPER = 65;
+	private static final int ASCII_START_NUMBERS = 48;
+	private static final int TOTAL_NUMBERS = 10;
+	private static final int TOTAL_LETTERS = 26;
+	
+	   public static String generateRandomId(int lengId){
+	        StringBuilder sb = new StringBuilder(FileConstants.ID_REFERENCE);
+	        Random random = new Random();
+	        for (int i=0; i<lengId; i++){
+	        	int selectCharType = random.nextInt(CHARACTER_TYPES);
+	        	switch(selectCharType) {
+	        	case LOWER : 
+	        		char lower = (char) (ASCII_START_LOWER + random.nextInt( TOTAL_LETTERS));
+	        		sb.append(lower);
+	        		break;
+	        	case UPPER :
+	        		char upper = (char) (ASCII_START_UPPER + random.nextInt((TOTAL_LETTERS)));
+	          		sb.append(upper);
+	        		break;
+	        	default :
+	        		char number =  (char) (ASCII_START_NUMBERS + random.nextInt((TOTAL_NUMBERS)));
+	        		sb.append(number);
+	        	}
+	        }
+	        return sb.toString();
+	    }
+}

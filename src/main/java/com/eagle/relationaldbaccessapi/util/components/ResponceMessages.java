@@ -59,6 +59,12 @@ public class ResponceMessages {
 		return responce;
 	}
 	
+	public Map<String, Object> messageUpdated() {
+		Map<String, Object> responce = new HashMap<>();
+		responce.put(MESSAGE,  "Updated");
+		return responce;
+	}
+	
 	public Map<String, Object> messageCreated(Object o) {
 		Map<String, Object> responce = new HashMap<>();
 		responce.put(MESSAGE,  "Created");

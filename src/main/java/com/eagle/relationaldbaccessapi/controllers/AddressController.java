@@ -19,7 +19,6 @@ import com.eagle.relationaldbaccessapi.util.components.ResponceMessages;
 
 import static com.eagle.relationaldbaccessapi.util.constants.RestConstants.*;
 
-import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -51,17 +50,15 @@ public class AddressController {
 	@PutMapping(path = REST_UPDATE,  consumes=MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> update(@RequestBody AddressDTO address, @PathVariable Long id) {
 		try {
-			if(this.service.existById(id)) {
-				Map<String, Object> responce = this.messages.messageUpdated(this.service.update(address, id));
-				return new ResponseEntity<Map<String, Object>>(responce, HttpStatus.OK);
-			} else {
-				Map<String, Object> responce = this.messages.messsageModelNotFound(id, MODEL_NAME);
-				return new ResponseEntity<Map<String, Object>>(responce, HttpStatus.BAD_REQUEST);
-			}
+			Map<String, Object> responce = this.messages.messageUpdated(this.service.update(address, id));
+			return new ResponseEntity<Map<String, Object>>(responce, HttpStatus.OK);
+		} catch (IllegalArgumentException ie) {
+			Map<String, Object> responce = this.messages.messsageModelNotFound(id, MODEL_NAME);
+			return new ResponseEntity<Map<String, Object>>(responce, HttpStatus.BAD_REQUEST);
 		} catch (Exception e) {
 			Map<String, Object> responce = this.messages.messsageGenericError(e.getMessage());
 			return new ResponseEntity<Map<String, Object>>(responce, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
+		} 
 	}
 	
 	@GetMapping(path = REST_FIND_BY_ID, produces = MediaType.APPLICATION_JSON_VALUE )
@@ -78,15 +75,12 @@ public class AddressController {
 	@GetMapping(path = REST_FIND_ALL, produces = MediaType.APPLICATION_JSON_VALUE )
 	public ResponseEntity<?> findAll() {
 		try {
-			List<AddressDTO> listResponce = this.service.findAll();
-			if(listResponce.isEmpty()) {
-				Map<String, Object> responce = this.messages.messageNoData();
-				return new ResponseEntity<Map<String, Object>>(responce, HttpStatus.OK);
-			} else {
-				Map<String, Object> responce = this.messages.messageSuccess(listResponce);
-				return new ResponseEntity<Map<String, Object>>(responce, HttpStatus.OK);
-			}
-		} catch (Exception e) {
+            Map<String, Object> responce = this.messages.messageSuccess(this.service.findAll());
+     		return new ResponseEntity<Map<String, Object>>(responce, HttpStatus.OK);
+		} catch (IllegalArgumentException ie) {
+			Map<String, Object> responce = this.messages.messageNoData();
+			return new ResponseEntity<Map<String, Object>>(responce, HttpStatus.NO_CONTENT);
+		}catch (Exception e) {
 			Map<String, Object> responce = this.messages.messsageGenericError(e.getMessage());
 			return new ResponseEntity<Map<String, Object>>(responce, HttpStatus.INTERNAL_SERVER_ERROR);
 		}

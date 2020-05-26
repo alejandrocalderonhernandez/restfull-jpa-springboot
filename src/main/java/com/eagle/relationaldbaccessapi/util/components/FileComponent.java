@@ -5,13 +5,13 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.stream.Stream;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
+
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 
@@ -33,10 +33,10 @@ public class FileComponent {
 	public boolean saveFile(Path path, MultipartFile file) {
 		try {
 			Files.copy(file.getInputStream(), path);
-			LOGGER.info("SUCCESS -> New file added: " + file.getOriginalFilename() );
+			LOGGER.info("new file added: " + file.getOriginalFilename() );
 			return true;
 		} catch (IOException e) {
-			LOGGER.error("ERROR TO LOAD FILE-> " + e.getMessage());
+			LOGGER.error("can't save file> " + e.getMessage());
 			return false;
 		}
 	}
@@ -45,22 +45,24 @@ public class FileComponent {
 		try {
 			return new UrlResource(path.toUri());
 		} catch (IOException e) {
-			LOGGER.error("ERROR  TO GET FILE -> " + e.getMessage());
+			LOGGER.error("can't get file -> " + e.getMessage());
 			return null;
 		}
 	}
 	
-	public boolean deleteFile(String name, String path) {
-		File file = Paths.get(path).resolve(name).toFile();
+	public boolean deleteFile(File file) {
 		if(file.exists() && file.canRead()) {
 			if(file.delete()) {
-				LOGGER.info("SUCCESS ->  file with name " + name + " deleted" );
+				LOGGER.info("file deleted" );
 				return true;
 			} else {
-				LOGGER.error("ERROR ->  Cant delete file with name " + name  );
+				LOGGER.error("can't delete file");
 				return false;
 			}
+		} else {
+			LOGGER.error("can't read file");
+			throw new IllegalArgumentException();
 		}
-		throw new IllegalArgumentException();
 	}
+	
 }

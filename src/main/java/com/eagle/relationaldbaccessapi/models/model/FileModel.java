@@ -1,13 +1,14 @@
 package com.eagle.relationaldbaccessapi.models.model;
 
+import java.io.File;
 import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.UUID;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import com.eagle.relationaldbaccessapi.util.constants.AppRegexConstants;
+import com.eagle.relationaldbaccessapi.util.constants.FileConstants;
 import com.eagle.relationaldbaccessapi.util.constants.PathsConstants;
+import com.eagle.relationaldbaccessapi.util.constants.RegexConstants;
+import com.eagle.relationaldbaccessapi.util.util.StringUtils;
 
 public class FileModel {
 	
@@ -15,14 +16,26 @@ public class FileModel {
 	private String name;
 	private String extension;
 	private Path path;
+	File file;
 	private MultipartFile multipartFile;
+	
+	private static final int URI_POSITION = 0;
+	private static final int NAME_POSITION = 1;
 	
 	public FileModel(MultipartFile multipartFile) {
 		this.name = multipartFile.getOriginalFilename();
 		this.extension = this.getExtension(multipartFile.getOriginalFilename());
-		this.fullName = UUID.randomUUID().toString() + multipartFile.getOriginalFilename();
-		this.path = Path.of(PathsConstants.USER_IMG).resolve(this.fullName).toAbsolutePath();;
+		this.fullName = StringUtils.generateRandomId(FileConstants.LENGTH_ID_IMG) + multipartFile.getOriginalFilename();
+		this.path = Path.of(PathsConstants.USER_IMG).resolve(this.fullName).toAbsolutePath();
 		this.multipartFile = multipartFile;
+	}
+	
+	public FileModel(String url) {
+		String[] segmentUrl = url.split(RegexConstants.ID_REFERENCE);
+		this.name = FileConstants.ID_REFERENCE + segmentUrl[NAME_POSITION];
+		this.extension = this.getExtension(segmentUrl[NAME_POSITION]);
+		this.fullName = url;
+		this.file = Path.of(segmentUrl[URI_POSITION]).resolve(this.name).toFile();
 	}
 	
 	public String getFullName() {
@@ -65,9 +78,17 @@ public class FileModel {
 		this.multipartFile = multipartFile;
 	}
 
+	public File getFile() {
+		return file;
+	}
+
+	public void setFile(File file) {
+		this.file = file;
+	}
+
 	private String getExtension(String name) {
 		if(name.contains(".")) {
-			return name.split(AppRegexConstants.FILE_EXTENSION)[1];
+			return name.split(RegexConstants.FILE_EXTENSION)[1];
 		} else {
 		 return null;
 		}

@@ -22,7 +22,7 @@ public class AddressServiceImpl implements IAddressService {
 	
     private static final Logger LOGGER = LogManager.getLogger(AddressServiceImpl.class);
     
-	 private IMapper<AddressEntity, AddressDTO> mapToEntity  = (addressDto) -> {
+	 private IMapper<AddressEntity, AddressDTO> mapToEntity  = addressDto -> {
 			return new AddressEntity.Builder()
 					.addId(addressDto.getId())
 					.addColony(addressDto.getColony())
@@ -36,7 +36,7 @@ public class AddressServiceImpl implements IAddressService {
 					.build();
 	 	};
 	 	
-		private IMapper<AddressDTO, AddressEntity> mapToDTO  = (addressEntity) -> {
+		private IMapper<AddressDTO, AddressEntity> mapToDTO  = addressEntity -> {
 				return new AddressDTO.Builder()
 						.addId(addressEntity.getId())
 						.addColony(addressEntity.getColony())
@@ -72,10 +72,11 @@ public class AddressServiceImpl implements IAddressService {
 	@Transactional
 	public AddressDTO insert(AddressDTO dto) {
 		AddressEntity addressToInsert = this.mapToEntity.mapObject(dto);
+		LOGGER.info("[insert] inserted UserInfo new Address");
 		try {
 			this.repocitory.save(addressToInsert);
 		} catch (Exception e) {
-			LOGGER.error("Error to insert address", e);
+			LOGGER.error("[insert] Error to insert Address -> ", e);
 		}
 		return dto;
 	}
@@ -88,14 +89,15 @@ public class AddressServiceImpl implements IAddressService {
 				AddressEntity addresToUpdate = this.repocitory.findById(id).get();
 				updateEntity.update(dto, addresToUpdate);
 				this.repocitory.save(addresToUpdate);
-				return dto;
+				LOGGER.info("[update] updated Address with id " + id);
+				return this.mapToDTO.mapObject(addresToUpdate);
 			} catch (Exception e) {
-				LOGGER.error("[update] Error to update address, exeption -> " + e.getMessage());
+				LOGGER.error("[update] Error to update Address, exeption -> " + e.getMessage());
 				return dto;
 			}
 		} else {
-			LOGGER.error("[update] Error to update address, id -> " + id+ " don´t exist on database");
-			throw new IllegalArgumentException("The addres id -> " + id + " don´t exist");
+			LOGGER.error("[update] Error to update Address, id -> " + id+ " don´t exist on database");
+			throw new IllegalArgumentException("The Addres id -> " + id + " don´t exist");
 		}
 	}
 
@@ -119,8 +121,8 @@ public class AddressServiceImpl implements IAddressService {
 			resultEntity.forEach(address ->  resultDTO.add(this.mapToDTO.mapObject(address)));
 			return resultDTO;
 		} else {
-			LOGGER.error("[findAll]: Not data in database");
-			throw new NoSuchElementException("Not data in database");
+			LOGGER.error("[findAll]: Not data -> Address");
+			throw new NoSuchElementException("Database is empty");
 		}
 	}
 
@@ -129,6 +131,7 @@ public class AddressServiceImpl implements IAddressService {
 	public boolean deleteById(Long id) {
 		if(this.repocitory.existsById(id)) {
 			this.repocitory.deleteById(id);
+			LOGGER.info("[delete] Address with id " + id);
 			return true;
 		} else {
 			return false;
@@ -136,6 +139,7 @@ public class AddressServiceImpl implements IAddressService {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public boolean existById(Long id) {
 		return this.repocitory.existsById(id);
 	}
