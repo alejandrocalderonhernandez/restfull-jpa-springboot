@@ -3,21 +3,49 @@ package com.eagle.relationaldbaccessapi.models.dto;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import com.eagle.relationaldbaccessapi.models.entity.AddressEntity;
+
 public class AddressDTO implements Serializable {
 	
 	private static final long serialVersionUID = 4055365928482918390L;
 	
 	private Long id;
+	@NotNull
+	@Size(min = 1, max = 30)
 	private String street;
+	@NotNull
+	@Size(min = 3, max = 30)
 	private String colony;
+	@Size(min = 3, max = 30)
 	private String townHall;
+	@NotNull
+	@Size(min = 3, max = 30)
 	private String estate;
 	private Integer externalNumber;
 	private Integer internalNumber;
 	private BigDecimal lat;
 	private BigDecimal lon;
+	private EmployeeDTO employee;
 	
 	public AddressDTO() {
+	}
+
+	public AddressDTO(AddressEntity address) {
+		 this.setId(address.getId());
+		 this.setStreet(address.getStreet());
+		 this.setColony(address.getColony());
+		 this.setTownHall(address.getTownHall());
+		 this.setEstate(address.getEstate());
+		 this.setInternalNumber(address.getInternalNumber());
+		 this.setExternalNumber(address.getExternalNumber());
+		 this.setLat(address.getLat());
+		 this.setLon(address.getLon());
+	    if (address.getEmployee() != null) {
+	   		this.setEmployee(new EmployeeDTO(address.getEmployee()));
+	   	}
 	}
 
 	public Long getId() {
@@ -91,62 +119,13 @@ public class AddressDTO implements Serializable {
 	public void setLon(BigDecimal lon) {
 		this.lon = lon;
 	}
-	
-	public static class Builder {
-		
-		private AddressDTO addressDTO;
-		
-		public Builder() {
-			this.addressDTO = new AddressDTO();
-		}
-		
-		public Builder addId(Long id) {
-			this.addressDTO.setId(id);
-			return this;
-		}
-		
-		public Builder addStreet(String street) {
-			this.addressDTO.setStreet(street);
-			return this;
-		}
-		
-		public Builder addColony(String colony) {
-			this.addressDTO.setColony(colony);
-			return this;
-		}
-		
-		public Builder addTownHall(String townHall) {
-			this.addressDTO.setTownHall(townHall);;
-			return this;
-		}
-		
-		public Builder addEstate(String estate) {
-			this.addressDTO.setEstate(estate);
-			return this;
-		}
-		
-		public Builder addInternalNumber(Integer internalNumber) {
-			this.addressDTO.setInternalNumber(internalNumber);;
-			return this;
-		}
-		
-		public Builder addExternalNumber(Integer externalNumber) {
-			this.addressDTO.setExternalNumber(externalNumber);;
-			return this;
-		}
-		
-		public Builder addLat(BigDecimal lat) {
-			this.addressDTO.setLat(lat);
-			return this;
-		}
-		
-		public Builder addLon(BigDecimal lon) {
-			this.addressDTO.setLon(lon);
-			return this;
-		}
-		
-		public AddressDTO build() {
-			return this.addressDTO;
-		}
+
+	public EmployeeDTO getEmployee() {
+		return employee;
 	}
+
+	public void setEmployee(EmployeeDTO employee) {
+		this.employee = employee;
+	}
+	
 }

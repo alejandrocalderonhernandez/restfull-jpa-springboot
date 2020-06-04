@@ -3,7 +3,6 @@ package com.eagle.relationaldbaccessapi.util.components;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -11,101 +10,35 @@ public class ResponceMessages {
 	
 	private static final String MESSAGE = "message: ";
 	private static final String ERROR = "error: ";
-	private static final String RESPONCE = "data: ";
-	private static final String UPLOAD = "upload: ";
+	private static final String DATA = "data: ";
 	
-	private StringBuilder sb;
+	public static final String GET_SUCCES = "Get element success: ";
+	public static final String CREATE_SUCCESS = "Created element success ";
+	public static final String UPDATE_SUCCESS = "Updated element success ";
+	public static final String DELETE_SUCCESS = "Delete element success: ";
+	public static final String UPLOAD_SUCCESS = "Upload file success ";
 	
-	@Autowired
-	public ResponceMessages(StringBuilder sb) {
-		this.sb = sb;
-	}
+	public static final String GET_ERROR = "Cant get element ";
+	public static final String CREATE_ERROR = "Element not created ";
+	public static final String UPDATE_ERROR = "Element not updated ";
+	public static final String DELETE_ERROR = "	Element not deleted ";
+	public static final String UPLOAD_ERROR = "File not upload ";
+	public static final String FILE_FORMAT_ERROR = "Format incorrect ";
 	
-	public Map<String, Object> messsageModelNotFound(Long id, String modelName) {
+	public static final String DATABASE_EMPTY = "	Database is empty ";
+	public static final String ELEMENT_NOT_FOUND = "Element not found ";
+	
+	public Map<String, Object> successMessage(String message, Object data) {
 		Map<String, Object> responce = new HashMap<>();
-		String error = this.sb.append(modelName).append(" with ").append(id).append(" was not found").toString();
-		responce.put(MESSAGE,  "Object was not found");
-		responce.put(ERROR,  error);
-		resetStringBuilder();
-		return responce;
-	}	
-	
-	public Map<String, Object> messsageModelAlreadyExist(String modelName) {
-		Map<String, Object> responce = new HashMap<>();
-		String message = this.sb.append( "This ").append(modelName).append( " already exist").toString();
 		responce.put(MESSAGE, message);
-		resetStringBuilder();
+		responce.put(DATA, data);
 		return responce;
 	}
 	
-	public Map<String, Object> messsageGenericError(String errorMessage) {
+	public Map<String, Object> errorMessage(String error, String message){
 		Map<String, Object> responce = new HashMap<>();
-		responce.put(MESSAGE,  "Server error");
-		responce.put(ERROR, errorMessage);
+		responce.put(ERROR, error);
+		responce.put(MESSAGE, message);
 		return responce;
-	}
-	
-	public Map<String, Object> messageSuccess(Object o) {
-		Map<String, Object> responce = new HashMap<>();
-		responce.put(MESSAGE,  "Success");
-		responce.put(RESPONCE,  o);
-		return responce;
-	}
-	
-	public Map<String, Object> messageUpdated(Object o) {
-		Map<String, Object> responce = new HashMap<>();
-		responce.put(MESSAGE,  "Updated");
-		responce.put(RESPONCE,  o);
-		return responce;
-	}
-	
-	public Map<String, Object> messageUpdated() {
-		Map<String, Object> responce = new HashMap<>();
-		responce.put(MESSAGE,  "Updated");
-		return responce;
-	}
-	
-	public Map<String, Object> messageCreated(Object o) {
-		Map<String, Object> responce = new HashMap<>();
-		responce.put(MESSAGE,  "Created");
-		responce.put(RESPONCE,  o);
-		return responce;
-	}
-	
-	public Map<String, Object> messageDeleted() {
-		Map<String, Object> responce = new HashMap<>();
-		responce.put(MESSAGE,  "Deleted");
-		return responce;
-	}
-	
-	public Map<String, Object> messageNoData() {
-		Map<String, Object> responce = new HashMap<>();
-		responce.put(MESSAGE, "The database is empty");
-		return responce;
-	}
-	
-	public Map<String, Object> messsageUploadFileError(boolean upload) {
-		Map<String, Object> responce = new HashMap<>();
-		responce.put(MESSAGE,  "Error to upload file");
-		responce.put(UPLOAD, upload);
-		return responce;
-	}
-	
-	public Map<String, Object> messsageUploadFileSuccess(boolean upload) {
-		Map<String, Object> responce = new HashMap<>();
-		responce.put(MESSAGE,  "Upload file success");
-		responce.put(UPLOAD, upload);
-		return responce;
-	}
-	
-	public Map<String, Object> messsageGetFileError(String errorMessage) {
-		Map<String, Object> responce = new HashMap<>();
-		responce.put(MESSAGE,  "Error to get file");
-		responce.put(ERROR,  errorMessage);
-		return responce;
-	}	
-	
-	private void resetStringBuilder(){
-		this.sb.delete(0,sb.length());
 	}
 }

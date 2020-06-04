@@ -1,24 +1,52 @@
 package com.eagle.relationaldbaccessapi.models.dto;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;;
+import java.time.LocalDateTime;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import com.eagle.relationaldbaccessapi.models.entity.UserInfoEntity;
 
 public class UserInfoDTO implements Serializable{
 
 	private static final long serialVersionUID = -8096606183270497702L;
 	
 	private Long id;
+	@NotNull
+	@Size(min = 3,max = 20)
 	private String name1;
+	@Size(min = 3,max = 20)
 	private String name2;
+	@NotNull
 	private String lastName1;
+	@Size(min = 3,max = 20)
 	private String lastName2;
+	@Size(min = 18, max = 18)
 	private String curp;
 	private String photoUrl;
 	private LocalDateTime createAt;
 	private Short age;
 	private Boolean status;
+	private EmployeeDTO employee;
 	
     public UserInfoDTO() {
+    }
+    
+    public UserInfoDTO(UserInfoEntity userInfo) {
+    	this.setId(userInfo.getId());
+    	this.setName1(userInfo.getName1());
+    	this.setName2(userInfo.getName2());
+    	this.setLastName1(userInfo.getLastName1());
+    	this.setLastName2(userInfo.getLastName2());
+    	this.setCurp(userInfo.getCurp());
+    	this.setPhotoUrl(userInfo.getPhotoUrl());
+    	this.setCreateAt(userInfo.getCreateAt());
+    	this.setAge(userInfo.getAge());
+    	this.setStatus(userInfo.getStatus());
+    	if (userInfo.getEmployee() != null) {
+        	this.setEmployee(new EmployeeDTO(userInfo.getEmployee()));
+    	}
     }
 
 	public Long getId() {
@@ -100,78 +128,13 @@ public class UserInfoDTO implements Serializable{
 	public void setStatus(Boolean status) {
 		this.status = status;
 	}
-	
-	
-	
-	@Override
-	public String toString() {
-		return "UserInfoDTO [id=" + id + ", name1=" + name1 + ", name2=" + name2 + ", lastName1=" + lastName1
-				+ ", lastName2=" + lastName2 + ", curp=" + curp + ", photoUrl=" + photoUrl + ", createAt=" + createAt
-				+ ", age=" + age + ", status=" + status + "]";
+
+	public EmployeeDTO getEmployee() {
+		return employee;
 	}
 
-
-
-	public static class Builder {
-		
-		private UserInfoDTO userInfoDTO;
-		
-		public Builder() {
-			this.userInfoDTO = new UserInfoDTO();
-		}
-		
-		public Builder addId(Long id) {
-			this.userInfoDTO.setId(id);
-			return this;
-		}
-		
-		public Builder addName1(String name1) {
-			this.userInfoDTO.setName1(name1);
-			return this;
-		}
-		
-		public Builder addName2(String name2) {
-			this.userInfoDTO.setName2(name2);
-			return this;
-		}
-		
-		public Builder addLastName1(String lastName1) {
-			this.userInfoDTO.setLastName1(lastName1);
-			return this;
-		}
-		
-		public Builder addLastName2(String lastName2) {
-			this.userInfoDTO.setLastName2(lastName2);
-			return this;
-		}
-		
-		public Builder addCurp(String curp) {
-			this.userInfoDTO.setCurp(curp);
-			return this;
-		}
-		
-		public Builder addPhotoUrl(String photoUrl) {
-			this.userInfoDTO.setPhotoUrl(photoUrl);
-			return this;
-		}
-		
-		public Builder addAge(Short age) {
-			this.userInfoDTO.setAge(age);
-			return this;
-		}
-		
-		public Builder addCreatedAt(LocalDateTime createAt) {
-			this.userInfoDTO.setCreateAt(createAt);
-			return this;
-		}
-		
-		public Builder addStatus(Boolean status) {
-			this.userInfoDTO.setStatus(status);
-			return this;
-		}
-		
-		public UserInfoDTO build() {
-			return this.userInfoDTO;
-		}
+	public void setEmployee(EmployeeDTO employee) {
+		this.employee = employee;
 	}
+	
 }

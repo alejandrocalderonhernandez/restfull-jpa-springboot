@@ -5,10 +5,14 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.eagle.relationaldbaccessapi.models.dto.UserInfoDTO;
 
 @Entity
 @Table(name = "USER_INFO")
@@ -20,15 +24,17 @@ public class UserInfoEntity implements Serializable{
 	@Column(name = "id", columnDefinition = "bigserial")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
 	@Column(name = "name_1", length = 20, nullable = false)
 	private String name1;
+	
 	@Column(name = "name_2", length = 20, nullable = true)
 	private String name2;
 	@Column(name = "lastname_1", length = 20, nullable = false)
 	private String lastName1;
 	@Column(name = "lastname_2", length = 20, nullable = true)
 	private String lastName2;
-	@Column(name = "curp", length = 20, nullable = true)
+	@Column(name = "curp", length = 18, nullable = true)
 	private String curp;
 	@Column(name = "photo", length = 100, nullable = true)
 	private String photoUrl;
@@ -38,9 +44,25 @@ public class UserInfoEntity implements Serializable{
 	private Short age;
 	@Column(name = "status", nullable = false)
 	private Boolean status;
+	
+	@OneToOne(mappedBy = "userInfo", fetch = FetchType.LAZY)
+	private EmployeeEntity employee;
 
 	public UserInfoEntity() {
 	}
+	
+    public UserInfoEntity(UserInfoDTO userInfo) {
+    	this.setName1(userInfo.getName1());
+    	this.setName2(userInfo.getName2());
+    	this.setLastName1(userInfo.getLastName1());
+    	this.setLastName2(userInfo.getLastName2());
+    	this.setCurp(userInfo.getCurp());
+    	this.setPhotoUrl(userInfo.getPhotoUrl());
+    	this.setCreateAt(LocalDateTime.now());
+    	this.setAge(userInfo.getAge());
+    	this.setStatus(true);
+    }
+   
 
 	public Long getId() {
 		return id;
@@ -120,59 +142,20 @@ public class UserInfoEntity implements Serializable{
 	public void setStatus(Boolean status) {
 		this.status = status;
 	}
-	
-	public static class Builder {
-		
-		private UserInfoEntity userInfoEntity;
-		
-		public Builder() {
-			this.userInfoEntity = new UserInfoEntity();
-			this.userInfoEntity.setStatus(true);
-			this.userInfoEntity.setCreateAt(LocalDateTime.now());
-		}
-		
-		public Builder addId(Long id) {
-			this.userInfoEntity.setId(id);
-			return this;
-		}
-		
-		public Builder addName1(String name1) {
-			this.userInfoEntity.setName1(name1);
-			return this;
-		}
-		
-		public Builder addName2(String name2) {
-			this.userInfoEntity.setName2(name2);
-			return this;
-		}
-		
-		public Builder addLastName1(String lastName1) {
-			this.userInfoEntity.setLastName1(lastName1);
-			return this;
-		}
-		
-		public Builder addLastName2(String lastName2) {
-			this.userInfoEntity.setLastName2(lastName2);
-			return this;
-		}
-		
-		public Builder addCurp(String curp) {
-			this.userInfoEntity.setCurp(curp);
-			return this;
-		}
-		
-		public Builder addPhotoUrl(String photoUrl) {
-			this.userInfoEntity.setPhotoUrl(photoUrl);
-			return this;
-		}
-		
-		public Builder addAge(Short age) {
-			this.userInfoEntity.setAge(age);
-			return this;
-		}
-		
-		public UserInfoEntity build() {
-			return this.userInfoEntity;
-		}
+
+	public EmployeeEntity getEmployee() {
+		return employee;
 	}
+
+	public void setEmploye(EmployeeEntity employee) {
+		this.employee = employee;
+	}
+
+	@Override
+	public String toString() {
+		return "UserInfoEntity [id=" + id + ", name1=" + name1 + ", name2=" + name2 + ", lastName1=" + lastName1
+				+ ", lastName2=" + lastName2 + ", curp=" + curp + ", photoUrl=" + photoUrl + ", createAt=" + createAt
+				+ ", age=" + age + ", status=" + status + ", employee=" + employee + "]";
+	}
+	
 }

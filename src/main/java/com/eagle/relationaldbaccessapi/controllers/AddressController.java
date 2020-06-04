@@ -16,16 +16,18 @@ import org.springframework.web.bind.annotation.RestController;
 import com.eagle.relationaldbaccessapi.models.dto.AddressDTO;
 import com.eagle.relationaldbaccessapi.services.interfaces.IAddressService;
 import com.eagle.relationaldbaccessapi.util.components.ResponceMessages;
+import com.eagle.relationaldbaccessapi.util.exceptions.PageabeSizeException;
+import com.eagle.relationaldbaccessapi.util.util.PageableUtil;
 
 import static com.eagle.relationaldbaccessapi.util.constants.RestConstants.*;
 
 import java.util.Map;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/address")
 public class AddressController {
-	
-	private static final String MODEL_NAME = "Address";
 	
 	private IAddressService service;
 	private ResponceMessages messages;
@@ -37,63 +39,100 @@ public class AddressController {
 	}
 	
 	@PostMapping(path = REST_CREATE, produces = MediaType.APPLICATION_JSON_VALUE, consumes=MediaType.APPLICATION_JSON_VALUE) 
-	public ResponseEntity<?> create(@RequestBody AddressDTO address) {
+	public ResponseEntity<?> create(@Valid @RequestBody AddressDTO address) {
 		try {
-			Map<String, Object> responce = this.messages.messageCreated(this.service.insert(address));
-			return new ResponseEntity<Map<String, Object>>(responce, HttpStatus.OK);
+			Map<String, Object> responce = 
+					this.messages.successMessage(ResponceMessages.CREATE_SUCCESS, this.service.insert(address));
+			return new ResponseEntity<>(responce, HttpStatus.OK);
 		} catch (Exception e) {
-			Map<String, Object> responce = this.messages.messsageGenericError(e.getMessage());
-			return new ResponseEntity<Map<String, Object>>(responce, HttpStatus.INTERNAL_SERVER_ERROR);
+			Map<String, Object> responce = 
+					this.messages.errorMessage(e.getMessage(), ResponceMessages.CREATE_ERROR);
+			return new ResponseEntity<>(responce, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
 	@PutMapping(path = REST_UPDATE,  consumes=MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> update(@RequestBody AddressDTO address, @PathVariable Long id) {
+	public ResponseEntity<?> update(@Valid @RequestBody AddressDTO address, @PathVariable Long id) {
 		try {
-			Map<String, Object> responce = this.messages.messageUpdated(this.service.update(address, id));
-			return new ResponseEntity<Map<String, Object>>(responce, HttpStatus.OK);
+			Map<String, Object> responce = 
+					this.messages.successMessage(ResponceMessages.UPDATE_SUCCESS,this.service.update(address, id));
+			return new ResponseEntity<>(responce, HttpStatus.OK);
 		} catch (IllegalArgumentException ie) {
-			Map<String, Object> responce = this.messages.messsageModelNotFound(id, MODEL_NAME);
-			return new ResponseEntity<Map<String, Object>>(responce, HttpStatus.BAD_REQUEST);
+			Map<String, Object> responce = 
+					this.messages.errorMessage(ie.getMessage(), ResponceMessages.ELEMENT_NOT_FOUND);
+			return new ResponseEntity<>(responce, HttpStatus.BAD_REQUEST);
 		} catch (Exception e) {
-			Map<String, Object> responce = this.messages.messsageGenericError(e.getMessage());
-			return new ResponseEntity<Map<String, Object>>(responce, HttpStatus.INTERNAL_SERVER_ERROR);
+			Map<String, Object> responce = 
+					this.messages.errorMessage(e.getMessage(), ResponceMessages.UPDATE_ERROR);
+			return new ResponseEntity<>(responce, HttpStatus.INTERNAL_SERVER_ERROR);
 		} 
 	}
 	
 	@GetMapping(path = REST_FIND_BY_ID, produces = MediaType.APPLICATION_JSON_VALUE )
 	public ResponseEntity<?> findById(@PathVariable Long id) {
 		try {
-			Map<String, Object> responce = this.messages.messageSuccess(this.service.findById(id));
-			return new ResponseEntity<Map<String, Object>>(responce, HttpStatus.OK);
+			Map<String, Object> responce = 
+					this.messages.successMessage(ResponceMessages.CREATE_SUCCESS, this.service.findById(id));
+			return new ResponseEntity<>(responce, HttpStatus.OK);
+		} catch (IllegalArgumentException ie) {
+				Map<String, Object> responce = 
+						this.messages.errorMessage(ie.getMessage(), ResponceMessages.ELEMENT_NOT_FOUND);
+				return new ResponseEntity<>(responce, HttpStatus.BAD_REQUEST);
 		} catch (Exception e) {
-			Map<String, Object> responce = this.messages.messsageGenericError(e.getMessage());
-			return new ResponseEntity<Map<String, Object>>(responce, HttpStatus.INTERNAL_SERVER_ERROR);
+			Map<String, Object> responce =
+					this.messages.errorMessage(e.getMessage(), ResponceMessages.ELEMENT_NOT_FOUND);
+			return new ResponseEntity<>(responce, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
 	@GetMapping(path = REST_FIND_ALL, produces = MediaType.APPLICATION_JSON_VALUE )
 	public ResponseEntity<?> findAll() {
 		try {
-            Map<String, Object> responce = this.messages.messageSuccess(this.service.findAll());
-     		return new ResponseEntity<Map<String, Object>>(responce, HttpStatus.OK);
+            Map<String, Object> responce = 
+            		this.messages.successMessage(ResponceMessages.GET_SUCCES, this.service.findAll());
+     		return new ResponseEntity<>(responce, HttpStatus.OK);
 		} catch (IllegalArgumentException ie) {
-			Map<String, Object> responce = this.messages.messageNoData();
-			return new ResponseEntity<Map<String, Object>>(responce, HttpStatus.NO_CONTENT);
+			Map<String, Object> responce = 
+					this.messages.errorMessage(ie.getMessage(), ResponceMessages.ELEMENT_NOT_FOUND);
+			return new ResponseEntity<>(responce, HttpStatus.BAD_REQUEST);
 		}catch (Exception e) {
-			Map<String, Object> responce = this.messages.messsageGenericError(e.getMessage());
-			return new ResponseEntity<Map<String, Object>>(responce, HttpStatus.INTERNAL_SERVER_ERROR);
+			Map<String, Object> responce =
+					this.messages.errorMessage(e.getMessage(), ResponceMessages.GET_ERROR);
+			return new ResponseEntity<>(responce, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
 	@DeleteMapping(path = REST_DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> delete(@PathVariable Long id) {
 		if(this.service.deleteById(id)) {
-			Map<String, Object> responce = this.messages.messageDeleted();
-			return new ResponseEntity<Map<String, Object>>(responce, HttpStatus.OK);
+			Map<String, Object> responce = 
+					this.messages.successMessage(ResponceMessages.DELETE_SUCCESS, id);
+			return new ResponseEntity<>(responce, HttpStatus.OK);
 		} else {
-			Map<String, Object> responce = this.messages.messsageModelNotFound(id, MODEL_NAME);
-			return new ResponseEntity<Map<String, Object>>(responce, HttpStatus.BAD_REQUEST);
+			Map<String, Object> responce = 
+					this.messages.errorMessage("Element with id " + id + "dont exist", ResponceMessages.DELETE_ERROR);
+			return new ResponseEntity<>(responce, HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@GetMapping(path = REST_PAGE, produces = MediaType.APPLICATION_JSON_VALUE )
+	public ResponseEntity<?> getPageByRange(@PathVariable Integer page, @PathVariable String size) {
+		try {
+			int limit = PageableUtil.getPageSize(size);
+            Map<String, Object> responce = 
+            		this.messages.successMessage(ResponceMessages.GET_SUCCES, this.service.getPageByRange(page, limit));
+     		return new ResponseEntity<>(responce, HttpStatus.OK);
+		} catch (IllegalArgumentException ie) {
+			Map<String, Object> responce = 
+					this.messages.errorMessage(ie.getMessage(), ResponceMessages.ELEMENT_NOT_FOUND);
+			return new ResponseEntity<>(responce, HttpStatus.BAD_REQUEST);
+		} catch (PageabeSizeException pe) {
+				Map<String, Object> responce = 
+						this.messages.errorMessage(pe.getMessage(), ResponceMessages.ELEMENT_NOT_FOUND);
+				return new ResponseEntity<>(responce, HttpStatus.BAD_REQUEST);
+		}catch (Exception e) {
+			Map<String, Object> responce = this.messages.errorMessage(e.getMessage(), ResponceMessages.GET_ERROR);
+			return new ResponseEntity<>(responce, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 }

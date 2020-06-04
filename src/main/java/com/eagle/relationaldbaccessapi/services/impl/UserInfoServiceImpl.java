@@ -2,9 +2,9 @@ package com.eagle.relationaldbaccessapi.services.impl;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -16,11 +16,10 @@ import org.springframework.transaction.annotation.Transactional;
 import com.eagle.relationaldbaccessapi.models.dto.UserInfoDTO;
 import com.eagle.relationaldbaccessapi.models.entity.UserInfoEntity;
 import com.eagle.relationaldbaccessapi.models.model.FileModel;
-import com.eagle.relationaldbaccessapi.repocitory.UserInfoRepocitory;
+import com.eagle.relationaldbaccessapi.repository.UserInfoRepocitory;
 import com.eagle.relationaldbaccessapi.services.interfaces.IUserInfo;
 import com.eagle.relationaldbaccessapi.util.components.FileComponent;
 import com.eagle.relationaldbaccessapi.util.constants.FileConstants;
-import com.eagle.relationaldbaccessapi.util.interfaces.IMapper;
 import com.eagle.relationaldbaccessapi.util.interfaces.IUpdater;
 import com.eagle.relationaldbaccessapi.util.validators.FileValidator;
 
@@ -31,33 +30,6 @@ public class UserInfoServiceImpl implements IUserInfo {
 	
 	private UserInfoRepocitory repocitory;
 	private FileComponent fileComponent;
-	
-	private IMapper<UserInfoEntity, UserInfoDTO> mapToEntity = userInfoDto -> {
-		return new UserInfoEntity.Builder()
-				.addId(userInfoDto.getId())
-				.addName1(userInfoDto.getName1())
-				.addName2(userInfoDto.getName2())
-				.addLastName1(userInfoDto.getLastName1())
-				.addLastName2(userInfoDto.getLastName2())
-				.addCurp(userInfoDto.getCurp())
-				.addAge(userInfoDto.getAge())
-				.build();
-	};
-	
-	private IMapper<UserInfoDTO, UserInfoEntity> mapToDTO = userInfoEntity -> {
-		return new UserInfoDTO.Builder()
-				.addId(userInfoEntity.getId())
-				.addName1(userInfoEntity.getName1())
-				.addName2(userInfoEntity.getName2())
-				.addLastName1(userInfoEntity.getLastName1())
-				.addLastName2(userInfoEntity.getLastName2())
-				.addCurp(userInfoEntity.getCurp())
-				.addAge(userInfoEntity.getAge())
-				.addPhotoUrl(userInfoEntity.getPhotoUrl())
-				.addCreatedAt(userInfoEntity.getCreateAt())
-				.addStatus(userInfoEntity.getStatus())
-				.build();
-	};
 	
 	private IUpdater<UserInfoDTO, UserInfoEntity> updater = (newUserInfo, oldUserInfo) -> {
 		oldUserInfo.setName1(newUserInfo.getName1());
@@ -77,13 +49,14 @@ public class UserInfoServiceImpl implements IUserInfo {
 	@Override
 	@Transactional
 	public UserInfoDTO insert(UserInfoDTO dto) {
+		UserInfoEntity response = null;
 		try {
-			this.repocitory.save(this.mapToEntity.mapObject(dto));
+			response = this.repocitory.save(new UserInfoEntity(dto));
 			LOGGER.info("Inserted {} ", dto);
 		} catch (Exception e) {
 			LOGGER.error("Error to insert UserInfo: ", e);
 		}
-		return dto;
+		return new UserInfoDTO(response);
 	}
 
 	@Override
@@ -95,7 +68,7 @@ public class UserInfoServiceImpl implements IUserInfo {
 				this.updater.update(dto, userToUpdate);
 				this.repocitory.save(userToUpdate);
 				LOGGER.info("Updated {} ", dto);
-				return this.mapToDTO.mapObject(userToUpdate);
+				return new UserInfoDTO(userToUpdate);
 			} catch (Exception e) {
 				LOGGER.error("Error to update UserInfo -> ", e);
 				return dto;
@@ -110,7 +83,7 @@ public class UserInfoServiceImpl implements IUserInfo {
 	@Transactional(readOnly = true)
 	public UserInfoDTO findById(Long id) {
 		if(this.repocitory.existsById(id)){
-			return this.mapToDTO.mapObject(this.repocitory.findById(id).get());
+			return new UserInfoDTO(this.repocitory.findById(id).get());
 		} else {
 			LOGGER.warn("Select UserInfo not found id: " + id);
 			throw new IllegalArgumentException("The UserInfo with id:  " + id + " dont exist");
@@ -122,9 +95,8 @@ public class UserInfoServiceImpl implements IUserInfo {
 	public List<UserInfoDTO> findAll() {
 		List<UserInfoEntity>resultEntity = this.repocitory.findAll();
 		if(!resultEntity.isEmpty()) {
-			List<UserInfoDTO> resultDTO = new LinkedList<>();
-			resultEntity.forEach(address ->  resultDTO.add(this.mapToDTO.mapObject(address)));
-			return resultDTO;
+			return resultEntity.stream().map(UserInfoDTO::new)
+					.collect(Collectors.toList());
 		} else {
 			LOGGER.warn("Find all no data: UserInfo");
 			throw new NoSuchElementException("Database is empty");

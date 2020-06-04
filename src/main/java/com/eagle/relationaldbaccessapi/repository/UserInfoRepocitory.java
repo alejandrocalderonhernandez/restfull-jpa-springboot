@@ -1,4 +1,4 @@
-package com.eagle.relationaldbaccessapi.repocitory;
+package com.eagle.relationaldbaccessapi.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

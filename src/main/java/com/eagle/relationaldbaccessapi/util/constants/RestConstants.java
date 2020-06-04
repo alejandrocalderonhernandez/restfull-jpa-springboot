@@ -11,6 +11,8 @@ public class RestConstants {
 	public static final String REST_FIND_ALL = "/findAll";
 	public static final String REST_DELETE = "/delete/{id}";
 	
+	public static final String REST_PAGE = "/page/{page}/{size}";
+	
 	public static final String REST_UPLOAD_IMG = "/upload/img/{id}";
 	public static final String REST_DELETE_IMG = "/delete/img/{id}";
 	public static final String REST_GET_IMG = "/get/img/{id}";

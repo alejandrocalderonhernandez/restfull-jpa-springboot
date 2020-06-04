@@ -3,12 +3,17 @@ package com.eagle.relationaldbaccessapi.models.entity;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.eagle.relationaldbaccessapi.models.dto.AddressDTO;
 
 @Entity
 @Table(name = "ADDRESS")
@@ -37,7 +42,25 @@ public class AddressEntity implements Serializable{
 	@Column(name = "lon",  nullable = true)
 	private BigDecimal lon;
 	
+	@OneToOne(mappedBy = "address", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private EmployeeEntity employee;
+	
 	public AddressEntity() {
+	}
+	
+	public AddressEntity(AddressDTO address) {
+		 this.setId(address.getId());
+		 this.setStreet(address.getStreet());
+		 this.setColony(address.getColony());
+		 this.setTownHall(address.getTownHall());
+		 this.setEstate(address.getEstate());
+		 this.setInternalNumber(address.getInternalNumber());
+		 this.setExternalNumber(address.getExternalNumber());
+		 this.setLat(address.getLat());
+		 this.setLon(address.getLon());
+		 if (address.getEmployee() != null) {
+			 this.setEmploye(new EmployeeEntity(address.getEmployee()));
+		 }
 	}
 
 	public Long getId() {
@@ -110,63 +133,14 @@ public class AddressEntity implements Serializable{
 
 	public void setLon(BigDecimal lon) {
 		this.lon = lon;
+	}
+
+	public EmployeeEntity getEmployee() {
+		return employee;
+	}
+
+	public void setEmploye(EmployeeEntity employee) {
+		this.employee = employee;
 	}	
 	
-	public static class Builder {
-		
-		private AddressEntity addressEntity;
-		
-		public Builder() {
-			this.addressEntity = new AddressEntity();
-		}
-		
-		public Builder addId(Long id) {
-			this.addressEntity.setId(id);
-			return this;
-		}
-		
-		public Builder addStreet(String street) {
-			this.addressEntity.setStreet(street);
-			return this;
-		}
-		
-		public Builder addColony(String colony) {
-			this.addressEntity.setColony(colony);
-			return this;
-		}
-		
-		public Builder addTownHall(String townHall) {
-			this.addressEntity.setTownHall(townHall);;
-			return this;
-		}
-		
-		public Builder addEstate(String estate) {
-			this.addressEntity.setEstate(estate);
-			return this;
-		}
-		
-		public Builder addInternalNumber(Integer internalNumber) {
-			this.addressEntity.setInternalNumber(internalNumber);;
-			return this;
-		}
-		
-		public Builder addExternalNumber(Integer externalNumber) {
-			this.addressEntity.setExternalNumber(externalNumber);;
-			return this;
-		}
-		
-		public Builder addLat(BigDecimal lat) {
-			this.addressEntity.setLat(lat);
-			return this;
-		}
-		
-		public Builder addLon(BigDecimal lon) {
-			this.addressEntity.setLon(lon);
-			return this;
-		}
-		
-		public AddressEntity build() {
-			return this.addressEntity;
-		}
-	}
 }

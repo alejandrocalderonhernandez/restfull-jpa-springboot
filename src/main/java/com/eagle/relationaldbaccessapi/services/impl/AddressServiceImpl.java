@@ -1,20 +1,22 @@
 package com.eagle.relationaldbaccessapi.services.impl;
 
-import java.util.LinkedList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.apache.logging.log4j.Logger;
 
 import com.eagle.relationaldbaccessapi.models.dto.AddressDTO;
 import com.eagle.relationaldbaccessapi.models.entity.AddressEntity;
-import com.eagle.relationaldbaccessapi.repocitory.AddressRepository;
+import com.eagle.relationaldbaccessapi.repository.AddressRepository;
 import com.eagle.relationaldbaccessapi.services.interfaces.IAddressService;
-import com.eagle.relationaldbaccessapi.util.interfaces.IMapper;
 import com.eagle.relationaldbaccessapi.util.interfaces.IUpdater;
 
 @Service
@@ -22,35 +24,7 @@ public class AddressServiceImpl implements IAddressService {
 	
     private static final Logger LOGGER = LogManager.getLogger(AddressServiceImpl.class);
     
-	 private IMapper<AddressEntity, AddressDTO> mapToEntity  = addressDto -> {
-			return new AddressEntity.Builder()
-					.addId(addressDto.getId())
-					.addColony(addressDto.getColony())
-					.addTownHall(addressDto.getTownHall())
-					.addEstate(addressDto.getEstate())
-					.addStreet(addressDto.getStreet())
-					.addInternalNumber(addressDto.getInternalNumber())
-					.addExternalNumber(addressDto.getExternalNumber())
-					.addLat(addressDto.getLat())
-					.addLon(addressDto.getLon())
-					.build();
-	 	};
-	 	
-		private IMapper<AddressDTO, AddressEntity> mapToDTO  = addressEntity -> {
-				return new AddressDTO.Builder()
-						.addId(addressEntity.getId())
-						.addColony(addressEntity.getColony())
-						.addTownHall(addressEntity.getTownHall())
-						.addEstate(addressEntity.getEstate())
-						.addStreet(addressEntity.getStreet())
-						.addInternalNumber(addressEntity.getInternalNumber())
-						.addExternalNumber(addressEntity.getExternalNumber())
-						.addLat(addressEntity.getLat())
-						.addLon(addressEntity.getLon())
-						.build();
-		 	};
-    
-    private IUpdater<AddressDTO, AddressEntity> updateEntity = (newAddress, oldAddress) -> {
+    private IUpdater<AddressDTO, AddressEntity> updater = (newAddress, oldAddress) -> {
 			    	 oldAddress.setStreet(newAddress.getStreet());
 			    	 oldAddress.setColony(newAddress.getColony());
 			    	 oldAddress.setTownHall(newAddress.getTownHall());
@@ -71,14 +45,15 @@ public class AddressServiceImpl implements IAddressService {
 	@Override
 	@Transactional
 	public AddressDTO insert(AddressDTO dto) {
-		AddressEntity addressToInsert = this.mapToEntity.mapObject(dto);
-		LOGGER.info("Inserted {} ", dto);
+		AddressEntity responce = null;
 		try {
-			this.repocitory.save(addressToInsert);
+			AddressEntity addressToInsert = new AddressEntity(dto);
+			responce = this.repocitory.save(addressToInsert);
+			LOGGER.info("Inserted {} ", dto);
 		} catch (Exception e) {
 			LOGGER.error("Error to insert Address: ", e);
 		}
-		return dto;
+		return new AddressDTO(responce);
 	}
 
 	@Override
@@ -87,17 +62,17 @@ public class AddressServiceImpl implements IAddressService {
 		if(this.repocitory.existsById(id)){
 			try {
 				AddressEntity addresToUpdate = this.repocitory.findById(id).get();
-				updateEntity.update(dto, addresToUpdate);
+				updater.update(dto, addresToUpdate);
 				this.repocitory.save(addresToUpdate);
 				LOGGER.info("Updated {} ", dto);
-				return this.mapToDTO.mapObject(addresToUpdate);
+				return new AddressDTO(addresToUpdate);
 			} catch (Exception e) {
-				LOGGER.error("Error to update Address -> ", e);
+				LOGGER.error("Error to update Address: ", e);
 				return dto;
 			}
 		} else {
-			LOGGER.warn("Update Address not found id: " + id);
-			throw new IllegalArgumentException("The Address id -> " + id + " dont exist");
+		   LOGGER.warn("Update Address not found id: " + id);
+			throw new IllegalArgumentException("The Address id: " + id + " dont exist");
 		}
 	}
 
@@ -105,7 +80,7 @@ public class AddressServiceImpl implements IAddressService {
 	@Transactional(readOnly = true)
 	public AddressDTO findById(Long id) {
 		if(this.repocitory.existsById(id)){
-			return this.mapToDTO.mapObject(this.repocitory.findById(id).get());
+			return new AddressDTO(this.repocitory.findById(id).get());
 		} else {
 			LOGGER.warn("Select Address not found id: " + id);
 			throw new IllegalArgumentException("The Address with id:  " + id + " dont exist");
@@ -117,11 +92,10 @@ public class AddressServiceImpl implements IAddressService {
 	public List<AddressDTO> findAll() {
 		List<AddressEntity>resultEntity = this.repocitory.findAll();
 		if(!resultEntity.isEmpty()) {
-			List<AddressDTO> resultDTO = new LinkedList<>();
-			resultEntity.forEach(address ->  resultDTO.add(this.mapToDTO.mapObject(address)));
-			return resultDTO;
+			return resultEntity.stream().map(AddressDTO::new)
+					.collect(Collectors.toList());
 		} else {
-			LOGGER.warn("Find all no data: Address");;
+			LOGGER.warn("Find all no data: Address");
 			throw new NoSuchElementException("Database is empty");
 		}
 	}
@@ -143,5 +117,18 @@ public class AddressServiceImpl implements IAddressService {
 	@Transactional(readOnly = true)
 	public boolean existById(Long id) {
 		return this.repocitory.existsById(id);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public Page<AddressDTO> getPageByRange(int page, int limit) {
+		Pageable range = PageRequest.of(page, limit);
+		Page<AddressEntity>resultEntity = this.repocitory.findAll(range);
+		if(!resultEntity.isEmpty()) {
+			return resultEntity.map(AddressDTO::new);
+		} else {
+			LOGGER.warn("Find all no data: Address");
+			throw new NoSuchElementException("Database is empty");
+		}
 	}
 }
