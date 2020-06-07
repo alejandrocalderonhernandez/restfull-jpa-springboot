@@ -12,7 +12,7 @@ import com.eagle.relationaldbaccessapi.models.dto.ContactDTO;
 import com.eagle.relationaldbaccessapi.models.entity.ContactEntity;
 import com.eagle.relationaldbaccessapi.repository.ContactRepository;
 import com.eagle.relationaldbaccessapi.services.interfaces.IContactService;
-import com.eagle.relationaldbaccessapi.util.interfaces.IUpdater;
+import com.eagle.relationaldbaccessapi.util.interfaces.functional.IUpdater;
 
 @Service
 public class ContactServiceImpl implements IContactService{

@@ -1,6 +1,7 @@
 package com.eagle.relationaldbaccessapi.controllers;
 
 import static com.eagle.relationaldbaccessapi.util.constants.RestConstants.REST_CREATE;
+import static com.eagle.relationaldbaccessapi.util.constants.RestConstants.REST_FIND_BY_ID;
 
 import java.util.Map;
 
@@ -10,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,6 +44,23 @@ public class EmployeeController {
 		} catch (Exception e) {
 			Map<String, Object> responce = 
 					this.messages.errorMessage(e.getMessage(), ResponceMessages.CREATE_ERROR);
+			return new ResponseEntity<>(responce, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@GetMapping(path = REST_FIND_BY_ID, produces = MediaType.APPLICATION_JSON_VALUE )
+	public ResponseEntity<?> findById(@PathVariable Long id) {
+		try {
+			Map<String, Object> responce = 
+					this.messages.successMessage(ResponceMessages.CREATE_SUCCESS, this.service.findById(id));
+			return new ResponseEntity<>(responce, HttpStatus.OK);
+		} catch (IllegalArgumentException ie) {
+				Map<String, Object> responce = 
+						this.messages.errorMessage(ie.getMessage(), ResponceMessages.ELEMENT_NOT_FOUND);
+				return new ResponseEntity<>(responce, HttpStatus.BAD_REQUEST);
+		} catch (Exception e) {
+			Map<String, Object> responce =
+					this.messages.errorMessage(e.getMessage(), ResponceMessages.ELEMENT_NOT_FOUND);
 			return new ResponseEntity<>(responce, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}

@@ -5,6 +5,7 @@ import java.io.Serializable;
 import javax.validation.constraints.NotNull;
 
 import com.eagle.relationaldbaccessapi.models.entity.EmployeeEntity;
+import com.google.gson.Gson;
 
 public class EmployeeDTO implements Serializable {
 	
@@ -72,6 +73,11 @@ public class EmployeeDTO implements Serializable {
 
 	public void setContact(ContactDTO contact) {
 		this.contact = contact;
+	}
+	
+	@Override
+	public String toString() {
+		return new Gson().toJson(this);
 	}
 
 }

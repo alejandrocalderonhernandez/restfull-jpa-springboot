@@ -14,6 +14,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.eagle.relationaldbaccessapi.models.dto.AddressDTO;
+import com.google.gson.Gson;
 
 @Entity
 @Table(name = "ADDRESS")
@@ -58,9 +59,6 @@ public class AddressEntity implements Serializable{
 		 this.setExternalNumber(address.getExternalNumber());
 		 this.setLat(address.getLat());
 		 this.setLon(address.getLon());
-		 if (address.getEmployee() != null) {
-			 this.setEmploye(new EmployeeEntity(address.getEmployee()));
-		 }
 	}
 
 	public Long getId() {
@@ -142,5 +140,10 @@ public class AddressEntity implements Serializable{
 	public void setEmploye(EmployeeEntity employee) {
 		this.employee = employee;
 	}	
+	
+	@Override
+	public String toString() {
+		return new Gson().toJson(this);
+	}
 	
 }

@@ -20,7 +20,7 @@ import com.eagle.relationaldbaccessapi.repository.UserInfoRepocitory;
 import com.eagle.relationaldbaccessapi.services.interfaces.IUserInfo;
 import com.eagle.relationaldbaccessapi.util.components.FileComponent;
 import com.eagle.relationaldbaccessapi.util.constants.FileConstants;
-import com.eagle.relationaldbaccessapi.util.interfaces.IUpdater;
+import com.eagle.relationaldbaccessapi.util.interfaces.functional.IUpdater;
 import com.eagle.relationaldbaccessapi.util.validators.FileValidator;
 
 @Service

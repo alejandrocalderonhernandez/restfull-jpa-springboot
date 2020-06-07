@@ -6,6 +6,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.Pattern;
 
 import com.eagle.relationaldbaccessapi.models.entity.ContactEntity;
+import com.google.gson.Gson;
 
 import static com.eagle.relationaldbaccessapi.util.constants.RegexConstants.ONLY_NUMBERS_REGEX;
 
@@ -83,6 +84,11 @@ public class ContactDTO implements Serializable{
 
 	public void setEmployee(EmployeeDTO employee) {
 		this.employee = employee;
+	}
+	
+	@Override
+	public String toString() {
+		return new Gson().toJson(this);
 	}
 
 }

@@ -12,6 +12,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.eagle.relationaldbaccessapi.models.dto.ContactDTO;
+import com.google.gson.Gson;
 
 @Entity
 @Table(name = "CONTACT_INFO")
@@ -90,6 +91,11 @@ public class ContactEntity implements Serializable{
 
 	public void setEmployee(EmployeeEntity employee) {
 		this.employee = employee;
+	}
+	
+	@Override
+	public String toString() {
+		return new Gson().toJson(this);
 	}
 
 }

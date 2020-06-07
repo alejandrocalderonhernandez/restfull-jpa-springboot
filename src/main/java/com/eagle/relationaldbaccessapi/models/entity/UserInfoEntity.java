@@ -13,6 +13,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.eagle.relationaldbaccessapi.models.dto.UserInfoDTO;
+import com.google.gson.Gson;
 
 @Entity
 @Table(name = "USER_INFO")
@@ -150,12 +151,10 @@ public class UserInfoEntity implements Serializable{
 	public void setEmploye(EmployeeEntity employee) {
 		this.employee = employee;
 	}
-
+	
 	@Override
 	public String toString() {
-		return "UserInfoEntity [id=" + id + ", name1=" + name1 + ", name2=" + name2 + ", lastName1=" + lastName1
-				+ ", lastName2=" + lastName2 + ", curp=" + curp + ", photoUrl=" + photoUrl + ", createAt=" + createAt
-				+ ", age=" + age + ", status=" + status + ", employee=" + employee + "]";
+		return new Gson().toJson(this);
 	}
 	
 }

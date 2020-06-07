@@ -7,6 +7,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.eagle.relationaldbaccessapi.models.entity.AddressEntity;
+import com.google.gson.Gson;
 
 public class AddressDTO implements Serializable {
 	
@@ -126,6 +127,11 @@ public class AddressDTO implements Serializable {
 
 	public void setEmployee(EmployeeDTO employee) {
 		this.employee = employee;
+	}
+
+	@Override
+	public String toString() {
+		return new Gson().toJson(this);
 	}
 	
 }

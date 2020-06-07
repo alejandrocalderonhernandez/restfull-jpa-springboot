@@ -12,6 +12,7 @@ import com.eagle.relationaldbaccessapi.models.dto.EmployeeDTO;
 import com.eagle.relationaldbaccessapi.models.entity.EmployeeEntity;
 import com.eagle.relationaldbaccessapi.repository.EmployeeRepocitory;
 import com.eagle.relationaldbaccessapi.services.interfaces.IEmployeeService;
+import com.eagle.relationaldbaccessapi.util.util.EmployeeUtil;
 
 @Service
 public class EmployeServiceImpl implements IEmployeeService {
@@ -19,6 +20,8 @@ public class EmployeServiceImpl implements IEmployeeService {
     private static final Logger LOGGER = LogManager.getLogger(EmployeServiceImpl.class);
 	
 	private EmployeeRepocitory repocitory;
+	
+
 
 	@Autowired
 	public EmployeServiceImpl(EmployeeRepocitory repocitory) {
@@ -45,8 +48,15 @@ public class EmployeServiceImpl implements IEmployeeService {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public EmployeeDTO findById(Long id) {
-		return null;
+		if(this.repocitory.existsById(id)) {
+			EmployeeEntity entity = this.repocitory.findById(id).get();
+			return EmployeeUtil.buildEployeeDTO.build(entity);
+		} else {
+			 LOGGER.warn("Select Eployee not found id: " + id);
+			 throw new IllegalArgumentException("The Contact id: " + id + " dont exist");
+		}
 	}
 
 	@Override

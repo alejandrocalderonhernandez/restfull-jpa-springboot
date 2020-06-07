@@ -4,9 +4,9 @@ import java.util.Random;
 
 import com.eagle.relationaldbaccessapi.util.constants.FileConstants;
 
-public class StringUtils {
+public class StringUtil {
 	
-	private StringUtils() {
+	private StringUtil() {
 	}
 
 	private static final int CHARACTER_TYPES = 3;

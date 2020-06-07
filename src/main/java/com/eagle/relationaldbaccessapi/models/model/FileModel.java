@@ -8,7 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.eagle.relationaldbaccessapi.util.constants.FileConstants;
 import com.eagle.relationaldbaccessapi.util.constants.PathsConstants;
 import com.eagle.relationaldbaccessapi.util.constants.RegexConstants;
-import com.eagle.relationaldbaccessapi.util.util.StringUtils;
+import com.eagle.relationaldbaccessapi.util.util.StringUtil;
 
 public class FileModel {
 	
@@ -25,7 +25,7 @@ public class FileModel {
 	public FileModel(MultipartFile multipartFile) {
 		this.name = multipartFile.getOriginalFilename();
 		this.extension = this.getExtension(multipartFile.getOriginalFilename());
-		this.fullName = StringUtils.generateRandomId(FileConstants.LENGTH_ID_IMG) + multipartFile.getOriginalFilename();
+		this.fullName = StringUtil.generateRandomId(FileConstants.LENGTH_ID_IMG) + multipartFile.getOriginalFilename();
 		this.path = Path.of(PathsConstants.USER_IMG).resolve(this.fullName).toAbsolutePath();
 		this.multipartFile = multipartFile;
 	}

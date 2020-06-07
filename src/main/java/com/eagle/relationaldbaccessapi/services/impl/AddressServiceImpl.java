@@ -17,7 +17,7 @@ import com.eagle.relationaldbaccessapi.models.dto.AddressDTO;
 import com.eagle.relationaldbaccessapi.models.entity.AddressEntity;
 import com.eagle.relationaldbaccessapi.repository.AddressRepository;
 import com.eagle.relationaldbaccessapi.services.interfaces.IAddressService;
-import com.eagle.relationaldbaccessapi.util.interfaces.IUpdater;
+import com.eagle.relationaldbaccessapi.util.interfaces.functional.IUpdater;
 
 @Service
 public class AddressServiceImpl implements IAddressService {
