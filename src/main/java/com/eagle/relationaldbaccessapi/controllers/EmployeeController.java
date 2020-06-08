@@ -43,7 +43,7 @@ public class EmployeeController {
 			return new ResponseEntity<>(responce, HttpStatus.OK);
 		} catch (Exception e) {
 			Map<String, Object> responce = 
-					this.messages.errorMessage(e.getMessage(), ResponceMessages.CREATE_ERROR);
+					this.messages.errorMessage(ResponceMessages.SAVE_ERROR, ResponceMessages.CREATE_ERROR);
 			return new ResponseEntity<>(responce, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -52,15 +52,14 @@ public class EmployeeController {
 	public ResponseEntity<?> findById(@PathVariable Long id) {
 		try {
 			Map<String, Object> responce = 
-					this.messages.successMessage(ResponceMessages.CREATE_SUCCESS, this.service.findById(id));
+					this.messages.successMessage(ResponceMessages.GET_SUCCES, this.service.findById(id));
 			return new ResponseEntity<>(responce, HttpStatus.OK);
 		} catch (IllegalArgumentException ie) {
 				Map<String, Object> responce = 
 						this.messages.errorMessage(ie.getMessage(), ResponceMessages.ELEMENT_NOT_FOUND);
 				return new ResponseEntity<>(responce, HttpStatus.BAD_REQUEST);
 		} catch (Exception e) {
-			Map<String, Object> responce =
-					this.messages.errorMessage(e.getMessage(), ResponceMessages.ELEMENT_NOT_FOUND);
+			Map<String, Object> responce =this.messages.internalServerError();
 			return new ResponseEntity<>(responce, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}

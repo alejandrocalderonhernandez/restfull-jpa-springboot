@@ -24,9 +24,11 @@ public class ResponceMessages {
 	public static final String DELETE_ERROR = "	Element not deleted ";
 	public static final String UPLOAD_ERROR = "File not upload ";
 	public static final String FILE_FORMAT_ERROR = "Format incorrect ";
+	public static final String SAVE_ERROR = "Error to save element ";
 	
 	public static final String DATABASE_EMPTY = "	Database is empty ";
 	public static final String ELEMENT_NOT_FOUND = "Element not found ";
+	public static final String SERVER_ERROR = "Server error ";
 	
 	public Map<String, Object> successMessage(String message, Object data) {
 		Map<String, Object> responce = new HashMap<>();
@@ -39,6 +41,12 @@ public class ResponceMessages {
 		Map<String, Object> responce = new HashMap<>();
 		responce.put(ERROR, error);
 		responce.put(MESSAGE, message);
+		return responce;
+	}
+	
+	public Map<String, Object> internalServerError(){
+		Map<String, Object> responce = new HashMap<>();
+		responce.put(ERROR, "Internal server error");
 		return responce;
 	}
 }

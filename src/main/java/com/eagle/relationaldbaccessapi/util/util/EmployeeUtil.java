@@ -56,8 +56,12 @@ public class EmployeeUtil {
 		dto.setId(entity.getId());
 		dto.setAlternativeId(entity.getAlternativeId());
 		dto.setUserInfo(buildUserInfoDTO.build(entity.getUserInfo()));
-		dto.setAddress(buildAddressDTO.build(entity.getAddress()));
-		dto.setContact(buildContactDTO.build(entity.getContact()));
+		if(entity.getAddress() != null) {
+			dto.setAddress(buildAddressDTO.build(entity.getAddress()));
+		}
+		if(entity.getContact() != null) {
+			dto.setContact(buildContactDTO.build(entity.getContact()));
+		}
 		return dto;
 	};
 	

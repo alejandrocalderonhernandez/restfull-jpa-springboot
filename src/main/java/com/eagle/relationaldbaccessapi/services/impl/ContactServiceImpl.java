@@ -13,10 +13,12 @@ import com.eagle.relationaldbaccessapi.models.entity.ContactEntity;
 import com.eagle.relationaldbaccessapi.repository.ContactRepository;
 import com.eagle.relationaldbaccessapi.services.interfaces.IContactService;
 import com.eagle.relationaldbaccessapi.util.interfaces.functional.IUpdater;
+import com.eagle.relationaldbaccessapi.util.util.StringUtil;
 
 @Service
 public class ContactServiceImpl implements IContactService{
 	
+	private static final String TYPE = "Contact";
     private static final Logger LOGGER = LogManager.getLogger(ContactServiceImpl.class);
     
 	private ContactRepository repocitory;
@@ -62,7 +64,7 @@ public class ContactServiceImpl implements IContactService{
 			}
 		} else {
 			 LOGGER.warn("Update Contact not found id: " + id);
-			 throw new IllegalArgumentException("The Contact id: " + id + " dont exist");
+			throw new IllegalArgumentException(StringUtil.badIdMessage(TYPE, id));
 		}
 	}
 
@@ -73,7 +75,7 @@ public class ContactServiceImpl implements IContactService{
 			return new ContactDTO(this.repocitory.findById(id).get());
 		} else {
 			 LOGGER.warn("Select Contact not found id: " + id);
-			 throw new IllegalArgumentException("The Contact id: " + id + " dont exist");
+			throw new IllegalArgumentException(StringUtil.badIdMessage(TYPE, id));
 		}
 	}
 
@@ -85,14 +87,7 @@ public class ContactServiceImpl implements IContactService{
 
 	@Override
 	@Transactional
-	public boolean deleteById(Long id) {
-		return false;
-	}
-
-	@Override
-	@Transactional(readOnly = true)
-	public boolean existById(Long id) {
-		return false;
+	public void deleteById(Long id) {
 	}
 
 }

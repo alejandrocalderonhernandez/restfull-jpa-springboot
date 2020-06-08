@@ -8,6 +8,5 @@ public interface ISimpleCrud<T> {
 	public T update(T dto, Long id);
 	public T findById(Long id);
 	public List<T> findAll();
-	public boolean deleteById(Long id);
-	public boolean existById(Long id);
+	public void deleteById(Long id);
 }

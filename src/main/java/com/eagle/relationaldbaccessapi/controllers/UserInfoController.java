@@ -55,7 +55,7 @@ public class UserInfoController {
 			return new ResponseEntity<>(responce, HttpStatus.OK);
 		} catch (Exception e) {
 			Map<String, Object> responce = 
-					this.messages.errorMessage(e.getMessage(), ResponceMessages.CREATE_ERROR);
+					this.messages.errorMessage(ResponceMessages.SAVE_ERROR, ResponceMessages.CREATE_ERROR);
 			return new ResponseEntity<>(responce, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -71,8 +71,7 @@ public class UserInfoController {
 					this.messages.errorMessage(ie.getMessage(), ResponceMessages.ELEMENT_NOT_FOUND);
 			return new ResponseEntity<>(responce, HttpStatus.BAD_REQUEST);
 		} catch (Exception e) {
-			Map<String, Object> responce = 
-					this.messages.errorMessage(e.getMessage(), ResponceMessages.UPDATE_ERROR);
+			Map<String, Object> responce = this.messages.internalServerError();
 			return new ResponseEntity<>(responce, HttpStatus.INTERNAL_SERVER_ERROR);
 		} 
 	}
@@ -81,15 +80,14 @@ public class UserInfoController {
 	public ResponseEntity<?> findById(@PathVariable Long id) {
 		try {
 			Map<String, Object> responce = 
-					this.messages.successMessage(ResponceMessages.CREATE_SUCCESS, this.service.findById(id));
+					this.messages.successMessage(ResponceMessages.GET_SUCCES, this.service.findById(id));
 			return new ResponseEntity<>(responce, HttpStatus.OK);
 		} catch (IllegalArgumentException ie) {
 				Map<String, Object> responce = 
 						this.messages.errorMessage(ie.getMessage(), ResponceMessages.ELEMENT_NOT_FOUND);
 				return new ResponseEntity<>(responce, HttpStatus.BAD_REQUEST);
 		} catch (Exception e) {
-			Map<String, Object> responce = 
-					this.messages.errorMessage(e.getMessage(), ResponceMessages.UPDATE_ERROR);
+			Map<String, Object> responce = this.messages.internalServerError();
 			return new ResponseEntity<>(responce, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -100,22 +98,26 @@ public class UserInfoController {
             Map<String, Object> responce = 
             		this.messages.successMessage(ResponceMessages.GET_SUCCES, this.service.findAll());
      		return new ResponseEntity<>(responce, HttpStatus.OK);
-		}catch (Exception e) {
+		} catch (IllegalArgumentException ie) {
 			Map<String, Object> responce = 
-					this.messages.errorMessage(e.getMessage(), ResponceMessages.ELEMENT_NOT_FOUND);
+					this.messages.errorMessage(ie.getMessage(), ResponceMessages.ELEMENT_NOT_FOUND);
 			return new ResponseEntity<>(responce, HttpStatus.BAD_REQUEST);
+		}catch (Exception e) {
+			Map<String, Object> responce = this.messages.internalServerError();
+			return new ResponseEntity<>(responce, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
 	@DeleteMapping(path = REST_DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> delete(@PathVariable Long id) {
-		if(this.service.deleteById(id)) {
+		try {
+			this.service.deleteById(id);
 			Map<String, Object> responce = 
 					this.messages.successMessage(ResponceMessages.DELETE_SUCCESS, id);
 			return new ResponseEntity<>(responce, HttpStatus.OK);
-		} else {
+		} catch (IllegalArgumentException e) {
 			Map<String, Object> responce = 
-					this.messages.errorMessage("Element with id " + id + "dont exist", ResponceMessages.DELETE_ERROR);
+					this.messages.errorMessage(e.getMessage(), ResponceMessages.DELETE_ERROR);
 			return new ResponseEntity<>(responce, HttpStatus.BAD_REQUEST);
 		}
 	}
@@ -152,8 +154,7 @@ public class UserInfoController {
 					this.messages.errorMessage(ie.getMessage(), ResponceMessages.DELETE_ERROR);
 			return new ResponseEntity<>(responce, HttpStatus.BAD_REQUEST);
 		} catch (Exception e) {
-			Map<String, Object> responce = 
-					this.messages.errorMessage(e.getMessage(), ResponceMessages.DELETE_ERROR);
+			Map<String, Object> responce =	this.messages.internalServerError();
 			return new ResponseEntity<>(responce, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -163,7 +164,7 @@ public class UserInfoController {
 		try {
 			this.service.changeStatus(id);
 			Map<String, Object> responce = 
-					this.messages.successMessage(ResponceMessages.UPDATE_SUCCESS,this.service.existById(id));
+					this.messages.successMessage(ResponceMessages.UPDATE_SUCCESS,this.service.findById(id));
 			return new ResponseEntity<>(responce, HttpStatus.OK);
 		} catch (IllegalArgumentException ie) {
 			Map<String, Object> responce = 

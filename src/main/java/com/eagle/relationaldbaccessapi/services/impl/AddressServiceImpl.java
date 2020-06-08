@@ -18,10 +18,12 @@ import com.eagle.relationaldbaccessapi.models.entity.AddressEntity;
 import com.eagle.relationaldbaccessapi.repository.AddressRepository;
 import com.eagle.relationaldbaccessapi.services.interfaces.IAddressService;
 import com.eagle.relationaldbaccessapi.util.interfaces.functional.IUpdater;
+import com.eagle.relationaldbaccessapi.util.util.StringUtil;
 
 @Service
 public class AddressServiceImpl implements IAddressService {
 	
+	private static final String TYPE = "Address";
     private static final Logger LOGGER = LogManager.getLogger(AddressServiceImpl.class);
     
     private IUpdater<AddressDTO, AddressEntity> updater = (newAddress, oldAddress) -> {
@@ -72,7 +74,7 @@ public class AddressServiceImpl implements IAddressService {
 			}
 		} else {
 		   LOGGER.warn("Update Address not found id: " + id);
-			throw new IllegalArgumentException("The Address id: " + id + " dont exist");
+			throw new IllegalArgumentException(StringUtil.badIdMessage(TYPE, id));
 		}
 	}
 
@@ -83,7 +85,7 @@ public class AddressServiceImpl implements IAddressService {
 			return new AddressDTO(this.repocitory.findById(id).get());
 		} else {
 			LOGGER.warn("Select Address not found id: " + id);
-			throw new IllegalArgumentException("The Address with id:  " + id + " dont exist");
+			throw new IllegalArgumentException(StringUtil.badIdMessage(TYPE, id));
 		}
 	}
 
@@ -102,21 +104,14 @@ public class AddressServiceImpl implements IAddressService {
 
 	@Override
 	@Transactional
-	public boolean deleteById(Long id) {
+	public void deleteById(Long id) {
 		if(this.repocitory.existsById(id)) {
 			this.repocitory.deleteById(id);
 			LOGGER.info("Deleted Address with id: " + id);
-			return true;
 		} else {
 			LOGGER.warn("Delete Address not found id: " + id);
-			return false;
+			throw new IllegalArgumentException(StringUtil.badIdMessage(TYPE, id));
 		}
-	}
-
-	@Override
-	@Transactional(readOnly = true)
-	public boolean existById(Long id) {
-		return this.repocitory.existsById(id);
 	}
 
 	@Override

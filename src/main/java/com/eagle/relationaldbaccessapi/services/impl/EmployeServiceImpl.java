@@ -13,10 +13,12 @@ import com.eagle.relationaldbaccessapi.models.entity.EmployeeEntity;
 import com.eagle.relationaldbaccessapi.repository.EmployeeRepocitory;
 import com.eagle.relationaldbaccessapi.services.interfaces.IEmployeeService;
 import com.eagle.relationaldbaccessapi.util.util.EmployeeUtil;
+import com.eagle.relationaldbaccessapi.util.util.StringUtil;
 
 @Service
 public class EmployeServiceImpl implements IEmployeeService {
 	
+	private static final String TYPE = "Employee";
     private static final Logger LOGGER = LogManager.getLogger(EmployeServiceImpl.class);
 	
 	private EmployeeRepocitory repocitory;
@@ -55,7 +57,7 @@ public class EmployeServiceImpl implements IEmployeeService {
 			return EmployeeUtil.buildEployeeDTO.build(entity);
 		} else {
 			 LOGGER.warn("Select Eployee not found id: " + id);
-			 throw new IllegalArgumentException("The Contact id: " + id + " dont exist");
+			throw new IllegalArgumentException(StringUtil.badIdMessage(TYPE, id));
 		}
 	}
 
@@ -65,13 +67,8 @@ public class EmployeServiceImpl implements IEmployeeService {
 	}
 
 	@Override
-	public boolean deleteById(Long id) {
-		return false;
-	}
-
-	@Override
-	public boolean existById(Long id) {
-		return false;
+	public void deleteById(Long id) {
+	
 	}
 
 }

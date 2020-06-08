@@ -21,11 +21,13 @@ import com.eagle.relationaldbaccessapi.services.interfaces.IUserInfo;
 import com.eagle.relationaldbaccessapi.util.components.FileComponent;
 import com.eagle.relationaldbaccessapi.util.constants.FileConstants;
 import com.eagle.relationaldbaccessapi.util.interfaces.functional.IUpdater;
+import com.eagle.relationaldbaccessapi.util.util.StringUtil;
 import com.eagle.relationaldbaccessapi.util.validators.FileValidator;
 
 @Service
 public class UserInfoServiceImpl implements IUserInfo {
 	
+	private static final String TYPE = "User";
     private static final Logger LOGGER = LogManager.getLogger(UserInfoServiceImpl.class);
 	
 	private UserInfoRepocitory repocitory;
@@ -75,7 +77,7 @@ public class UserInfoServiceImpl implements IUserInfo {
 			}
 		} else {
 			LOGGER.warn("Update UserInfo not found id: " + id);
-			throw new IllegalArgumentException("The UserInfo id: " + id + " dont exist");
+			throw new IllegalArgumentException(StringUtil.badIdMessage(TYPE, id));
 		}
 	}
 
@@ -86,7 +88,7 @@ public class UserInfoServiceImpl implements IUserInfo {
 			return new UserInfoDTO(this.repocitory.findById(id).get());
 		} else {
 			LOGGER.warn("Select UserInfo not found id: " + id);
-			throw new IllegalArgumentException("The UserInfo with id:  " + id + " dont exist");
+			throw new IllegalArgumentException(StringUtil.badIdMessage(TYPE, id));
 		}
 	}
 
@@ -105,21 +107,14 @@ public class UserInfoServiceImpl implements IUserInfo {
 	
 	@Override
 	@Transactional
-	public boolean deleteById(Long id) {
+	public void deleteById(Long id) {
 		if(this.repocitory.existsById(id)) {
 			this.repocitory.deleteById(id);
 			LOGGER.info("Deleted UserInfo with id: " + id);
-			return true;
 		} else {
 			LOGGER.warn("Delete UserInfo not found id: " + id);
-			return false;
+			throw new IllegalArgumentException(StringUtil.badIdMessage(TYPE, id));
 		}
-	}
-
-	@Override
-	@Transactional(readOnly = true)
-	public boolean existById(Long id) {
-		return this.repocitory.existsById(id);
 	}
 	
 	@Override
@@ -144,10 +139,10 @@ public class UserInfoServiceImpl implements IUserInfo {
 				Path path = Paths.get(url).toAbsolutePath();
 				return this.fileComponent.getFile(path);
 			} else {
-				throw new NoSuchElementException("This user not have a photo");
+				throw new NoSuchElementException("This user dont have a photo");
 			}
 		} else {
-			throw new IllegalArgumentException("the UserInfo with id : " + id + " dont exist");
+			throw new IllegalArgumentException(StringUtil.badIdMessage(TYPE, id));
 		}
 	}
 
@@ -162,7 +157,7 @@ public class UserInfoServiceImpl implements IUserInfo {
 			this.repocitory.save(userToUpdate);
 			return this.fileComponent.deleteFile(fileModel.getFile());
 		} else {
-			throw new IllegalArgumentException("the UserInfo with id : " + id + " dont exist");
+			throw new IllegalArgumentException(StringUtil.badIdMessage(TYPE, id));
 		}
 	}
 
@@ -176,7 +171,7 @@ public class UserInfoServiceImpl implements IUserInfo {
 			LOGGER.info("Updated UserInfo inactive with id " + id);
 		} else {
 			LOGGER.warn("Update UserInfo not found id: " + id);
-			throw new IllegalArgumentException("The UserInfo with id: " + id + " dont exist");
+			throw new IllegalArgumentException(StringUtil.badIdMessage(TYPE, id));
 		}
 	}
 }

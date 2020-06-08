@@ -9,6 +9,10 @@ public class StringUtil {
 	private StringUtil() {
 	}
 
+	private static final String ELEMENT_TO_REPLACE = "--element--";
+	private static final String ID_TO_REPLACE = "--id--";
+	private static final String ID_NOT_FOUND_MESSAGE = "The --element-- with id --id-- dont exist";
+	
 	private static final int CHARACTER_TYPES = 3;
 	private static final int LOWER = 1;
 	private static final int UPPER = 2; 
@@ -25,7 +29,7 @@ public class StringUtil {
 	        	int selectCharType = random.nextInt(CHARACTER_TYPES);
 	        	switch(selectCharType) {
 	        	case LOWER : 
-	        		char lower = (char) (ASCII_START_LOWER + random.nextInt( TOTAL_LETTERS));
+	        		char lower = (char) (ASCII_START_LOWER + random.nextInt(TOTAL_LETTERS));
 	        		sb.append(lower);
 	        		break;
 	        	case UPPER :
@@ -39,4 +43,10 @@ public class StringUtil {
 	        }
 	        return sb.toString();
 	    }
+	   
+	   public static String badIdMessage(String typeElement,Long id) {
+		   return ID_NOT_FOUND_MESSAGE
+				   .replace(ELEMENT_TO_REPLACE, typeElement)
+				   .replace(ID_TO_REPLACE, id.toString());
+	   }
 }
