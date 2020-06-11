@@ -6,7 +6,6 @@ import java.time.LocalDateTime;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import com.eagle.relationaldbaccessapi.models.entity.UserInfoEntity;
 import com.google.gson.Gson;
 
 public class UserInfoDTO implements Serializable{
@@ -32,19 +31,6 @@ public class UserInfoDTO implements Serializable{
 	private EmployeeDTO employee;
 	
     public UserInfoDTO() {
-    }
-    
-    public UserInfoDTO(UserInfoEntity userInfo) {
-    	this.setId(userInfo.getId());
-    	this.setName1(userInfo.getName1());
-    	this.setName2(userInfo.getName2());
-    	this.setLastName1(userInfo.getLastName1());
-    	this.setLastName2(userInfo.getLastName2());
-    	this.setCurp(userInfo.getCurp());
-    	this.setPhotoUrl(userInfo.getPhotoUrl());
-    	this.setCreateAt(userInfo.getCreateAt());
-    	this.setAge(userInfo.getAge());
-    	this.setStatus(userInfo.getStatus());
     }
 
 	public Long getId() {

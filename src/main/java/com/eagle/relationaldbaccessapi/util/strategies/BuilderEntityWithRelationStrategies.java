@@ -1,5 +1,7 @@
 package com.eagle.relationaldbaccessapi.util.strategies;
 
+import java.time.LocalDateTime;
+
 import com.eagle.relationaldbaccessapi.models.dto.AddressDTO;
 import com.eagle.relationaldbaccessapi.models.dto.ContactDTO;
 import com.eagle.relationaldbaccessapi.models.dto.EmployeeDTO;
@@ -40,9 +42,12 @@ public class BuilderEntityWithRelationStrategies {
     	entity.setLastName2(dto.getLastName2());
     	entity.setCurp(dto.getCurp());
     	entity.setPhotoUrl(dto.getPhotoUrl());
-    	entity.setCreateAt(dto.getCreateAt());
+    	entity.setCreateAt(LocalDateTime.now());
     	entity.setAge(dto.getAge());
-    	entity.setStatus(dto.getStatus());
+    	entity.setStatus(true);
+		if(dto.getEmployee() != null) {
+			entity.setEmploye(BuilderSimpleEntityStrategies.BUILD_EMPLOYEE_ENTITY.build(dto.getEmployee()));
+		}
 		return entity;
 	};
 	

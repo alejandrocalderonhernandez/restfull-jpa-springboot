@@ -3,6 +3,7 @@ package com.eagle.relationaldbaccessapi.models.entity;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,7 +13,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.eagle.relationaldbaccessapi.models.dto.UserInfoDTO;
 import com.google.gson.Gson;
 
 @Entity
@@ -46,24 +46,11 @@ public class UserInfoEntity implements Serializable{
 	@Column(name = "status", nullable = false)
 	private Boolean status;
 	
-	@OneToOne(mappedBy = "userInfo", fetch = FetchType.LAZY)
+	@OneToOne(mappedBy = "userInfo", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private EmployeeEntity employee;
 
 	public UserInfoEntity() {
-	}
-	
-    public UserInfoEntity(UserInfoDTO userInfo) {
-    	this.setName1(userInfo.getName1());
-    	this.setName2(userInfo.getName2());
-    	this.setLastName1(userInfo.getLastName1());
-    	this.setLastName2(userInfo.getLastName2());
-    	this.setCurp(userInfo.getCurp());
-    	this.setPhotoUrl(userInfo.getPhotoUrl());
-    	this.setCreateAt(LocalDateTime.now());
-    	this.setAge(userInfo.getAge());
-    	this.setStatus(true);
-    }
-   
+	}   
 
 	public Long getId() {
 		return id;

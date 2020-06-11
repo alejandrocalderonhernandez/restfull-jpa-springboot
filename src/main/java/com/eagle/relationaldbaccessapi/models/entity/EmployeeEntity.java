@@ -13,7 +13,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.eagle.relationaldbaccessapi.models.dto.EmployeeDTO;
 import com.google.gson.Gson;
 
 @Entity
@@ -44,19 +43,6 @@ public class EmployeeEntity implements Serializable{
 	public EmployeeEntity() {
 	}
 	
-	public EmployeeEntity(EmployeeDTO employee) {
-		this.setAlternativeId(employee.getAlternativeId());
-		if(employee.getUserInfo() != null ) {
-			this.setUserInfo(new UserInfoEntity(employee.getUserInfo()));
-		}
-		if(employee.getAddress() != null ) {
-			this.setAddress(new AddressEntity(employee.getAddress()));
-		}
-		if(employee.getContact() != null ) {
-			this.setContact(new ContactEntity(employee.getContact()));
-		}
-	}
-
 	public Long getId() {
 		return id;
 	}

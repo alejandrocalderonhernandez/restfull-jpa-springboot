@@ -4,6 +4,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
@@ -21,13 +22,16 @@ import com.eagle.relationaldbaccessapi.services.interfaces.IUserInfo;
 import com.eagle.relationaldbaccessapi.util.components.FileComponent;
 import com.eagle.relationaldbaccessapi.util.constants.FileConstants;
 import com.eagle.relationaldbaccessapi.util.interfaces.functional.IUpdater;
+import com.eagle.relationaldbaccessapi.util.strategies.BuilderDTOSWithRelationStrategies;
+import com.eagle.relationaldbaccessapi.util.strategies.BuilderEntityWithRelationStrategies;
+import com.eagle.relationaldbaccessapi.util.strategies.BuilderSimpleDTOStrategies;
+import com.eagle.relationaldbaccessapi.util.strategies.BuilderSimpleEntityStrategies;
 import com.eagle.relationaldbaccessapi.util.util.StringUtil;
 import com.eagle.relationaldbaccessapi.util.validators.FileValidator;
 
 @Service
 public class UserInfoServiceImpl implements IUserInfo {
 	
-	private static final String TYPE = "User";
     private static final Logger LOGGER = LogManager.getLogger(UserInfoServiceImpl.class);
 	
 	private UserInfoRepocitory repocitory;
@@ -53,27 +57,28 @@ public class UserInfoServiceImpl implements IUserInfo {
 	public UserInfoDTO insert(UserInfoDTO dto) {
 		UserInfoEntity response = null;
 		try {
-			response = this.repocitory.save(new UserInfoEntity(dto));
+			UserInfoEntity userToInsert = this.selectBuilderEntity(dto);
+			response = this.repocitory.save(userToInsert);
 			LOGGER.info("Inserted {} ", dto);
 		} catch (Exception e) {
 			LOGGER.error("Error to insert UserInfo: ", e);
 		}
-		return new UserInfoDTO(response);
+		return this.selectBuilderDTO(response);
 	}
 
 	@Override
 	@Transactional
 	public UserInfoDTO update(UserInfoDTO dto, Long id) {
-		if(this.repocitory.existsById(id)) {
+		Optional<UserInfoEntity> userToUpdate = this.repocitory.findById(id);
+		if(userToUpdate.isPresent()) {
 			try {
-				UserInfoEntity userToUpdate = this.repocitory.findById(id).get();
-				this.updater.update(dto, userToUpdate);
-				this.repocitory.save(userToUpdate);
+				this.updater.update(dto, userToUpdate.get());
+				this.repocitory.save(userToUpdate.get());
 				LOGGER.info("Updated {} ", dto);
-				return new UserInfoDTO(userToUpdate);
+				return this.selectBuilderDTO(userToUpdate.get());
 			} catch (Exception e) {
 				LOGGER.error("Error to update UserInfo -> ", e);
-				return dto;
+				return null;
 			}
 		} else {
 			LOGGER.warn("Update UserInfo not found id: " + id);
@@ -84,8 +89,9 @@ public class UserInfoServiceImpl implements IUserInfo {
 	@Override
 	@Transactional(readOnly = true)
 	public UserInfoDTO findById(Long id) {
-		if(this.repocitory.existsById(id)){
-			return new UserInfoDTO(this.repocitory.findById(id).get());
+		Optional<UserInfoEntity> userToSearch= this.repocitory.findById(id);
+		if(userToSearch.isPresent()){
+			return this.selectBuilderDTO(userToSearch.get());
 		} else {
 			LOGGER.warn("Select UserInfo not found id: " + id);
 			throw new IllegalArgumentException(StringUtil.badIdMessage(TYPE, id));
@@ -97,7 +103,7 @@ public class UserInfoServiceImpl implements IUserInfo {
 	public List<UserInfoDTO> findAll() {
 		List<UserInfoEntity>resultEntity = this.repocitory.findAll();
 		if(!resultEntity.isEmpty()) {
-			return resultEntity.stream().map(UserInfoDTO::new)
+			return resultEntity.stream().map(this::selectBuilderDTO)
 					.collect(Collectors.toList());
 		} else {
 			LOGGER.warn("Find all no data: UserInfo");
@@ -120,8 +126,9 @@ public class UserInfoServiceImpl implements IUserInfo {
 	@Override
 	@Transactional
 	public boolean uploadOrUpdateFile(FileModel fileModel, Long id) {
-		if(FileValidator.validate(fileModel, FileConstants.TYPE_IMG) && this.repocitory.existsById(id)) {
-			UserInfoEntity userToUpdate = this.repocitory.findById(id).get();
+		Optional<UserInfoEntity> user = this.repocitory.findById(id);
+		if(FileValidator.validate(fileModel, FileConstants.TYPE_IMG) && user.isPresent()) {
+			UserInfoEntity userToUpdate = user.get();
 			userToUpdate.setPhotoUrl(fileModel.getPath().toString());
 			this.repocitory.save(userToUpdate);
 			LOGGER.info("New file: " + id);
@@ -133,8 +140,9 @@ public class UserInfoServiceImpl implements IUserInfo {
 	@Override
 	@Transactional(readOnly = true)
 	public Resource getFile(FileModel fileMode, Long id) {
-		if(this.repocitory.existsById(id)) {
-			String url = this.repocitory.findById(id).get().getPhotoUrl();
+		Optional<UserInfoEntity> user = this.repocitory.findById(id);
+		if(user.isPresent()) {
+			String url = user.get().getPhotoUrl();
 			if(url.length() > 0) {
 				Path path = Paths.get(url).toAbsolutePath();
 				return this.fileComponent.getFile(path);
@@ -164,14 +172,33 @@ public class UserInfoServiceImpl implements IUserInfo {
 	@Override
 	@Transactional 
 	public void changeStatus(Long id) {
-		if(this.repocitory.existsById(id)) {
-			UserInfoEntity userToUpdate = this.repocitory.findById(id).get();
-			userToUpdate.setStatus(!userToUpdate.getStatus());
-			this.repocitory.save(userToUpdate);
+		Optional<UserInfoEntity> userToUpdate = this.repocitory.findById(id);
+		if(userToUpdate.isPresent()) {
+			userToUpdate.get().setStatus(!userToUpdate.get().getStatus());
+			this.repocitory.save(userToUpdate.get());
 			LOGGER.info("Updated UserInfo inactive with id " + id);
 		} else {
 			LOGGER.warn("Update UserInfo not found id: " + id);
 			throw new IllegalArgumentException(StringUtil.badIdMessage(TYPE, id));
+		}
+	}
+	
+	private UserInfoEntity selectBuilderEntity(UserInfoDTO dto) {
+		UserInfoEntity result = null;
+		if (dto.getEmployee()!=null) {
+			result = BuilderEntityWithRelationStrategies.BUILD_USER_INFO_ENTITY.build(dto);
+			result.getEmployee().setUserInfo(result);
+		} else {
+			result = BuilderSimpleEntityStrategies.BUILD_USER_INFO_ENTITY.build(dto);
+		}
+		return result;
+	}
+	
+	private UserInfoDTO selectBuilderDTO(UserInfoEntity entity) {
+		if (entity.getEmployee()!=null) {
+			return BuilderDTOSWithRelationStrategies.BUILD_USER_INFO_DTO.build(entity);
+		} else {
+			return BuilderSimpleDTOStrategies.BUILD_USER_INFO_DTO.build(entity);
 		}
 	}
 }

@@ -27,8 +27,6 @@ public class EmployeServiceImpl implements IEmployeeService {
 	
 	private EmployeeRepocitory repocitory;
 	
-
-
 	@Autowired
 	public EmployeServiceImpl(EmployeeRepocitory repocitory) {
 		this.repocitory = repocitory;
@@ -39,7 +37,7 @@ public class EmployeServiceImpl implements IEmployeeService {
 	public EmployeeDTO insert(EmployeeDTO dto) {
 		EmployeeEntity response = null;
 		try {
-			EmployeeEntity employeeToInsert = new EmployeeEntity(dto);
+			EmployeeEntity employeeToInsert = this.selectBuilderEntity(dto);
 			response = this.repocitory.save(employeeToInsert);
 			LOGGER.info("Inserted {} ", dto);
 		} catch (Exception e) {

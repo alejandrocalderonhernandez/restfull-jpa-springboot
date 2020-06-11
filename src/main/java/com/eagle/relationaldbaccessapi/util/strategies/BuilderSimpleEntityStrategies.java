@@ -32,7 +32,6 @@ public class BuilderSimpleEntityStrategies {
 	
 	public static final IBuilder<UserInfoEntity, UserInfoDTO> BUILD_USER_INFO_ENTITY = (dto) -> {
 		UserInfoEntity entity = new UserInfoEntity();
-    	entity.setId(dto.getId());
     	entity.setName1(dto.getName1());
     	entity.setName2(dto.getName2());
     	entity.setLastName1(dto.getLastName1());
@@ -47,7 +46,6 @@ public class BuilderSimpleEntityStrategies {
 	
 	public static  final IBuilder<ContactEntity, ContactDTO> BUILD_CONTACT_ENTITY = (dto) -> {
 		ContactEntity entity = new ContactEntity();
-		entity.setId(dto.getId());
 		entity.setPhoneNumber(dto.getPhoneNumber());
 		entity.setWorkNumber(dto.getWorkNumber());
 		entity.setHomeNumber(dto.getHomeNumber());
@@ -57,9 +55,10 @@ public class BuilderSimpleEntityStrategies {
 	
 	public static final IBuilder<EmployeeEntity, EmployeeDTO> BUILD_EMPLOYEE_ENTITY = (dto) -> {
 		EmployeeEntity entity = new EmployeeEntity();
-		entity.setId(dto.getId());
 		entity.setAlternativeId(dto.getAlternativeId());
-		entity.setUserInfo(BUILD_USER_INFO_ENTITY.build(dto.getUserInfo()));
+		if (dto.getUserInfo()!=null) {
+			entity.setUserInfo(BUILD_USER_INFO_ENTITY.build(dto.getUserInfo()));
+		}
 		return entity;
 	};
 

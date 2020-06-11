@@ -6,5 +6,7 @@ import com.eagle.relationaldbaccessapi.services.interfaces.common.ISimpleCrud;
 
 public interface IUserInfo extends IFilesService, ISimpleCrud<UserInfoDTO>{
 
+	public static final String TYPE = "User";
+	
 	public void changeStatus(Long id);
 }

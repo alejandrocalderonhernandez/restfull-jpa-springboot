@@ -32,14 +32,14 @@ public class AddressServiceImpl implements IAddressService {
     private static final Logger LOGGER = LogManager.getLogger(AddressServiceImpl.class);
     
     private IUpdater<AddressDTO, AddressEntity> updater = (newAddress, oldAddress) -> {
-			    	 oldAddress.setStreet(newAddress.getStreet());
-			    	 oldAddress.setColony(newAddress.getColony());
-			    	 oldAddress.setTownHall(newAddress.getTownHall());
-			    	 oldAddress.setEstate(newAddress.getStreet());
-			    	 oldAddress.setExternalNumber(newAddress.getExternalNumber());
-			    	 oldAddress.setInternalNumber(newAddress.getInternalNumber());
-			       	 oldAddress.setLat(newAddress.getLat());
-			    	 oldAddress.setLon(newAddress.getLon());
+	    	 oldAddress.setStreet(newAddress.getStreet());
+	    	 oldAddress.setColony(newAddress.getColony());
+	    	 oldAddress.setTownHall(newAddress.getTownHall());
+	    	 oldAddress.setEstate(newAddress.getStreet());
+	    	 oldAddress.setExternalNumber(newAddress.getExternalNumber());
+	    	 oldAddress.setInternalNumber(newAddress.getInternalNumber());
+	       	 oldAddress.setLat(newAddress.getLat());
+	    	 oldAddress.setLon(newAddress.getLon());
     };
 	 
 	private AddressRepository repocitory;
