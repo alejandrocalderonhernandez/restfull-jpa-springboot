@@ -26,6 +26,8 @@ import com.eagle.relationaldbaccessapi.util.components.ResponceMessages;
 @RequestMapping("/employee")
 public class EmployeeController {
 	
+	public static final String REST_FIND_USER_ID = "/find/userId/{id}";
+	
 	private IEmployeeService service;
 	private ResponceMessages messages;
 	
@@ -53,6 +55,22 @@ public class EmployeeController {
 		try {
 			Map<String, Object> responce = 
 					this.messages.successMessage(ResponceMessages.GET_SUCCES, this.service.findById(id));
+			return new ResponseEntity<>(responce, HttpStatus.OK);
+		} catch (IllegalArgumentException ie) {
+				Map<String, Object> responce = 
+						this.messages.errorMessage(ie.getMessage(), ResponceMessages.ELEMENT_NOT_FOUND);
+				return new ResponseEntity<>(responce, HttpStatus.BAD_REQUEST);
+		} catch (Exception e) {
+			Map<String, Object> responce =this.messages.internalServerError();
+			return new ResponseEntity<>(responce, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@GetMapping(path = REST_FIND_USER_ID, produces = MediaType.APPLICATION_JSON_VALUE )
+	public ResponseEntity<?> findById(@PathVariable String id) {
+		try {
+			Map<String, Object> responce = 
+					this.messages.successMessage(ResponceMessages.GET_SUCCES, this.service.findByAlternativeId(id));
 			return new ResponseEntity<>(responce, HttpStatus.OK);
 		} catch (IllegalArgumentException ie) {
 				Map<String, Object> responce = 

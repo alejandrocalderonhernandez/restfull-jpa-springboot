@@ -34,9 +34,6 @@ public class ContactDTO implements Serializable{
 		this.setWorkNumber(contact.getWorkNumber());
 		this.setHomeNumber(contact.getHomeNumber());
 		this.setEmail(contact.getEmail());
-    	if (contact.getEmployee() != null) {
-    		this.setEmployee(new EmployeeDTO(contact.getEmployee()));
-    	}
 	}
 	
 	public Long getId() {

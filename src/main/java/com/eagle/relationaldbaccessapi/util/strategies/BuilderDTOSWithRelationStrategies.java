@@ -1,4 +1,4 @@
-package com.eagle.relationaldbaccessapi.util.util;
+package com.eagle.relationaldbaccessapi.util.strategies;
 
 import com.eagle.relationaldbaccessapi.models.dto.AddressDTO;
 import com.eagle.relationaldbaccessapi.models.dto.ContactDTO;
@@ -10,9 +10,12 @@ import com.eagle.relationaldbaccessapi.models.entity.EmployeeEntity;
 import com.eagle.relationaldbaccessapi.models.entity.UserInfoEntity;
 import com.eagle.relationaldbaccessapi.util.interfaces.functional.IBuilder;
 
-public class EmployeeUtil {
+public class BuilderDTOSWithRelationStrategies {
 	
-	private static  IBuilder<UserInfoDTO, UserInfoEntity> buildUserInfoDTO = (entity) -> {
+	private BuilderDTOSWithRelationStrategies() {
+	}
+	
+	public static final IBuilder<UserInfoDTO, UserInfoEntity> BUILD_USER_INFO_DTO = (entity) -> {
 		UserInfoDTO dto = new UserInfoDTO();
     	dto.setId(entity.getId());
     	dto.setName1(entity.getName1());
@@ -24,10 +27,13 @@ public class EmployeeUtil {
     	dto.setCreateAt(entity.getCreateAt());
     	dto.setAge(entity.getAge());
     	dto.setStatus(entity.getStatus());
+    	if (entity.getEmployee() != null) {
+    		dto.setEmployee(BuilderSimpleDTOStrategies.BUILD_EMPLOYEE_DTO.build(entity.getEmployee()));
+    	}
 		return dto;
 	};
 	
-	private static  IBuilder<AddressDTO, AddressEntity> buildAddressDTO = (entity) -> {
+	public static final IBuilder<AddressDTO, AddressEntity> BUILD_ADDRESS_DTO_WITH_EMPLOYEE = (entity) -> {
 		 AddressDTO dto = new AddressDTO();
 		 dto.setId(entity.getId());
 		 dto.setStreet(entity.getStreet());
@@ -38,32 +44,37 @@ public class EmployeeUtil {
 		 dto.setExternalNumber(entity.getExternalNumber());
 		 dto.setLat(entity.getLat());
 		 dto.setLon(entity.getLon());
+	    	if (entity.getEmployee() != null) {
+	    		dto.setEmployee(BuilderSimpleDTOStrategies.BUILD_EMPLOYEE_DTO.build(entity.getEmployee()));
+	    	}
 		 return dto;
 	};
 	
-	private static  IBuilder<ContactDTO, ContactEntity> buildContactDTO = (entity) -> {
+	public static  final IBuilder<ContactDTO, ContactEntity> BUILD_CONTACT_DTO = (entity) -> {
 		ContactDTO dto = new ContactDTO();
 		dto.setId(entity.getId());
 		dto.setPhoneNumber(entity.getPhoneNumber());
 		dto.setWorkNumber(entity.getWorkNumber());
 		dto.setHomeNumber(entity.getHomeNumber());
 		dto.setEmail(entity.getEmail());
+    	if (entity.getEmployee() != null) {
+    		dto.setEmployee(BuilderSimpleDTOStrategies.BUILD_EMPLOYEE_DTO.build(entity.getEmployee()));
+    	}
 		return dto;
 	};
 	
-	public static IBuilder<EmployeeDTO, EmployeeEntity> buildEployeeDTO = (entity) -> {
+	public static final IBuilder<EmployeeDTO, EmployeeEntity> BUILD_EMPLOYEE_DTO = (entity) -> {
 		EmployeeDTO dto = new EmployeeDTO();
 		dto.setId(entity.getId());
 		dto.setAlternativeId(entity.getAlternativeId());
-		dto.setUserInfo(buildUserInfoDTO.build(entity.getUserInfo()));
+		dto.setUserInfo(BuilderSimpleDTOStrategies.BUILD_USER_INFO_DTO.build(entity.getUserInfo()));
 		if(entity.getAddress() != null) {
-			dto.setAddress(buildAddressDTO.build(entity.getAddress()));
+			dto.setAddress(BuilderSimpleDTOStrategies.BUILD_ADDRESS_DTO.build(entity.getAddress()));
 		}
 		if(entity.getContact() != null) {
-			dto.setContact(buildContactDTO.build(entity.getContact()));
+			dto.setContact(BuilderSimpleDTOStrategies.BUILD_CONTACT_DTO.build(entity.getContact()));
 		}
 		return dto;
 	};
-	
-	
+
 }

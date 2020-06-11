@@ -4,7 +4,6 @@ import java.io.Serializable;
 
 import javax.validation.constraints.NotNull;
 
-import com.eagle.relationaldbaccessapi.models.entity.EmployeeEntity;
 import com.google.gson.Gson;
 
 public class EmployeeDTO implements Serializable {
@@ -21,19 +20,6 @@ public class EmployeeDTO implements Serializable {
 	public EmployeeDTO() {
 	}
 	
-	public EmployeeDTO(EmployeeEntity employee) {
-		this.setId(employee.getId());
-		this.setAlternativeId(employee.getAlternativeId());
-		if(employee.getUserInfo() != null ) {
-			this.setUserInfo(new UserInfoDTO(employee.getUserInfo()));
-		}
-		if(employee.getAddress() != null ) {
-			this.setAddress(new AddressDTO(employee.getAddress()));
-		}
-		if(employee.getContact() != null ) {
-			this.setContact(new ContactDTO(employee.getContact()));
-		}
-	}
 
 	public Long getId() {
 		return id;

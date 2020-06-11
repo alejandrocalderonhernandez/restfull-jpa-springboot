@@ -5,4 +5,5 @@ import com.eagle.relationaldbaccessapi.services.interfaces.common.ISimpleCrud;
 
 public interface IEmployeeService extends ISimpleCrud<EmployeeDTO>{
 
+	public EmployeeDTO findByAlternativeId(String id);
 }

@@ -49,4 +49,10 @@ public class StringUtil {
 				   .replace(ELEMENT_TO_REPLACE, typeElement)
 				   .replace(ID_TO_REPLACE, id.toString());
 	   }
+	   
+	   public static String badIdMessage(String typeElement, String id) {
+		   return ID_NOT_FOUND_MESSAGE
+				   .replace(ELEMENT_TO_REPLACE, typeElement)
+				   .replace(ID_TO_REPLACE, id);
+	   }
 }

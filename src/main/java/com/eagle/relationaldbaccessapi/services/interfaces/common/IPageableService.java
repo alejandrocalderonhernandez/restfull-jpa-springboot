@@ -5,5 +5,6 @@ import org.springframework.data.domain.Page;
 public interface IPageableService<T> {
 	
 	public Page<T> getPageByRange(int page, int limit);
+	public Page<T> getPageByRangeSortByName(int page, int limit);
 
 }

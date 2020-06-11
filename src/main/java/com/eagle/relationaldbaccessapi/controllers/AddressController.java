@@ -133,4 +133,25 @@ public class AddressController {
 			return new ResponseEntity<>(responce, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+	
+	@GetMapping(path = REST_PAGE_BY_NAME, produces = MediaType.APPLICATION_JSON_VALUE )
+	public ResponseEntity<?> getPageByRangeSortedByRange(@PathVariable Integer page, @PathVariable String size) {
+		try {
+			int limit = PageableUtil.getPageSize(size);
+            Map<String, Object> responce = 
+            		this.messages.successMessage(ResponceMessages.GET_SUCCES, this.service.getPageByRange(page, limit));
+     		return new ResponseEntity<>(responce, HttpStatus.OK);
+		} catch (IllegalArgumentException ie) {
+			Map<String, Object> responce = 
+					this.messages.errorMessage(ie.getMessage(), ResponceMessages.ELEMENT_NOT_FOUND);
+			return new ResponseEntity<>(responce, HttpStatus.BAD_REQUEST);
+		} catch (PageabeSizeException pe) {
+				Map<String, Object> responce = 
+						this.messages.errorMessage(pe.getMessage(), ResponceMessages.GET_ERROR);
+				return new ResponseEntity<>(responce, HttpStatus.BAD_REQUEST);
+		}catch (Exception e) {
+			Map<String, Object> responce = this.messages.internalServerError();
+			return new ResponseEntity<>(responce, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 }

@@ -12,6 +12,7 @@ public class RestConstants {
 	public static final String REST_DELETE = "/delete/{id}";
 	
 	public static final String REST_PAGE = "/page/{page}/{size}";
+	public static final String REST_PAGE_BY_NAME = "/pageByName/{page}/{size}";
 	
 	public static final String REST_UPLOAD_IMG = "/upload/img/{id}";
 	public static final String REST_DELETE_IMG = "/delete/img/{id}";

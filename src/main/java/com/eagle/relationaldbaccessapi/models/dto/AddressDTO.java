@@ -6,7 +6,6 @@ import java.math.BigDecimal;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import com.eagle.relationaldbaccessapi.models.entity.AddressEntity;
 import com.google.gson.Gson;
 
 public class AddressDTO implements Serializable {
@@ -32,21 +31,6 @@ public class AddressDTO implements Serializable {
 	private EmployeeDTO employee;
 	
 	public AddressDTO() {
-	}
-
-	public AddressDTO(AddressEntity address) {
-		 this.setId(address.getId());
-		 this.setStreet(address.getStreet());
-		 this.setColony(address.getColony());
-		 this.setTownHall(address.getTownHall());
-		 this.setEstate(address.getEstate());
-		 this.setInternalNumber(address.getInternalNumber());
-		 this.setExternalNumber(address.getExternalNumber());
-		 this.setLat(address.getLat());
-		 this.setLon(address.getLon());
-	    if (address.getEmployee() != null) {
-	   		this.setEmployee(new EmployeeDTO(address.getEmployee()));
-	   	}
 	}
 
 	public Long getId() {

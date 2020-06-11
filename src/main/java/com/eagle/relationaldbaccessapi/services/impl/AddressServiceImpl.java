@@ -2,6 +2,7 @@ package com.eagle.relationaldbaccessapi.services.impl;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.apache.logging.log4j.Logger;
@@ -18,12 +20,15 @@ import com.eagle.relationaldbaccessapi.models.entity.AddressEntity;
 import com.eagle.relationaldbaccessapi.repository.AddressRepository;
 import com.eagle.relationaldbaccessapi.services.interfaces.IAddressService;
 import com.eagle.relationaldbaccessapi.util.interfaces.functional.IUpdater;
+import com.eagle.relationaldbaccessapi.util.strategies.BuilderDTOSWithRelationStrategies;
+import com.eagle.relationaldbaccessapi.util.strategies.BuilderEntityWithRelationStrategies;
+import com.eagle.relationaldbaccessapi.util.strategies.BuilderSimpleDTOStrategies;
+import com.eagle.relationaldbaccessapi.util.strategies.BuilderSimpleEntityStrategies;
 import com.eagle.relationaldbaccessapi.util.util.StringUtil;
 
 @Service
 public class AddressServiceImpl implements IAddressService {
 	
-	private static final String TYPE = "Address";
     private static final Logger LOGGER = LogManager.getLogger(AddressServiceImpl.class);
     
     private IUpdater<AddressDTO, AddressEntity> updater = (newAddress, oldAddress) -> {
@@ -47,27 +52,28 @@ public class AddressServiceImpl implements IAddressService {
 	@Override
 	@Transactional
 	public AddressDTO insert(AddressDTO dto) {
-		AddressEntity responce = null;
+		AddressEntity response = null;
 		try {
-			AddressEntity addressToInsert = new AddressEntity(dto);
-			responce = this.repocitory.save(addressToInsert);
+			AddressEntity addressToInsert = this.selectBuilderEntity(dto);
+			response = this.repocitory.save(addressToInsert);
 			LOGGER.info("Inserted {} ", dto);
 		} catch (Exception e) {
 			LOGGER.error("Error to insert Address: ", e);
 		}
-		return new AddressDTO(responce);
+		return this.selectBuilderDTO(response);
 	}
 
 	@Override
 	@Transactional
 	public AddressDTO update(AddressDTO dto, Long id) {
-		if(this.repocitory.existsById(id)){
+		Optional<AddressEntity> responce = (this.repocitory.findById(id));
+		if(responce.isPresent()){
 			try {
-				AddressEntity addresToUpdate = this.repocitory.findById(id).get();
+				AddressEntity addresToUpdate = responce.get();
 				updater.update(dto, addresToUpdate);
 				this.repocitory.save(addresToUpdate);
 				LOGGER.info("Updated {} ", dto);
-				return new AddressDTO(addresToUpdate);
+				return this.selectBuilderDTO(addresToUpdate);
 			} catch (Exception e) {
 				LOGGER.error("Error to update Address: ", e);
 				return dto;
@@ -81,8 +87,9 @@ public class AddressServiceImpl implements IAddressService {
 	@Override
 	@Transactional(readOnly = true)
 	public AddressDTO findById(Long id) {
-		if(this.repocitory.existsById(id)){
-			return new AddressDTO(this.repocitory.findById(id).get());
+		Optional<AddressEntity> response = (this.repocitory.findById(id));
+		if(response.isPresent()){
+			return this.selectBuilderDTO(response.get());
 		} else {
 			LOGGER.warn("Select Address not found id: " + id);
 			throw new IllegalArgumentException(StringUtil.badIdMessage(TYPE, id));
@@ -92,12 +99,12 @@ public class AddressServiceImpl implements IAddressService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<AddressDTO> findAll() {
-		List<AddressEntity>resultEntity = this.repocitory.findAll();
-		if(!resultEntity.isEmpty()) {
-			return resultEntity.stream().map(AddressDTO::new)
+		List<AddressEntity>response = this.repocitory.findAll();
+		if(!response.isEmpty()) {
+			return response.stream().map(this::selectBuilderDTO)
 					.collect(Collectors.toList());
 		} else {
-			LOGGER.warn("Find all no data: Address");
+			LOGGER.warn("Find all, no data: Address");
 			throw new NoSuchElementException("Database is empty");
 		}
 	}
@@ -118,12 +125,43 @@ public class AddressServiceImpl implements IAddressService {
 	@Transactional(readOnly = true)
 	public Page<AddressDTO> getPageByRange(int page, int limit) {
 		Pageable range = PageRequest.of(page, limit);
-		Page<AddressEntity>resultEntity = this.repocitory.findAll(range);
-		if(!resultEntity.isEmpty()) {
-			return resultEntity.map(AddressDTO::new);
+		Page<AddressEntity>responsePage = this.repocitory.findAll(range);
+		if(!responsePage.isEmpty()) {
+			return responsePage.map(this::selectBuilderDTO);
 		} else {
 			LOGGER.warn("Find all no data: Address");
 			throw new NoSuchElementException("Database is empty");
+		}
+	}
+
+	@Override
+	public Page<AddressDTO> getPageByRangeSortByName(int page, int limit) {
+		Pageable range = PageRequest.of(page, limit, Sort.by(DEFAULT_NAME_TO_SORT));
+		Page<AddressEntity>responsePage = this.repocitory.findAll(range);
+		if(!responsePage.isEmpty()) {
+			return responsePage.map(this::selectBuilderDTO);
+		} else {
+			LOGGER.warn("Find all no data: Address");
+			throw new NoSuchElementException("Database is empty");
+		}
+	}
+	
+	private AddressEntity selectBuilderEntity(final AddressDTO dto) {
+		AddressEntity result = null;
+		if (dto.getEmployee() != null) {
+			result = BuilderEntityWithRelationStrategies.BUILD_ADDRESS_ENTITY_WITH_EMPLOYEE.build(dto);
+		    result.getEmployee().setAddress(result);
+		} else {
+			result = BuilderSimpleEntityStrategies.BUILD_ADDRESS_ENTITY.build(dto);
+		}
+		return result;
+	}
+	
+	private AddressDTO selectBuilderDTO(final AddressEntity entity) {
+		if (entity.getEmployee() != null) {
+			return BuilderDTOSWithRelationStrategies.BUILD_ADDRESS_DTO_WITH_EMPLOYEE.build(entity);
+		} else {
+			return BuilderSimpleDTOStrategies.BUILD_ADDRESS_DTO.build(entity);
 		}
 	}
 }

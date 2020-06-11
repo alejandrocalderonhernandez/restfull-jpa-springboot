@@ -45,9 +45,6 @@ public class UserInfoDTO implements Serializable{
     	this.setCreateAt(userInfo.getCreateAt());
     	this.setAge(userInfo.getAge());
     	this.setStatus(userInfo.getStatus());
-    	if (userInfo.getEmployee() != null) {
-        	this.setEmployee(new EmployeeDTO(userInfo.getEmployee()));
-    	}
     }
 
 	public Long getId() {
