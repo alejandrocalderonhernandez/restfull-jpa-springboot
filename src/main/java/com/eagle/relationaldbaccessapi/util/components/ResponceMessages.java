@@ -46,7 +46,7 @@ public class ResponceMessages {
 	
 	public Map<String, Object> internalServerError(){
 		Map<String, Object> responce = new HashMap<>();
-		responce.put(ERROR, "Internal server error");
+		responce.put(ERROR, "Server error");
 		return responce;
 	}
 }

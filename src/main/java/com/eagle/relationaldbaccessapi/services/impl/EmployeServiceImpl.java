@@ -13,6 +13,7 @@ import com.eagle.relationaldbaccessapi.models.dto.EmployeeDTO;
 import com.eagle.relationaldbaccessapi.models.entity.EmployeeEntity;
 import com.eagle.relationaldbaccessapi.repository.EmployeeRepository;
 import com.eagle.relationaldbaccessapi.services.interfaces.IEmployeeService;
+import com.eagle.relationaldbaccessapi.util.interfaces.functional.IUpdater;
 import com.eagle.relationaldbaccessapi.util.strategies.BuilderDTOSWithRelationStrategies;
 import com.eagle.relationaldbaccessapi.util.strategies.BuilderEntityWithRelationStrategies;
 import com.eagle.relationaldbaccessapi.util.strategies.BuilderSimpleDTOStrategies;
@@ -24,6 +25,20 @@ public class EmployeServiceImpl implements IEmployeeService {
 	
 	private static final String TYPE = "Employee";
     private static final Logger LOGGER = LogManager.getLogger(EmployeServiceImpl.class);
+    
+    private IUpdater<EmployeeDTO, EmployeeEntity> updater = (newEmployee, oldEmployee) -> {
+    	oldEmployee.setAlternativeId(newEmployee.getAlternativeId());
+    	if(newEmployee.getAddress()!=null) {
+        	oldEmployee.setAddress(BuilderSimpleEntityStrategies.BUILD_ADDRESS_ENTITY.build(newEmployee.getAddress()));
+    	}
+    	if(newEmployee.getUserInfo() != null) {
+    		oldEmployee.setUserInfo(BuilderSimpleEntityStrategies.BUILD_USER_INFO_ENTITY.build(newEmployee.getUserInfo()));
+    	}
+    	if(newEmployee.getContact() != null) {
+    		oldEmployee.setContact(BuilderSimpleEntityStrategies.BUILD_CONTACT_ENTITY.build(newEmployee.getContact()));
+    	}
+
+    };
 	
 	private EmployeeRepository repocitory;
 	
@@ -48,7 +63,22 @@ public class EmployeServiceImpl implements IEmployeeService {
 
 	@Override
 	public EmployeeDTO update(EmployeeDTO dto, Long id) {
-		return null;
+		Optional<EmployeeEntity> response = this.repocitory.findById(id);
+		if (response.isPresent()) {
+			try {
+				EmployeeEntity employeeToUpdate = response.get();
+				this.updater.update(dto, employeeToUpdate);
+				this.repocitory.save(employeeToUpdate);
+				LOGGER.info("Updated {} ", dto);
+				return selectBuilderDTO(employeeToUpdate);
+			} catch (Exception e) {
+				LOGGER.error("Error to update Employee: ", e);
+				return null;
+			}
+		} else {
+			LOGGER.warn("Update Eployee not found id: " + id);
+			throw new IllegalArgumentException(StringUtil.badIdMessage(TYPE, id));
+		}
 	}
 
 	@Override

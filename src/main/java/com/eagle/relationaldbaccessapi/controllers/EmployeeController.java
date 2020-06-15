@@ -1,7 +1,6 @@
 package com.eagle.relationaldbaccessapi.controllers;
 
-import static com.eagle.relationaldbaccessapi.util.constants.RestConstants.REST_CREATE;
-import static com.eagle.relationaldbaccessapi.util.constants.RestConstants.REST_FIND_BY_ID;
+import static com.eagle.relationaldbaccessapi.util.constants.RestConstants.*;
 
 import java.util.Map;
 
@@ -14,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -48,6 +48,22 @@ public class EmployeeController {
 					this.messages.errorMessage(ResponceMessages.SAVE_ERROR, ResponceMessages.CREATE_ERROR);
 			return new ResponseEntity<>(responce, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+	}
+	
+	@PutMapping(path = REST_UPDATE,  consumes=MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> update(@Valid @RequestBody EmployeeDTO employe, @PathVariable Long id) {
+		try {
+			Map<String, Object> responce = 
+					this.messages.successMessage(ResponceMessages.UPDATE_SUCCESS,this.service.update(employe, id));
+			return new ResponseEntity<>(responce, HttpStatus.OK);
+		} catch (IllegalArgumentException ie) {
+			Map<String, Object> responce = 
+					this.messages.errorMessage(ie.getMessage(), ResponceMessages.ELEMENT_NOT_FOUND);
+			return new ResponseEntity<>(responce, HttpStatus.BAD_REQUEST);
+		} catch (Exception e) {
+			Map<String, Object> responce = this.messages.internalServerError();
+			return new ResponseEntity<>(responce, HttpStatus.INTERNAL_SERVER_ERROR);
+		} 
 	}
 	
 	@GetMapping(path = REST_FIND_BY_ID, produces = MediaType.APPLICATION_JSON_VALUE )
