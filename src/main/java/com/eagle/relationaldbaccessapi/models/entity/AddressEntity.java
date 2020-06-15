@@ -13,7 +13,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.eagle.relationaldbaccessapi.models.dto.AddressDTO;
 import com.google.gson.Gson;
 
 @Entity
@@ -46,19 +45,10 @@ public class AddressEntity implements Serializable{
 	@OneToOne(mappedBy = "address", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private EmployeeEntity employee;
 	
-	public AddressEntity() {
-	}
+	@OneToOne(mappedBy = "address", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private OriginEntity originEntity;
 	
-	public AddressEntity(AddressDTO address) {
-		 this.setId(address.getId());
-		 this.setStreet(address.getStreet());
-		 this.setColony(address.getColony());
-		 this.setTownHall(address.getTownHall());
-		 this.setEstate(address.getEstate());
-		 this.setInternalNumber(address.getInternalNumber());
-		 this.setExternalNumber(address.getExternalNumber());
-		 this.setLat(address.getLat());
-		 this.setLon(address.getLon());
+	public AddressEntity() {
 	}
 
 	public Long getId() {
@@ -141,6 +131,14 @@ public class AddressEntity implements Serializable{
 		this.employee = employee;
 	}	
 	
+	public OriginEntity getOriginEntity() {
+		return originEntity;
+	}
+
+	public void setOriginEntity(OriginEntity originEntity) {
+		this.originEntity = originEntity;
+	}
+
 	@Override
 	public String toString() {
 		return new Gson().toJson(this);

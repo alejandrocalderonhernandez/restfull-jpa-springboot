@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.eagle.relationaldbaccessapi.models.dto.UserInfoDTO;
 import com.eagle.relationaldbaccessapi.models.entity.UserInfoEntity;
 import com.eagle.relationaldbaccessapi.models.model.FileModel;
-import com.eagle.relationaldbaccessapi.repository.UserInfoRepocitory;
+import com.eagle.relationaldbaccessapi.repository.UserInfoRepository;
 import com.eagle.relationaldbaccessapi.services.interfaces.IUserInfo;
 import com.eagle.relationaldbaccessapi.util.components.FileComponent;
 import com.eagle.relationaldbaccessapi.util.constants.FileConstants;
@@ -34,7 +34,7 @@ public class UserInfoServiceImpl implements IUserInfo {
 	
     private static final Logger LOGGER = LogManager.getLogger(UserInfoServiceImpl.class);
 	
-	private UserInfoRepocitory repocitory;
+	private UserInfoRepository repocitory;
 	private FileComponent fileComponent;
 	
 	private IUpdater<UserInfoDTO, UserInfoEntity> updater = (newUserInfo, oldUserInfo) -> {
@@ -47,7 +47,7 @@ public class UserInfoServiceImpl implements IUserInfo {
 	};
 	
 	@Autowired
-	public UserInfoServiceImpl(UserInfoRepocitory repocitory, FileComponent fileComponent) {
+	public UserInfoServiceImpl(UserInfoRepository repocitory, FileComponent fileComponent) {
 		this.repocitory = repocitory;
 		this.fileComponent = fileComponent;
 	}

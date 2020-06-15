@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.eagle.relationaldbaccessapi.models.entity.EmployeeEntity;
 
-public interface EmployeeRepocitory extends JpaRepository<EmployeeEntity, Long> {
+public interface EmployeeRepository extends JpaRepository<EmployeeEntity, Long> {
 
 	public Optional<EmployeeEntity> findByAlternativeId(String alternativeId);
 	

@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.eagle.relationaldbaccessapi.models.dto.EmployeeDTO;
 import com.eagle.relationaldbaccessapi.models.entity.EmployeeEntity;
-import com.eagle.relationaldbaccessapi.repository.EmployeeRepocitory;
+import com.eagle.relationaldbaccessapi.repository.EmployeeRepository;
 import com.eagle.relationaldbaccessapi.services.interfaces.IEmployeeService;
 import com.eagle.relationaldbaccessapi.util.strategies.BuilderDTOSWithRelationStrategies;
 import com.eagle.relationaldbaccessapi.util.strategies.BuilderEntityWithRelationStrategies;
@@ -25,10 +25,10 @@ public class EmployeServiceImpl implements IEmployeeService {
 	private static final String TYPE = "Employee";
     private static final Logger LOGGER = LogManager.getLogger(EmployeServiceImpl.class);
 	
-	private EmployeeRepocitory repocitory;
+	private EmployeeRepository repocitory;
 	
 	@Autowired
-	public EmployeServiceImpl(EmployeeRepocitory repocitory) {
+	public EmployeServiceImpl(EmployeeRepository repocitory) {
 		this.repocitory = repocitory;
 	}
 

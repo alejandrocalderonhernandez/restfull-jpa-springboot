@@ -58,7 +58,6 @@ public class BuilderSimpleDTOStrategies {
 		EmployeeDTO dto = new EmployeeDTO();
 		dto.setId(entity.getId());
 		dto.setAlternativeId(entity.getAlternativeId());
-		dto.setUserInfo(BUILD_USER_INFO_DTO.build(entity.getUserInfo()));
 		return dto;
 	};
 	
