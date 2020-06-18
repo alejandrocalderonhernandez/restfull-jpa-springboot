@@ -38,8 +38,8 @@ public class DestinationEntity implements Serializable {
 	
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "id_address")
-	private AddressEntity addess;
-	
+	private AddressEntity address;
+
 	@ManyToMany(mappedBy = "destinations", cascade = CascadeType.ALL)
 	private Set<RouteEntity> routes;
 	
@@ -86,12 +86,12 @@ public class DestinationEntity implements Serializable {
 		this.finalDestination = finalDestination;
 	}
 	
-	public AddressEntity getAddess() {
-		return addess;
+	public AddressEntity getAddress() {
+		return address;
 	}
 	
-	public void setAddess(AddressEntity addess) {
-		this.addess = addess;
+	public void setAddress(AddressEntity address) {
+		this.address = address;
 	}
 	
 	public Set<RouteEntity> getRoutes() {

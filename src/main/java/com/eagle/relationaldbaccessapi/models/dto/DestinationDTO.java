@@ -15,7 +15,7 @@ public class DestinationDTO implements Serializable{
 	private 	Short type;
 	private Boolean finalDestination;
 	
-	private AddressDTO addess;
+	private AddressDTO address;
 	
 	private Set<RouteDTO> routes;
 	
@@ -62,12 +62,12 @@ public class DestinationDTO implements Serializable{
 		this.finalDestination = finalDestination;
 	}
 	
-	public AddressDTO getAddess() {
-		return addess;
+	public AddressDTO getAddress() {
+		return address;
 	}
 	
-	public void setAddess(AddressDTO addess) {
-		this.addess = addess;
+	public void setAddress(AddressDTO address) {
+		this.address = address;
 	}
 	
 	public Set<RouteDTO> getRoutes() {
