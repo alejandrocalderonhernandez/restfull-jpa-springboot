@@ -19,11 +19,11 @@ import com.eagle.relationaldbaccessapi.models.entity.UserInfoEntity;
 import com.eagle.relationaldbaccessapi.util.interfaces.functional.IBuilder;
 
 public class BuilderSimpleEntityStrategies {
-	
+
 	private BuilderSimpleEntityStrategies() {
 	}
-	
-	public static  final IBuilder<AddressEntity, AddressDTO> BUILD_ADDRESS_ENTITY = (dto) -> {
+
+	public static final IBuilder<AddressEntity, AddressDTO> BUILD_ADDRESS_ENTITY = (dto) -> {
 		AddressEntity entity = new AddressEntity();
 		entity.setStreet(dto.getStreet());
 		entity.setColony(dto.getColony());
@@ -35,22 +35,22 @@ public class BuilderSimpleEntityStrategies {
 		entity.setLon(dto.getLon());
 		return entity;
 	};
-	
+
 	public static final IBuilder<UserInfoEntity, UserInfoDTO> BUILD_USER_INFO_ENTITY = (dto) -> {
 		UserInfoEntity entity = new UserInfoEntity();
-    	entity.setName1(dto.getName1());
-    	entity.setName2(dto.getName2());
-    	entity.setLastName1(dto.getLastName1());
-    	entity.setLastName2(dto.getLastName2());
-    	entity.setCurp(dto.getCurp());
-    	entity.setPhotoUrl(dto.getPhotoUrl());
-    	entity.setCreateAt(LocalDateTime.now());
-    	entity.setAge(dto.getAge());
-    	entity.setStatus(true);
+		entity.setName1(dto.getName1());
+		entity.setName2(dto.getName2());
+		entity.setLastName1(dto.getLastName1());
+		entity.setLastName2(dto.getLastName2());
+		entity.setCurp(dto.getCurp());
+		entity.setPhotoUrl(dto.getPhotoUrl());
+		entity.setCreateAt(LocalDateTime.now());
+		entity.setAge(dto.getAge());
+		entity.setStatus(true);
 		return entity;
 	};
-	
-	public static  final IBuilder<ContactEntity, ContactDTO> BUILD_CONTACT_ENTITY = (dto) -> {
+
+	public static final IBuilder<ContactEntity, ContactDTO> BUILD_CONTACT_ENTITY = (dto) -> {
 		ContactEntity entity = new ContactEntity();
 		entity.setPhoneNumber(dto.getPhoneNumber());
 		entity.setWorkNumber(dto.getWorkNumber());
@@ -58,16 +58,16 @@ public class BuilderSimpleEntityStrategies {
 		entity.setEmail(dto.getEmail());
 		return entity;
 	};
-	
+
 	public static final IBuilder<EmployeeEntity, EmployeeDTO> BUILD_EMPLOYEE_ENTITY = (dto) -> {
 		EmployeeEntity entity = new EmployeeEntity();
 		entity.setAlternativeId(dto.getAlternativeId());
-		if (dto.getUserInfo()!=null) {
+		if (dto.getUserInfo() != null) {
 			entity.setUserInfo(BUILD_USER_INFO_ENTITY.build(dto.getUserInfo()));
 		}
 		return entity;
 	};
-	
+
 	public static final IBuilder<OriginEntity, OriginDTO> BUILDER_ORIGIN_ENTITY = (dto) -> {
 		OriginEntity entity = new OriginEntity();
 		entity.setAlternativeId(dto.getAlternativeId());
@@ -84,12 +84,13 @@ public class BuilderSimpleEntityStrategies {
 		entity.setType(dto.getType());
 		return entity;
 	};
-	
+
 	public static final IBuilder<RouteEntity, RouteDTO> BUILDER_ROUTE_ENTITY = (dto) -> {
 		RouteEntity entity = new RouteEntity();
 		entity.setAlternativeId(dto.getAlternativeId());
 		entity.setDirectTravel(dto.isDirectTravel());
-		entity.setName(entity.getName());
+		entity.setName(dto.getName());
 		return entity;
 	};
+
 }

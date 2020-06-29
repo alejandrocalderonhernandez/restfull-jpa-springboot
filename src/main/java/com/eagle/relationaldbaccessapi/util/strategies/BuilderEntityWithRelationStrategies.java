@@ -20,12 +20,11 @@ import com.eagle.relationaldbaccessapi.models.entity.UserInfoEntity;
 import com.eagle.relationaldbaccessapi.util.interfaces.functional.IBuilder;
 
 public class BuilderEntityWithRelationStrategies {
-	
-	
+
 	private BuilderEntityWithRelationStrategies() {
 	}
-	
-	public static  final IBuilder<AddressEntity, AddressDTO> BUILD_ADDRESS_ENTITY_WITH_EMPLOYEE = (dto) -> {
+
+	public static final IBuilder<AddressEntity, AddressDTO> BUILD_ADDRESS_ENTITY_WITH_EMPLOYEE = (dto) -> {
 		AddressEntity entity = new AddressEntity();
 		entity.setStreet(dto.getStreet());
 		entity.setColony(dto.getColony());
@@ -35,30 +34,30 @@ public class BuilderEntityWithRelationStrategies {
 		entity.setExternalNumber(dto.getExternalNumber());
 		entity.setLat(dto.getLat());
 		entity.setLon(dto.getLon());
-		if(dto.getEmployee() != null) {
+		if (dto.getEmployee() != null) {
 			entity.setEmploye(BuilderSimpleEntityStrategies.BUILD_EMPLOYEE_ENTITY.build(dto.getEmployee()));
 		}
 		return entity;
 	};
-	
+
 	public static final IBuilder<UserInfoEntity, UserInfoDTO> BUILD_USER_INFO_ENTITY = (dto) -> {
 		UserInfoEntity entity = new UserInfoEntity();
-    	entity.setName1(dto.getName1());
-    	entity.setName2(dto.getName2());
-    	entity.setLastName1(dto.getLastName1());
-    	entity.setLastName2(dto.getLastName2());
-    	entity.setCurp(dto.getCurp());
-    	entity.setPhotoUrl(dto.getPhotoUrl());
-    	entity.setCreateAt(LocalDateTime.now());
-    	entity.setAge(dto.getAge());
-    	entity.setStatus(true);
-		if(dto.getEmployee() != null) {
+		entity.setName1(dto.getName1());
+		entity.setName2(dto.getName2());
+		entity.setLastName1(dto.getLastName1());
+		entity.setLastName2(dto.getLastName2());
+		entity.setCurp(dto.getCurp());
+		entity.setPhotoUrl(dto.getPhotoUrl());
+		entity.setCreateAt(LocalDateTime.now());
+		entity.setAge(dto.getAge());
+		entity.setStatus(true);
+		if (dto.getEmployee() != null) {
 			entity.setEmploye(BuilderSimpleEntityStrategies.BUILD_EMPLOYEE_ENTITY.build(dto.getEmployee()));
 		}
 		return entity;
 	};
-	
-	public static  final IBuilder<ContactEntity, ContactDTO> BUILD_CONTACT_ENTITY = (dto) -> {
+
+	public static final IBuilder<ContactEntity, ContactDTO> BUILD_CONTACT_ENTITY = (dto) -> {
 		ContactEntity entity = new ContactEntity();
 		entity.setPhoneNumber(dto.getPhoneNumber());
 		entity.setWorkNumber(dto.getWorkNumber());
@@ -66,33 +65,29 @@ public class BuilderEntityWithRelationStrategies {
 		entity.setEmail(dto.getEmail());
 		return entity;
 	};
-	
+
 	public static final IBuilder<EmployeeEntity, EmployeeDTO> BUILD_EMPLOYEE_ENTITY = (dto) -> {
 		EmployeeEntity entity = new EmployeeEntity();
 		entity.setAlternativeId(dto.getAlternativeId());
 		entity.setUserInfo(BuilderSimpleEntityStrategies.BUILD_USER_INFO_ENTITY.build(dto.getUserInfo()));
-		if(dto.getAddress() != null) {
+		if (dto.getAddress() != null) {
 			entity.setAddress(BuilderSimpleEntityStrategies.BUILD_ADDRESS_ENTITY.build(dto.getAddress()));
 		}
-		if(dto.getContact() != null) {
+		if (dto.getContact() != null) {
 			entity.setContact(BuilderSimpleEntityStrategies.BUILD_CONTACT_ENTITY.build(dto.getContact()));
 		}
 		return entity;
 	};
-	
+
 	public static final IBuilder<OriginEntity, OriginDTO> BUILDER_ORIGIN_ENTITY = (dto) -> {
 		OriginEntity entity = new OriginEntity();
 		entity.setAlternativeId(dto.getAlternativeId());
 		entity.setName(dto.getName());
 		entity.setType(dto.getType());
 		entity.setAddress(BuilderSimpleEntityStrategies.BUILD_ADDRESS_ENTITY.build(dto.getAddress()));
-		if(!dto.getRoutes().isEmpty()) {
-			entity.setRoutes(
-				dto.getRoutes()
-					 .stream()
-				     .map(BuilderSimpleEntityStrategies.BUILDER_ROUTE_ENTITY::build)
-				     .collect(Collectors.toSet())
-			);
+		if (!dto.getRoutes().isEmpty()) {
+			entity.setRoutes(dto.getRoutes().stream().map(BuilderSimpleEntityStrategies.BUILDER_ROUTE_ENTITY::build)
+					.collect(Collectors.toSet()));
 		}
 		return entity;
 	};
@@ -104,30 +99,22 @@ public class BuilderEntityWithRelationStrategies {
 		entity.setName(dto.getName());
 		entity.setType(dto.getType());
 		entity.setAddress(BuilderSimpleEntityStrategies.BUILD_ADDRESS_ENTITY.build(dto.getAddress()));
-		if(!dto.getRoutes().isEmpty()) {
-			entity.setRoutes(
-				dto.getRoutes()
-					 .stream()
-					 .map(BuilderSimpleEntityStrategies.BUILDER_ROUTE_ENTITY::build)
-					 .collect(Collectors.toSet())
-			);
+		if (!dto.getRoutes().isEmpty()) {
+			entity.setRoutes(dto.getRoutes().stream().map(BuilderSimpleEntityStrategies.BUILDER_ROUTE_ENTITY::build)
+					.collect(Collectors.toSet()));
 		}
 		return entity;
 	};
-	
+
 	public static final IBuilder<RouteEntity, RouteDTO> BUILDER_ROUTE_ENTITY = (dto) -> {
 		RouteEntity entity = new RouteEntity();
 		entity.setAlternativeId(dto.getAlternativeId());
 		entity.setDirectTravel(dto.isDirectTravel());
-		entity.setName(entity.getName());
+		entity.setName(dto.getName());
 		entity.setOrigin(dto.getOrigin());
-		entity.setDestinations(
-				dto.getDestinations()
-					 .stream()
-					 .map(BuilderSimpleEntityStrategies.BUILDER_DESTINATION_ENTITY::build)
-					 .collect(Collectors.toSet())
-		);
+		entity.setDestinations(dto.getDestinations().stream()
+				.map(BuilderSimpleEntityStrategies.BUILDER_DESTINATION_ENTITY::build).collect(Collectors.toSet()));
 		return entity;
 	};
-	
+
 }
