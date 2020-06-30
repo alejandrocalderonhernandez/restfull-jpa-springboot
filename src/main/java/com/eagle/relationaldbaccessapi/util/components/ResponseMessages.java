@@ -6,7 +6,7 @@ import java.util.Map;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ResponceMessages {
+public class ResponseMessages {
 	
 	private static final String MESSAGE = "message: ";
 	private static final String ERROR = "error: ";

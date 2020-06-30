@@ -55,15 +55,15 @@ public class UserInfoServiceImpl implements IUserInfo {
 	@Override
 	@Transactional
 	public UserInfoDTO insert(UserInfoDTO dto) {
-		UserInfoEntity response = null;
+		UserInfoDTO response = null;
 		try {
 			UserInfoEntity userToInsert = this.selectBuilderEntity(dto);
-			response = this.repocitory.save(userToInsert);
+			response =  this.selectBuilderDTO(this.repocitory.save(userToInsert));
 			LOGGER.info("Inserted {} ", dto);
 		} catch (Exception e) {
 			LOGGER.error("Error to insert UserInfo: ", e);
 		}
-		return this.selectBuilderDTO(response);
+		return response;
 	}
 
 	@Override

@@ -111,7 +111,7 @@ public class BuilderEntityWithRelationStrategies {
 		entity.setAlternativeId(dto.getAlternativeId());
 		entity.setDirectTravel(dto.isDirectTravel());
 		entity.setName(dto.getName());
-		entity.setOrigin(dto.getOrigin());
+		entity.setOrigin(BuilderSimpleEntityStrategies.BUILDER_ORIGIN_ENTITY.build(dto.getOrigin()));
 		entity.setDestinations(dto.getDestinations().stream()
 				.map(BuilderSimpleEntityStrategies.BUILDER_DESTINATION_ENTITY::build).collect(Collectors.toSet()));
 		return entity;

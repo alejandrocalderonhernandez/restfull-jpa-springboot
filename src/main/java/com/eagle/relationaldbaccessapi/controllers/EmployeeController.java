@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.eagle.relationaldbaccessapi.models.dto.EmployeeDTO;
 import com.eagle.relationaldbaccessapi.services.interfaces.IEmployeeService;
-import com.eagle.relationaldbaccessapi.util.components.ResponceMessages;
+import com.eagle.relationaldbaccessapi.util.components.ResponseMessages;
 
 @RestController
 @RequestMapping("/employee")
@@ -29,10 +29,10 @@ public class EmployeeController {
 	public static final String REST_FIND_USER_ID = "/find/userId/{id}";
 	
 	private IEmployeeService service;
-	private ResponceMessages messages;
+	private ResponseMessages messages;
 	
 	@Autowired
-	public  EmployeeController(IEmployeeService service, ResponceMessages messages) {
+	public  EmployeeController(IEmployeeService service, ResponseMessages messages) {
 		this.service = service;
 		this.messages = messages;
 	}
@@ -41,11 +41,11 @@ public class EmployeeController {
 	public ResponseEntity<?> create(@Valid @RequestBody EmployeeDTO employee) {
 		try {
 			Map<String, Object> responce = 
-					this.messages.successMessage(ResponceMessages.CREATE_SUCCESS, this.service.insert(employee));
+					this.messages.successMessage(ResponseMessages.CREATE_SUCCESS, this.service.insert(employee));
 			return new ResponseEntity<>(responce, HttpStatus.OK);
 		} catch (Exception e) {
 			Map<String, Object> responce = 
-					this.messages.errorMessage(ResponceMessages.SAVE_ERROR, ResponceMessages.CREATE_ERROR);
+					this.messages.errorMessage(ResponseMessages.SAVE_ERROR, ResponseMessages.CREATE_ERROR);
 			return new ResponseEntity<>(responce, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -54,11 +54,11 @@ public class EmployeeController {
 	public ResponseEntity<?> update(@Valid @RequestBody EmployeeDTO employe, @PathVariable Long id) {
 		try {
 			Map<String, Object> responce = 
-					this.messages.successMessage(ResponceMessages.UPDATE_SUCCESS,this.service.update(employe, id));
+					this.messages.successMessage(ResponseMessages.UPDATE_SUCCESS,this.service.update(employe, id));
 			return new ResponseEntity<>(responce, HttpStatus.OK);
 		} catch (IllegalArgumentException ie) {
 			Map<String, Object> responce = 
-					this.messages.errorMessage(ie.getMessage(), ResponceMessages.ELEMENT_NOT_FOUND);
+					this.messages.errorMessage(ie.getMessage(), ResponseMessages.ELEMENT_NOT_FOUND);
 			return new ResponseEntity<>(responce, HttpStatus.BAD_REQUEST);
 		} catch (Exception e) {
 			Map<String, Object> responce = this.messages.internalServerError();
@@ -70,11 +70,11 @@ public class EmployeeController {
 	public ResponseEntity<?> findById(@PathVariable Long id) {
 		try {
 			Map<String, Object> responce = 
-					this.messages.successMessage(ResponceMessages.GET_SUCCES, this.service.findById(id));
+					this.messages.successMessage(ResponseMessages.GET_SUCCES, this.service.findById(id));
 			return new ResponseEntity<>(responce, HttpStatus.OK);
 		} catch (IllegalArgumentException ie) {
 				Map<String, Object> responce = 
-						this.messages.errorMessage(ie.getMessage(), ResponceMessages.ELEMENT_NOT_FOUND);
+						this.messages.errorMessage(ie.getMessage(), ResponseMessages.ELEMENT_NOT_FOUND);
 				return new ResponseEntity<>(responce, HttpStatus.BAD_REQUEST);
 		} catch (Exception e) {
 			Map<String, Object> responce =this.messages.internalServerError();
@@ -86,11 +86,11 @@ public class EmployeeController {
 	public ResponseEntity<?> findById(@PathVariable String id) {
 		try {
 			Map<String, Object> responce = 
-					this.messages.successMessage(ResponceMessages.GET_SUCCES, this.service.findByAlternativeId(id));
+					this.messages.successMessage(ResponseMessages.GET_SUCCES, this.service.findByAlternativeId(id));
 			return new ResponseEntity<>(responce, HttpStatus.OK);
 		} catch (IllegalArgumentException ie) {
 				Map<String, Object> responce = 
-						this.messages.errorMessage(ie.getMessage(), ResponceMessages.ELEMENT_NOT_FOUND);
+						this.messages.errorMessage(ie.getMessage(), ResponseMessages.ELEMENT_NOT_FOUND);
 				return new ResponseEntity<>(responce, HttpStatus.BAD_REQUEST);
 		} catch (Exception e) {
 			Map<String, Object> responce =this.messages.internalServerError();

@@ -52,15 +52,15 @@ public class AddressServiceImpl implements IAddressService {
 	@Override
 	@Transactional
 	public AddressDTO insert(AddressDTO dto) {
-		AddressEntity response = null;
+		AddressDTO response = null;
 		try {
 			AddressEntity addressToInsert = this.selectBuilderEntity(dto);
-			response = this.repocitory.save(addressToInsert);
+			response = this.selectBuilderDTO(this.repocitory.save(addressToInsert));
 			LOGGER.info("Inserted {} ", dto);
 		} catch (Exception e) {
 			LOGGER.error("Error to insert Address: ", e);
 		}
-		return this.selectBuilderDTO(response);
+		return response;
 	}
 
 	@Override

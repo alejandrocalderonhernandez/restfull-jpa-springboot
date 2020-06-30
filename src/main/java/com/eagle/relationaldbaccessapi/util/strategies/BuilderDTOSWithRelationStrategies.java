@@ -117,7 +117,7 @@ public class BuilderDTOSWithRelationStrategies {
 		dto.setAlternativeId(entity.getAlternativeId());
 		dto.setDirectTravel(entity.isDirectTravel());
 		dto.setName(entity.getName());
-		dto.setOrigin(entity.getOrigin());
+		dto.setOrigin(BuilderSimpleDTOStrategies.BUILDER_ORIGIN_DTO.build(entity.getOrigin()));
 		dto.setDestinations(entity.getDestinations().stream()
 				.map(BuilderSimpleDTOStrategies.BUILDER_DESTINATION_DTO::build).collect(Collectors.toSet()));
 		return dto;

@@ -3,7 +3,6 @@ package com.eagle.relationaldbaccessapi.models.dto;
 import java.io.Serializable;
 import java.util.Set;
 
-import com.eagle.relationaldbaccessapi.models.entity.OriginEntity;
 import com.google.gson.Gson;
 
 public class RouteDTO implements Serializable {
@@ -14,7 +13,7 @@ public class RouteDTO implements Serializable {
 	private String alternativeId;
 	private String name;
 	private Boolean directTravel;
-	private OriginEntity origin;
+	private OriginDTO origin;
 	private Set<DestinationDTO> destinations;
 	
 	public RouteDTO() {
@@ -51,11 +50,11 @@ public class RouteDTO implements Serializable {
 		this.directTravel = directTravel;
 	}
 	
-	public OriginEntity getOrigin() {
+	public OriginDTO getOrigin() {
 		return origin;
 	}
 	
-	public void setOrigin(OriginEntity origin) {
+	public void setOrigin(OriginDTO origin) {
 		this.origin = origin;
 	}
 	

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.eagle.relationaldbaccessapi.models.dto.AddressDTO;
 import com.eagle.relationaldbaccessapi.services.interfaces.IAddressService;
-import com.eagle.relationaldbaccessapi.util.components.ResponceMessages;
+import com.eagle.relationaldbaccessapi.util.components.ResponseMessages;
 import com.eagle.relationaldbaccessapi.util.exceptions.PageabeSizeException;
 import com.eagle.relationaldbaccessapi.util.util.PageableUtil;
 
@@ -30,10 +30,10 @@ import javax.validation.Valid;
 public class AddressController {
 	
 	private IAddressService service;
-	private ResponceMessages messages;
+	private ResponseMessages messages;
 	
 	@Autowired
-	public  AddressController(IAddressService service, ResponceMessages messages) {
+	public  AddressController(IAddressService service, ResponseMessages messages) {
 		this.service = service;
 		this.messages = messages;
 	}
@@ -42,11 +42,11 @@ public class AddressController {
 	public ResponseEntity<?> create(@Valid @RequestBody AddressDTO address) {
 		try {
 			Map<String, Object> response = 
-					this.messages.successMessage(ResponceMessages.CREATE_SUCCESS, this.service.insert(address));
+					this.messages.successMessage(ResponseMessages.CREATE_SUCCESS, this.service.insert(address));
 			return new ResponseEntity<>(response, HttpStatus.OK);
 		} catch (Exception e) {
 			Map<String, Object> response = 
-					this.messages.errorMessage(ResponceMessages.SAVE_ERROR, ResponceMessages.CREATE_ERROR);
+					this.messages.errorMessage(ResponseMessages.SAVE_ERROR, ResponseMessages.CREATE_ERROR);
 			return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -55,11 +55,11 @@ public class AddressController {
 	public ResponseEntity<?> update(@Valid @RequestBody AddressDTO address, @PathVariable Long id) {
 		try {
 			Map<String, Object> responce = 
-					this.messages.successMessage(ResponceMessages.UPDATE_SUCCESS,this.service.update(address, id));
+					this.messages.successMessage(ResponseMessages.UPDATE_SUCCESS,this.service.update(address, id));
 			return new ResponseEntity<>(responce, HttpStatus.OK);
 		} catch (IllegalArgumentException ie) {
 			Map<String, Object> responce = 
-					this.messages.errorMessage(ie.getMessage(), ResponceMessages.ELEMENT_NOT_FOUND);
+					this.messages.errorMessage(ie.getMessage(), ResponseMessages.ELEMENT_NOT_FOUND);
 			return new ResponseEntity<>(responce, HttpStatus.BAD_REQUEST);
 		} catch (Exception e) {
 			Map<String, Object> responce = this.messages.internalServerError();
@@ -71,11 +71,11 @@ public class AddressController {
 	public ResponseEntity<?> findById(@PathVariable Long id) {
 		try {
 			Map<String, Object> responce = 
-					this.messages.successMessage(ResponceMessages.GET_SUCCES, this.service.findById(id));
+					this.messages.successMessage(ResponseMessages.GET_SUCCES, this.service.findById(id));
 			return new ResponseEntity<>(responce, HttpStatus.OK);
 		} catch (IllegalArgumentException ie) {
 				Map<String, Object> responce = 
-						this.messages.errorMessage(ie.getMessage(), ResponceMessages.ELEMENT_NOT_FOUND);
+						this.messages.errorMessage(ie.getMessage(), ResponseMessages.ELEMENT_NOT_FOUND);
 				return new ResponseEntity<>(responce, HttpStatus.BAD_REQUEST);
 		} catch (Exception e) {
 			Map<String, Object> responce =	this.messages.internalServerError();
@@ -87,11 +87,11 @@ public class AddressController {
 	public ResponseEntity<?> findAll() {
 		try {
             Map<String, Object> responce = 
-            		this.messages.successMessage(ResponceMessages.GET_SUCCES, this.service.findAll());
+            		this.messages.successMessage(ResponseMessages.GET_SUCCES, this.service.findAll());
      		return new ResponseEntity<>(responce, HttpStatus.OK);
 		} catch (IllegalArgumentException ie) {
 			Map<String, Object> responce = 
-					this.messages.errorMessage(ie.getMessage(), ResponceMessages.ELEMENT_NOT_FOUND);
+					this.messages.errorMessage(ie.getMessage(), ResponseMessages.ELEMENT_NOT_FOUND);
 			return new ResponseEntity<>(responce, HttpStatus.BAD_REQUEST);
 		}catch (Exception e) {
 			Map<String, Object> responce = this.messages.internalServerError();
@@ -104,11 +104,11 @@ public class AddressController {
 		try {
 			this.service.deleteById(id);
 			Map<String, Object> responce = 
-					this.messages.successMessage(ResponceMessages.DELETE_SUCCESS, id);
+					this.messages.successMessage(ResponseMessages.DELETE_SUCCESS, id);
 			return new ResponseEntity<>(responce, HttpStatus.OK);
 		} catch (IllegalArgumentException e) {
 			Map<String, Object> responce = 
-					this.messages.errorMessage(e.getMessage(), ResponceMessages.DELETE_ERROR);
+					this.messages.errorMessage(e.getMessage(), ResponseMessages.DELETE_ERROR);
 			return new ResponseEntity<>(responce, HttpStatus.BAD_REQUEST);
 		}
 	}
@@ -118,15 +118,15 @@ public class AddressController {
 		try {
 			int limit = PageableUtil.getPageSize(size);
             Map<String, Object> responce = 
-            		this.messages.successMessage(ResponceMessages.GET_SUCCES, this.service.getPageByRange(page, limit));
+            		this.messages.successMessage(ResponseMessages.GET_SUCCES, this.service.getPageByRange(page, limit));
      		return new ResponseEntity<>(responce, HttpStatus.OK);
 		} catch (IllegalArgumentException ie) {
 			Map<String, Object> responce = 
-					this.messages.errorMessage(ie.getMessage(), ResponceMessages.ELEMENT_NOT_FOUND);
+					this.messages.errorMessage(ie.getMessage(), ResponseMessages.ELEMENT_NOT_FOUND);
 			return new ResponseEntity<>(responce, HttpStatus.BAD_REQUEST);
 		} catch (PageabeSizeException pe) {
 				Map<String, Object> responce = 
-						this.messages.errorMessage(pe.getMessage(), ResponceMessages.GET_ERROR);
+						this.messages.errorMessage(pe.getMessage(), ResponseMessages.GET_ERROR);
 				return new ResponseEntity<>(responce, HttpStatus.BAD_REQUEST);
 		}catch (Exception e) {
 			Map<String, Object> responce = this.messages.internalServerError();
@@ -139,15 +139,15 @@ public class AddressController {
 		try {
 			int limit = PageableUtil.getPageSize(size);
             Map<String, Object> responce = 
-            		this.messages.successMessage(ResponceMessages.GET_SUCCES, this.service.getPageByRange(page, limit));
+            		this.messages.successMessage(ResponseMessages.GET_SUCCES, this.service.getPageByRange(page, limit));
      		return new ResponseEntity<>(responce, HttpStatus.OK);
 		} catch (IllegalArgumentException ie) {
 			Map<String, Object> responce = 
-					this.messages.errorMessage(ie.getMessage(), ResponceMessages.ELEMENT_NOT_FOUND);
+					this.messages.errorMessage(ie.getMessage(), ResponseMessages.ELEMENT_NOT_FOUND);
 			return new ResponseEntity<>(responce, HttpStatus.BAD_REQUEST);
 		} catch (PageabeSizeException pe) {
 				Map<String, Object> responce = 
-						this.messages.errorMessage(pe.getMessage(), ResponceMessages.GET_ERROR);
+						this.messages.errorMessage(pe.getMessage(), ResponseMessages.GET_ERROR);
 				return new ResponseEntity<>(responce, HttpStatus.BAD_REQUEST);
 		}catch (Exception e) {
 			Map<String, Object> responce = this.messages.internalServerError();

@@ -1,6 +1,8 @@
 package com.eagle.relationaldbaccessapi.models.entity;
 
 import java.io.Serializable;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -46,6 +48,7 @@ public class OriginEntity implements Serializable{
 	private Set<RouteEntity> routes;
 	
 	public OriginEntity() {
+		this.routes = new HashSet<>();
 	}
 
 	public Long getId() {
@@ -94,6 +97,16 @@ public class OriginEntity implements Serializable{
 
 	public void setRoutes(Set<RouteEntity> routes) {
 		this.routes = routes;
+	}
+	
+	public void addRoute(RouteEntity route) {
+		this.routes.add(route);
+	}
+	
+	public void removeRoutes(Collection<RouteEntity> route) {
+		route.stream().forEach(routeToRemove -> {
+			this.routes.removeIf(r -> r.equals(routeToRemove));
+		});
 	}
 
 	@Override

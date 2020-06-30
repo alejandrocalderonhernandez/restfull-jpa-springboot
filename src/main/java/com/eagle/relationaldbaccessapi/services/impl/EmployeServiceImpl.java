@@ -50,15 +50,15 @@ public class EmployeServiceImpl implements IEmployeeService {
 	@Override
 	@Transactional
 	public EmployeeDTO insert(EmployeeDTO dto) {
-		EmployeeEntity response = null;
+		EmployeeDTO response = null;
 		try {
 			EmployeeEntity employeeToInsert = this.selectBuilderEntity(dto);
-			response = this.repocitory.save(employeeToInsert);
+			response =  this.selectBuilderDTO(this.repocitory.save(employeeToInsert));
 			LOGGER.info("Inserted {} ", dto);
 		} catch (Exception e) {
 			LOGGER.error("Error to insert Employe: ", e);
 		}
-		return this.selectBuilderDTO(response);
+		return response;
 	}
 
 	@Override
