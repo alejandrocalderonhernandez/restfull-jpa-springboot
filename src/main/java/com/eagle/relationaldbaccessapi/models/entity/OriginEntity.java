@@ -18,7 +18,13 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.google.gson.Gson;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "ORIGIN")
 public class OriginEntity implements Serializable{
@@ -45,66 +51,14 @@ public class OriginEntity implements Serializable{
 			fetch = FetchType.LAZY, 
 			cascade = CascadeType.ALL, 
 			orphanRemoval = true)
-	private Set<RouteEntity> routes;
-	
-	public OriginEntity() {
-		this.routes = new HashSet<>();
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getAlternativeId() {
-		return alternativeId;
-	}
-
-	public void setAlternativeId(String alternativeId) {
-		this.alternativeId = alternativeId;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public Short getType() {
-		return type;
-	}
-
-	public void setType(Short type) {
-		this.type = type;
-	}
-
-	public AddressEntity getAddress() {
-		return address;
-	}
-
-	public void setAddress(AddressEntity address) {
-		this.address = address;
-	}
-
-	public Set<RouteEntity> getRoutes() {
-		return routes;
-	}
-
-	public void setRoutes(Set<RouteEntity> routes) {
-		this.routes = routes;
-	}
+	private Set<RouteEntity> routes = new HashSet<>();
 	
 	public void addRoute(RouteEntity route) {
 		this.routes.add(route);
 	}
 	
 	public void removeRoutes(Collection<RouteEntity> route) {
-		route.stream().forEach(routeToRemove -> {
+		route.forEach(routeToRemove -> {
 			this.routes.removeIf(r -> r.equals(routeToRemove));
 		});
 	}

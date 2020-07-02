@@ -7,7 +7,13 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.google.gson.Gson;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Getter
+@Setter
+@NoArgsConstructor
 public class UserInfoDTO implements Serializable{
 
 	private static final long serialVersionUID = -8096606183270497702L;
@@ -29,98 +35,7 @@ public class UserInfoDTO implements Serializable{
 	private Short age;
 	private Boolean status;
 	private EmployeeDTO employee;
-	
-    public UserInfoDTO() {
-    }
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getName1() {
-		return name1;
-	}
-
-	public void setName1(String name1) {
-		this.name1 = name1;
-	}
-
-	public String getName2() {
-		return name2;
-	}
-
-	public void setName2(String name2) {
-		this.name2 = name2;
-	}
-
-	public String getLastName1() {
-		return lastName1;
-	}
-
-	public void setLastName1(String lastName1) {
-		this.lastName1 = lastName1;
-	}
-
-	public String getLastName2() {
-		return lastName2;
-	}
-
-	public void setLastName2(String lastName2) {
-		this.lastName2 = lastName2;
-	}
-
-	public String getCurp() {
-		return curp;
-	}
-
-	public void setCurp(String curp) {
-		this.curp = curp;
-	}
-
-	public String getPhotoUrl() {
-		return photoUrl;
-	}
-
-	public void setPhotoUrl(String photoUrl) {
-		this.photoUrl = photoUrl;
-	}
-
-	public LocalDateTime getCreateAt() {
-		return createAt;
-	}
-
-	public void setCreateAt(LocalDateTime createAt) {
-		this.createAt = createAt;
-	}
-
-	public Short getAge() {
-		return age;
-	}
-
-	public void setAge(Short age) {
-		this.age = age;
-	}
-
-	public Boolean getStatus() {
-		return status;
-	}
-
-	public void setStatus(Boolean status) {
-		this.status = status;
-	}
-
-	public EmployeeDTO getEmployee() {
-		return employee;
-	}
-
-	public void setEmployee(EmployeeDTO employee) {
-		this.employee = employee;
-	}
-	
 	@Override
 	public String toString() {
 		return new Gson().toJson(this);

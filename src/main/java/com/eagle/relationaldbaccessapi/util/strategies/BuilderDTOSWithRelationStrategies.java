@@ -101,7 +101,7 @@ public class BuilderDTOSWithRelationStrategies {
 	public static final IBuilder<DestinationDTO, DestinationEntity> BUILDER_DESTINATION_ENTITY = (entity) -> {
 		DestinationDTO dto = new DestinationDTO();
 		dto.setAlternativeId(entity.getAlternativeId());
-		dto.setFinalDestination(entity.isFinalDestination());
+		dto.setFinalDestination(entity.getFinalDestination());
 		dto.setName(entity.getName());
 		dto.setType(entity.getType());
 		dto.setAddress(BuilderSimpleDTOStrategies.BUILD_ADDRESS_DTO.build(entity.getAddress()));
@@ -115,7 +115,7 @@ public class BuilderDTOSWithRelationStrategies {
 	public static final IBuilder<RouteDTO, RouteEntity> BUILDER_ROUTE_DTO = (entity) -> {
 		RouteDTO dto = new RouteDTO();
 		dto.setAlternativeId(entity.getAlternativeId());
-		dto.setDirectTravel(entity.isDirectTravel());
+		dto.setDirectTravel(entity.getDirectTravel());
 		dto.setName(entity.getName());
 		dto.setOrigin(BuilderSimpleDTOStrategies.BUILDER_ORIGIN_DTO.build(entity.getOrigin()));
 		dto.setDestinations(entity.getDestinations().stream()

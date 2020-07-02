@@ -7,7 +7,13 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.google.gson.Gson;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Getter
+@Setter
+@NoArgsConstructor
 public class AddressDTO implements Serializable {
 	
 	private static final long serialVersionUID = 4055365928482918390L;
@@ -29,89 +35,7 @@ public class AddressDTO implements Serializable {
 	private BigDecimal lat;
 	private BigDecimal lon;
 	private EmployeeDTO employee;
-	
-	public AddressDTO() {
-	}
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getStreet() {
-		return street;
-	}
-
-	public void setStreet(String street) {
-		this.street = street;
-	}
-
-	public String getColony() {
-		return colony;
-	}
-
-	public void setColony(String colony) {
-		this.colony = colony;
-	}
-
-	public String getTownHall() {
-		return townHall;
-	}
-
-	public void setTownHall(String townHall) {
-		this.townHall = townHall;
-	}
-
-	public String getEstate() {
-		return estate;
-	}
-
-	public void setEstate(String estate) {
-		this.estate = estate;
-	}
-
-	public Integer getExternalNumber() {
-		return externalNumber;
-	}
-
-	public void setExternalNumber(Integer externalNumber) {
-		this.externalNumber = externalNumber;
-	}
-
-	public Integer getInternalNumber() {
-		return internalNumber;
-	}
-
-	public void setInternalNumber(Integer internalNumber) {
-		this.internalNumber = internalNumber;
-	}
-
-	public BigDecimal getLat() {
-		return lat;
-	}
-
-	public void setLat(BigDecimal lat) {
-		this.lat = lat;
-	}
-
-	public BigDecimal getLon() {
-		return lon;
-	}
-
-	public void setLon(BigDecimal lon) {
-		this.lon = lon;
-	}
-
-	public EmployeeDTO getEmployee() {
-		return employee;
-	}
-
-	public void setEmployee(EmployeeDTO employee) {
-		this.employee = employee;
-	}
 
 	@Override
 	public String toString() {

@@ -13,7 +13,13 @@ import javax.persistence.Table;
 
 import com.eagle.relationaldbaccessapi.models.dto.ContactDTO;
 import com.google.gson.Gson;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "CONTACT_INFO")
 public class ContactEntity implements Serializable{
@@ -36,63 +42,13 @@ public class ContactEntity implements Serializable{
 	@OneToOne(mappedBy = "contact", fetch = FetchType.LAZY)
 	private EmployeeEntity employee;
 	
-	public ContactEntity() {
-	}
-	
 	public ContactEntity(ContactDTO contact) {
 		this.setPhoneNumber(contact.getPhoneNumber());
 		this.setWorkNumber(contact.getWorkNumber());
 		this.setHomeNumber(contact.getHomeNumber());
 		this.setEmail(contact.getEmail());
 	}
-	
-	public Long getId() {
-		return id;
-	}
-	
-	public void setId(Long id) {
-		this.id = id;
-	}
-	
-	public String getPhoneNumber() {
-		return phoneNumber;
-	}
-	
-	public void setPhoneNumber(String phoneNumber) {
-		this.phoneNumber = phoneNumber;
-	}
-	public String getWorkNumber() {
-		return workNumber;
-	}
-	
-	public void setWorkNumber(String workNumber) {
-		this.workNumber = workNumber;
-	}
-	
-	public String getHomeNumber() {
-		return homeNumber;
-	}
-	
-	public void setHomeNumber(String homeNumber) {
-		this.homeNumber = homeNumber;
-	}
-	
-	public String getEmail() {
-		return email;
-	}
-	
-	public void setEmail(String email) {
-		this.email = email;
-	}
 
-	public EmployeeEntity getEmployee() {
-		return employee;
-	}
-
-	public void setEmployee(EmployeeEntity employee) {
-		this.employee = employee;
-	}
-	
 	@Override
 	public String toString() {
 		return new Gson().toJson(this);

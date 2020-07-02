@@ -78,7 +78,7 @@ public class BuilderSimpleDTOStrategies {
 	public static final IBuilder<DestinationDTO, DestinationEntity> BUILDER_DESTINATION_DTO = (entity) -> {
 		DestinationDTO dto = new DestinationDTO();
 		dto.setAlternativeId(entity.getAlternativeId());
-		dto.setFinalDestination(entity.isFinalDestination());
+		dto.setFinalDestination(entity.getFinalDestination());
 		dto.setName(entity.getName());
 		dto.setType(entity.getType());
 		return dto;
@@ -87,7 +87,7 @@ public class BuilderSimpleDTOStrategies {
 	public static final IBuilder<RouteDTO, RouteEntity> BUILDER_ROUTE_DTO = (entity) -> {
 		RouteDTO dto = new RouteDTO();
 		dto.setAlternativeId(entity.getAlternativeId());
-		dto.setDirectTravel(entity.isDirectTravel());
+		dto.setDirectTravel(entity.getDirectTravel());
 		dto.setName(entity.getName());
 		return dto;
 	};

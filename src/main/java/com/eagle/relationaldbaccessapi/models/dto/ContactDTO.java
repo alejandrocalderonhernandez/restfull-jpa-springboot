@@ -7,9 +7,15 @@ import javax.validation.constraints.Pattern;
 
 import com.eagle.relationaldbaccessapi.models.entity.ContactEntity;
 import com.google.gson.Gson;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import static com.eagle.relationaldbaccessapi.util.constants.RegexConstants.ONLY_NUMBERS_REGEX;
 
+@Getter
+@Setter
+@NoArgsConstructor
 public class ContactDTO implements Serializable{
 
 	private static final long serialVersionUID = 1615125051548395738L;
@@ -24,64 +30,12 @@ public class ContactDTO implements Serializable{
 	@Email
 	private String email;
 	private EmployeeDTO employee;
-	
-	public ContactDTO() {
-	}
-	
+
 	public ContactDTO(ContactEntity contact) {
-		this.setId(contact.getId());
-		this.setPhoneNumber(contact.getPhoneNumber());
-		this.setWorkNumber(contact.getWorkNumber());
-		this.setHomeNumber(contact.getHomeNumber());
-		this.setEmail(contact.getEmail());
-	}
-	
-	public Long getId() {
-		return id;
-	}
-	
-	public void setId(Long id) {
-		this.id = id;
-	}
-	
-	public String getPhoneNumber() {
-		return phoneNumber;
-	}
-	
-	public void setPhoneNumber(String phoneNumber) {
-		this.phoneNumber = phoneNumber;
-	}
-	public String getWorkNumber() {
-		return workNumber;
-	}
-	
-	public void setWorkNumber(String workNumber) {
-		this.workNumber = workNumber;
-	}
-	
-	public String getHomeNumber() {
-		return homeNumber;
-	}
-	
-	public void setHomeNumber(String homeNumber) {
-		this.homeNumber = homeNumber;
-	}
-	
-	public String getEmail() {
-		return email;
-	}
-	
-	public void setEmail(String email) {
-		this.email = email;
+
 	}
 
-	public EmployeeDTO getEmployee() {
-		return employee;
-	}
 
-	public void setEmployee(EmployeeDTO employee) {
-		this.employee = employee;
-	}
 	
 	@Override
 	public String toString() {

@@ -19,7 +19,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.google.gson.Gson;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "ROUTE")
 public class RouteEntity implements Serializable{
@@ -47,65 +53,14 @@ public class RouteEntity implements Serializable{
             joinColumns = { @JoinColumn(name = "id_route") }, 
             inverseJoinColumns = { @JoinColumn(name = "id_destiny") }
         )
-	private Set<DestinationEntity> destinations;
-	
-	public RouteEntity() {
-		this.destinations = new HashSet<>();
-	}
-	
-	public Long getId() {
-		return id;
-	}
-	
-	public void setId(Long id) {
-		this.id = id;
-	}
-	
-	public String getAlternativeId() {
-		return alternativeId;
-	}
-	public void setAlternativeId(String alternativeId) {
-		this.alternativeId = alternativeId;
-	}
-	
-	public String getName() {
-		return name;
-	}
-	
-	public void setName(String name) {
-		this.name = name;
-	}
-	
-	public Boolean isDirectTravel() {
-		return directTravel;
-	}
-	
-	public void setDirectTravel(Boolean directTravel) {
-		this.directTravel = directTravel;
-	}
-	
-	public OriginEntity getOrigin() {
-		return origin;
-	}
-	
-	public void setOrigin(OriginEntity origin) {
-		this.origin = origin;
-	}
-	
-	public Set<DestinationEntity> getDestinations() {
-		return destinations;
-	}
-	
-	public void setDestinations(Set<DestinationEntity> destinations) {
-		this.destinations = destinations;
-	}
+	private Set<DestinationEntity> destinations = new HashSet<>();
 	
 	public void addDestination(DestinationEntity destination) {
 		this.destinations.add(destination);
 	}
 	
 	public void removeDestination(Collection<DestinationEntity> destination) {
-		destination.stream().forEach(destinationToRemove -> {
+		destination.forEach(destinationToRemove -> {
 			this.destinations.removeIf(d -> d.equals(destinationToRemove));
 		});
 	}

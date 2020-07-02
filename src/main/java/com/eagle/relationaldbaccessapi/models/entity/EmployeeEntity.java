@@ -14,7 +14,13 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.google.gson.Gson;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "EMPLOYEE")
 public class EmployeeEntity implements Serializable{
@@ -39,49 +45,6 @@ public class EmployeeEntity implements Serializable{
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "id_contact")
 	private ContactEntity contact;
-	
-	public EmployeeEntity() {
-	}
-	
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getAlternativeId() {
-		return alternativeId;
-	}
-
-	public void setAlternativeId(String alternativeId) {
-		this.alternativeId = alternativeId;
-	}
-
-	public UserInfoEntity getUserInfo() {
-		return userInfo;
-	}
-
-	public void setUserInfo(UserInfoEntity userInfo) {
-		this.userInfo = userInfo;
-	}
-
-	public AddressEntity getAddress() {
-		return address;
-	}
-
-	public void setAddress(AddressEntity address) {
-		this.address = address;
-	}
-
-	public ContactEntity getContact() {
-		return contact;
-	}
-
-	public void setContact(ContactEntity contact) {
-		this.contact = contact;
-	}
 	
 	@Override
 	public String toString() {

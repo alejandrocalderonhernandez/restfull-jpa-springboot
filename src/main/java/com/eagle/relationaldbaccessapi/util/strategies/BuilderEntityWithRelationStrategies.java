@@ -35,7 +35,7 @@ public class BuilderEntityWithRelationStrategies {
 		entity.setLat(dto.getLat());
 		entity.setLon(dto.getLon());
 		if (dto.getEmployee() != null) {
-			entity.setEmploye(BuilderSimpleEntityStrategies.BUILD_EMPLOYEE_ENTITY.build(dto.getEmployee()));
+			entity.setEmployee(BuilderSimpleEntityStrategies.BUILD_EMPLOYEE_ENTITY.build(dto.getEmployee()));
 		}
 		return entity;
 	};
@@ -52,7 +52,7 @@ public class BuilderEntityWithRelationStrategies {
 		entity.setAge(dto.getAge());
 		entity.setStatus(true);
 		if (dto.getEmployee() != null) {
-			entity.setEmploye(BuilderSimpleEntityStrategies.BUILD_EMPLOYEE_ENTITY.build(dto.getEmployee()));
+			entity.setEmployee(BuilderSimpleEntityStrategies.BUILD_EMPLOYEE_ENTITY.build(dto.getEmployee()));
 		}
 		return entity;
 	};
@@ -95,7 +95,7 @@ public class BuilderEntityWithRelationStrategies {
 	public static final IBuilder<DestinationEntity, DestinationDTO> BUILDER_DESTINATION_ENTITY = (dto) -> {
 		DestinationEntity entity = new DestinationEntity();
 		entity.setAlternativeId(dto.getAlternativeId());
-		entity.setFinalDestination(dto.isFinalDestination());
+		entity.setFinalDestination(dto.getFinalDestination());
 		entity.setName(dto.getName());
 		entity.setType(dto.getType());
 		entity.setAddress(BuilderSimpleEntityStrategies.BUILD_ADDRESS_ENTITY.build(dto.getAddress()));
@@ -109,7 +109,7 @@ public class BuilderEntityWithRelationStrategies {
 	public static final IBuilder<RouteEntity, RouteDTO> BUILDER_ROUTE_ENTITY = (dto) -> {
 		RouteEntity entity = new RouteEntity();
 		entity.setAlternativeId(dto.getAlternativeId());
-		entity.setDirectTravel(dto.isDirectTravel());
+		entity.setDirectTravel(dto.getDirectTravel());
 		entity.setName(dto.getName());
 		entity.setOrigin(BuilderSimpleEntityStrategies.BUILDER_ORIGIN_ENTITY.build(dto.getOrigin()));
 		entity.setDestinations(dto.getDestinations().stream()

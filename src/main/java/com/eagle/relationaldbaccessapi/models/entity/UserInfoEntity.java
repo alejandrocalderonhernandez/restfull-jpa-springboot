@@ -14,7 +14,13 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.google.gson.Gson;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "USER_INFO")
 public class UserInfoEntity implements Serializable{
@@ -48,96 +54,6 @@ public class UserInfoEntity implements Serializable{
 	
 	@OneToOne(mappedBy = "userInfo", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private EmployeeEntity employee;
-
-	public UserInfoEntity() {
-	}   
-
-	public Long getId() {
-		return id;
-	}
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getName1() {
-		return name1;
-	}
-
-	public void setName1(String name1) {
-		this.name1 = name1;
-	}
-
-	public String getName2() {
-		return name2;
-	}
-
-	public void setName2(String name2) {
-		this.name2 = name2;
-	}
-
-	public String getLastName1() {
-		return lastName1;
-	}
-
-	public void setLastName1(String lastName1) {
-		this.lastName1 = lastName1;
-	}
-
-	public String getLastName2() {
-		return lastName2;
-	}
-
-	public void setLastName2(String lastName2) {
-		this.lastName2 = lastName2;
-	}
-
-	public String getCurp() {
-		return curp;
-	}
-
-	public void setCurp(String curp) {
-		this.curp = curp;
-	}
-
-	public String getPhotoUrl() {
-		return photoUrl;
-	}
-
-	public void setPhotoUrl(String photoUrl) {
-		this.photoUrl = photoUrl;
-	}
-
-	public LocalDateTime getCreateAt() {
-		return createAt;
-	}
-
-	public void setCreateAt(LocalDateTime createAt) {
-		this.createAt = createAt;
-	}
-
-	public Short getAge() {
-		return age;
-	}
-
-	public void setAge(Short age) {
-		this.age = age;
-	}
-
-	public Boolean getStatus() {
-		return status;
-	}
-
-	public void setStatus(Boolean status) {
-		this.status = status;
-	}
-
-	public EmployeeEntity getEmployee() {
-		return employee;
-	}
-
-	public void setEmploye(EmployeeEntity employee) {
-		this.employee = employee;
-	}
 	
 	@Override
 	public String toString() {
