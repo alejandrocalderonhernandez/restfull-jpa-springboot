@@ -34,8 +34,6 @@ public class ContactDTO implements Serializable{
 	public ContactDTO(ContactEntity contact) {
 
 	}
-
-
 	
 	@Override
 	public String toString() {

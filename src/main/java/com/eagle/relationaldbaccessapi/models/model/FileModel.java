@@ -16,7 +16,7 @@ public class FileModel {
 	private String name;
 	private String extension;
 	private Path path;
-	File file;
+	private File file;
 	private MultipartFile multipartFile;
 	
 	private static final int URI_POSITION = 0;

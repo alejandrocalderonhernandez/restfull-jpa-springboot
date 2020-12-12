@@ -18,7 +18,7 @@ public class DestinationDTO implements Serializable{
 	private Long id;
 	private String alternativeId;
 	private String name;
-	private 	Short type;
+	private Short type;
 	private Boolean finalDestination;
 	
 	private AddressDTO address;

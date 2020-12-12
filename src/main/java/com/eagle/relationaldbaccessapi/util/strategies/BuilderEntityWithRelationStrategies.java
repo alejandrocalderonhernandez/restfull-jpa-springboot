@@ -18,6 +18,7 @@ import com.eagle.relationaldbaccessapi.models.entity.OriginEntity;
 import com.eagle.relationaldbaccessapi.models.entity.RouteEntity;
 import com.eagle.relationaldbaccessapi.models.entity.UserInfoEntity;
 import com.eagle.relationaldbaccessapi.util.interfaces.functional.IBuilder;
+import lombok.NoArgsConstructor;
 
 public class BuilderEntityWithRelationStrategies {
 
